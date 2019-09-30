@@ -6,6 +6,7 @@ import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.example.myapplication.activities.HustlesActivity
 import com.example.myapplication.auth.LoginActivity
 
 import kotlinx.android.synthetic.main.activity_main.*
@@ -37,6 +38,12 @@ class MainActivity : AppCompatActivity() {
             R.id.action_settings -> {
                 // TODO: adding this to test login activity
                 val intent = Intent(applicationContext, LoginActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            R.id.action_hustles -> {
+                // Adding this to test Hustles activity
+                val intent = Intent(applicationContext, HustlesActivity::class.java)
                 startActivity(intent)
                 true
             }

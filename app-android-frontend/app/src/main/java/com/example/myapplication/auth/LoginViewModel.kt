@@ -45,10 +45,10 @@ class LoginViewModel: ViewModel() {
         val authEx = AuthorizationException.fromIntent(data)
 
         if (authResp != null) {
-            // TODO: token request doesn't work xd!
             authService!!.performTokenRequest(authResp.createTokenExchangeRequest()) { tokenResp, tokenEx ->
                 if (tokenResp != null) {
                     val intent = Intent(context, MainActivity::class.java)
+                    // TODO: backend call + create account?
                     navigation.postValue(Pair(START_NO_RESULT, intent))
                 } else {
                     Log.w(TAG, "Login Failed", tokenEx)

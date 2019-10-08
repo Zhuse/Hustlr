@@ -1,4 +1,4 @@
-package com.example.myapplication.viewmodels
+package com.example.myapplication.hustles
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

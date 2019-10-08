@@ -5,6 +5,7 @@ import android.os.Bundle
 //import androidx.appcompat.widget.SearchView
 import android.widget.SearchView
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.myapplication.R
 import com.example.myapplication.database.MainDatabase
@@ -27,11 +28,19 @@ class HustlesActivity : AppCompatActivity() {
             HustlesViewModelFactory(applicationVal)
 
         // Get a reference to the ViewModel associated with this activity
-        val db = MainDatabase.getInstance(application!!)
-
-
         hustlesViewModel = ViewModelProviders.of(
             this, viewModelFactory
         ).get(HustlesViewModel::class.java)
+
+        // associate the adapter with the recycler view
+        val adapter = HustlesListAdapter()
+        binding.hustlesList.adapter = adapter
+
+        // observe the hustles variable
+        hustlesViewModel.hustles.observe(this, Observer {
+            it?.let {
+                adapter.data = it
+            }
+        })
     }
 }

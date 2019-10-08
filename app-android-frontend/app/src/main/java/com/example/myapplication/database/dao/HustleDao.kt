@@ -16,4 +16,7 @@ interface HustleDao {
 
     @Query("SELECT * from hustle_table WHERE hustleId = :id")
     fun get(id: Long): Hustle?
+
+    @Query("SELECT * from hustle_table")
+    fun getAll(): List<Hustle>
 }

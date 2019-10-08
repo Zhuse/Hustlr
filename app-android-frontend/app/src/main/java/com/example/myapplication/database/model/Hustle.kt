@@ -15,6 +15,12 @@ data class Hustle(
     @ColumnInfo(name = "provider")
     val provider: Hustlr,
 
-    @ColumnInfo(name = "Date Posted")
-    val datePosted: Long = System.currentTimeMillis()
+    @ColumnInfo(name = "date_posted")
+    val datePosted: Long = System.currentTimeMillis(),
+
+    @ColumnInfo(name = "price")
+    val price: Double,
+
+    @ColumnInfo(name = "description")
+    val description: String
 )

@@ -1,5 +1,9 @@
 package com.example.myapplication.database
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.example.myapplication.database.model.Hustle
+import com.example.myapplication.database.model.Hustlr
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -9,6 +13,7 @@ import kotlinx.coroutines.withContext
  * persistent data.
  */
 class MainRepository private  constructor(private val database: MainDatabase) {
+    private var hustles: LiveData<List<Hustle>>? = null
 
     /**
      * Refresh the hustles stored in the offline database
@@ -30,6 +35,30 @@ class MainRepository private  constructor(private val database: MainDatabase) {
 
             // Store the data into the database
         }
+    }
+
+    fun getAllHustles() : LiveData<List<Hustle>> {
+        if(hustles == null) {
+            //TODO: Change this
+            return testHusltes()
+        } else {
+            return MutableLiveData<List<Hustle>>()
+        }
+    }
+
+    fun testHusltes() : LiveData<List<Hustle>> {
+        val provider = Hustlr(name = "John Wick")
+        val list = mutableListOf<Hustle>()
+
+        for(i in 1..10) {
+            val hustle = Hustle(i.toLong(), "Help Moving Out", provider, price = 25.0, description = "I need help moving my stuff out of the house especially after tomorrow night")
+            list.add(hustle)
+        }
+
+        val result = MutableLiveData<List<Hustle>>()
+        result.postValue(list)
+
+        return result
     }
 
     companion object {

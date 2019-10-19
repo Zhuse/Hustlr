@@ -178,7 +178,7 @@ Request:
 {
     "recipientId": String,
     "properties": {
-        message : {
+        "message" : {
             "text": String,
             "timestamp": Date
         }

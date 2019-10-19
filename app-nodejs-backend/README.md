@@ -44,7 +44,7 @@ Response (201):
     "userId": String,
     "properties": {
         "score": Number
-        "email": 
+        "email": String
     },
     "additionalProperties": {
         "userDescription": String

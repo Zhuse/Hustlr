@@ -25,6 +25,7 @@ __POST /user__
 Request:
 ```javascript
 {
+    "userId": String,
     "properties": {
         "email": String,
     },

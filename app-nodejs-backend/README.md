@@ -56,7 +56,7 @@ Response (201):
 Hustle
 ====
 
-__GET /hustle/{userId}__
+__GET /users/{userId}/hustle__
 Response (200):
 ```javascript
 {
@@ -77,7 +77,7 @@ Response (200):
 }
 ```
 
-__GET /hustle/{userId}/matched__
+__GET /users/{userId}/hustle/matched__
 Response (200):
 ```javascript
 {
@@ -97,7 +97,7 @@ Response (200):
 }
 ```
 
-__POST /hustle/{userId}__
+__POST /users/{userId}/hustle/__
 Request:
 ```javascript
 {
@@ -134,7 +134,7 @@ Response (201):
 Chat
 ====
 
-__GET /chat/{userId}__
+__GET /users/{userId}/chat__
 Response (200):
 ```javascript
 {
@@ -155,7 +155,7 @@ Response (200):
 }
 ```
 
-__GET /chat/{userId}/{recipientId}__
+__GET /users/{userId}/chat/messages?recipientId={recipientId}__
 Response (200):
 ```javascript
 {
@@ -172,7 +172,7 @@ Response (200):
 }
 ```
 
-__POST /chat/{userId}__
+__POST /users/{userId}/chat__
 Request:
 ```javascript
 {

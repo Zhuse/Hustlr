@@ -116,8 +116,7 @@ Response (201):
 {
     "userId": String
     "properties": {
-        "hustles": [
-            {
+        "hustle": {
                 "hustleId": String,
                 "providerId": String,
                 "category": String,
@@ -125,7 +124,7 @@ Response (201):
                 "status": String, //posted
                 "description": String
             }
-        ]
+        }
     }
 }
 ```

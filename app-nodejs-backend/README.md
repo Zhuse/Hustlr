@@ -154,7 +154,7 @@ Response (200):
 }
 ```
 
-__GET /users/{userId}/chat/messages?recipientId={recipientId}__
+__GET /chat/users/{userId}/messages/?recipientId={recipientId}__
 Response (200):
 ```javascript
 {
@@ -171,7 +171,7 @@ Response (200):
 }
 ```
 
-__POST /users/{userId}/chat__
+__POST /chat/users/{userId}/__
 Request:
 ```javascript
 {

@@ -177,14 +177,13 @@ Request:
     "recipientId": String,
     "properties": {
         "message" : {
-            "text": String,
-            "timestamp": Date
+            "text": String
         }
     }
 }
 ```
 
-Response (201):
+Response (204):
 ```javascript
 {}
 ```

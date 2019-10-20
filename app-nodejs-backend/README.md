@@ -55,7 +55,7 @@ Response (201):
 Hustle
 ====
 
-__GET /users/{userId}/hustle__
+__GET /hustle/users/{userId}/__
 Response (200):
 ```javascript
 {
@@ -76,7 +76,7 @@ Response (200):
 }
 ```
 
-__GET /users/{userId}/hustle/matched__
+__GET /hustle/users/{userId}/matched__
 Response (200):
 ```javascript
 {
@@ -96,7 +96,7 @@ Response (200):
 }
 ```
 
-__POST /users/{userId}/hustle/__
+__POST /hustle/users/{userId}__
 Request:
 ```javascript
 {

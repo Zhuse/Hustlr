@@ -17,18 +17,6 @@
             android:label="@string/title_available_hustles"
             tools:layout="@layout/fragment_available_hustles" />
 
-<!--    <fragment-->
-<!--            android:id="@+id/navigation_dashboard"-->
-<!--            android:name="com.example.myapplication.navbarTest.ui.dashboard.DashboardFragment"-->
-<!--            android:label="@string/title_dashboard"-->
-<!--            tools:layout="@layout/fragment_dashboard" />-->
-
-<!--    <fragment-->
-<!--            android:id="@+id/navigation_notifications"-->
-<!--            android:name="com.example.myapplication.navbarTest.ui.notifications.NotificationsFragment"-->
-<!--            android:label="@string/title_notifications"-->
-<!--            tools:layout="@layout/fragment_notifications" />-->
-
     <fragment
         android:id="@+id/navigation_hustlr_hub"
         android:name="com.example.myapplication.hustlrHub.HustlrHubFragment"

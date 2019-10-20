@@ -18,7 +18,7 @@ import com.example.myapplication.databinding.FragmentAvailableHustlesBinding
 class AvailableHustlesFragment : Fragment() {
     private lateinit var searchBar: SearchView
     private lateinit var binding: FragmentAvailableHustlesBinding
-    private lateinit var hustlesViewModel: HustlesViewModel
+    private lateinit var availableHustlesViewModel: AvailableHustlesViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,16 +30,16 @@ class AvailableHustlesFragment : Fragment() {
         searchBar = binding.searchBar
 
         // Get a reference to the ViewModel associated with this activity
-        hustlesViewModel = ViewModelProviders.of(
+        availableHustlesViewModel = ViewModelProviders.of(
             this
-        ).get(HustlesViewModel::class.java)
+        ).get(AvailableHustlesViewModel::class.java)
 
         // associate the adapter with the recycler view
-        val adapter = HustlesListAdapter()
+        val adapter = AvailableHustlesListAdapter()
         binding.hustlesList.adapter = adapter
 
         // observe the hustles variable
-        hustlesViewModel.hustles.observe(this, Observer {
+        availableHustlesViewModel.hustles.observe(this, Observer {
             it?.let {
                 adapter.data = it
             }

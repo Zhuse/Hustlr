@@ -8,7 +8,7 @@ import com.example.myapplication.R
 import com.example.myapplication.database.model.Hustle
 import java.lang.StringBuilder
 
-class HustlesListAdapter: RecyclerView.Adapter<HustleViewHolder>() {
+class AvailableHustlesListAdapter: RecyclerView.Adapter<AvailableHustleViewHolder>() {
     var data = listOf<Hustle>()
         set(value) {
             field = value
@@ -17,7 +17,7 @@ class HustlesListAdapter: RecyclerView.Adapter<HustleViewHolder>() {
 
     override fun getItemCount() : Int = data.size
 
-    override fun onBindViewHolder(holder: HustleViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: AvailableHustleViewHolder, position: Int) {
         val item = data[position]
 
         val descriptionSnippet = StringBuilder(item.description.substring(0, 30))
@@ -28,10 +28,10 @@ class HustlesListAdapter: RecyclerView.Adapter<HustleViewHolder>() {
         holder.descriptionSnippet.text = descriptionSnippet.toString()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : HustleViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : AvailableHustleViewHolder {
         val layoutInflator = LayoutInflater.from(parent.context)
         val view = layoutInflator
-            .inflate(R.layout.list_item_hustle, parent, false) as View
-        return HustleViewHolder(view)
+            .inflate(R.layout.list_item_available_hustle, parent, false) as View
+        return AvailableHustleViewHolder(view)
     }
 }

@@ -7,7 +7,7 @@ import com.example.myapplication.database.MainDatabase
 import com.example.myapplication.database.MainRepository
 import com.example.myapplication.database.model.Hustle
 
-class HustlesViewModel(application: Application) : AndroidViewModel(application) {
+class AvailableHustlesViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: MainRepository = MainRepository
         .getInstance(MainDatabase.getInstance(application))
 

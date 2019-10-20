@@ -1,9 +1,9 @@
-const session = require('./session');
-const user = require('./user');
-const message = require('./message');
+const hustle = require('./hustle')
+const user = require('./user')
+const chat = require('./chat')
 
 module.exports =  {
-  session,
+  hustle,
   user,
-  message,
-};
+  chat
+}

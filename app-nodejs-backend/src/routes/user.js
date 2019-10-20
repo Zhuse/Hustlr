@@ -1,13 +1,14 @@
-const { Router } = require('express');
+const { Router } = require('express')
+const userController = require('../controllers/userController')
 
-const router = Router();
-
-router.get('/', (req, res) => {
-  return res.send(Object.values(req.context.models.users));
-});
+const router = Router()
 
 router.get('/:userId', (req, res) => {
-  return res.send(req.context.models.users[req.params.userId]);
-});
+  userController.findById(req, res)
+})
 
-module.exports = router;
+router.post('/', (req, res) => {
+  userController.create(req, res)
+})
+
+module.exports = router

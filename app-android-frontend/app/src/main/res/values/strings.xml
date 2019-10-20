@@ -2,4 +2,12 @@
     <string name="app_name">My Application</string>
     <string name="action_settings">Settings</string>
     <string name="login_fail">Login Failed! Something went Wrong.</string>
+    <string name="title_activity_navbar">navbar</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_hustlr_hub">My Hustlr Hub</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

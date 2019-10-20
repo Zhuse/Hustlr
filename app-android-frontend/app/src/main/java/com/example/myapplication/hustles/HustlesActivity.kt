@@ -7,9 +7,14 @@ import android.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.example.myapplication.R
 import com.example.myapplication.database.MainDatabase
 import com.example.myapplication.databinding.ActivityHustlesBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HustlesActivity : AppCompatActivity() {
     private lateinit var searchBar: SearchView
@@ -42,5 +47,19 @@ class HustlesActivity : AppCompatActivity() {
                 adapter.data = it
             }
         })
+
+        // Navbar Things
+        val navView: BottomNavigationView = findViewById(R.id.nav_view)
+
+        val navController = findNavController(R.id.nav_host_fragment)
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_hustlr_hub
+            )
+        )
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.setupWithNavController(navController)
     }
 }

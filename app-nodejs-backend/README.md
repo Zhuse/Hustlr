@@ -133,7 +133,7 @@ Response (201):
 Chat
 ====
 
-__GET /users/{userId}/chat__
+__GET /chat/users/{userId}/__
 Response (200):
 ```javascript
 {
@@ -171,7 +171,7 @@ Response (200):
 }
 ```
 
-__POST /chat/users/{userId}/__
+__POST /chat/users/{userId}/message__
 Request:
 ```javascript
 {

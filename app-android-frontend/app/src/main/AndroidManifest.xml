@@ -13,7 +13,7 @@
         <activity
                 android:name=".navbarTest.navbar"
                 android:label="@string/title_activity_navbar"></activity>
-        <activity android:name=".hustles.HustlesActivity" />
+        <activity android:name=".main.HustlrMainActivity" />
         <activity
                 android:name=".MainActivity"
                 android:label="@string/app_name"

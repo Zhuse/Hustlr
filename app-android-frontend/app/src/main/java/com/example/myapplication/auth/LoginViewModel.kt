@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.myapplication.*
 import com.example.myapplication.R
-import com.example.myapplication.hustles.HustlesActivity
+import com.example.myapplication.main.HustlrMainActivity
 import net.openid.appauth.*
 
 class LoginViewModel: ViewModel() {
@@ -48,7 +48,7 @@ class LoginViewModel: ViewModel() {
         if (authResp != null) {
             authService!!.performTokenRequest(authResp.createTokenExchangeRequest()) { tokenResp, tokenEx ->
                 if (tokenResp != null) {
-                    val intent = Intent(context, HustlesActivity::class.java)
+                    val intent = Intent(context, HustlrMainActivity::class.java)
                     // TODO: backend call + create account?
                     navigation.postValue(Pair(START_NO_RESULT, intent))
                 } else {

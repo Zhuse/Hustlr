@@ -6,10 +6,15 @@
             android:icon="@drawable/ic_home_black_24dp"
             android:title="@string/title_home" />
 
+<!--    <item-->
+<!--            android:id="@+id/navigation_dashboard"-->
+<!--            android:icon="@drawable/ic_dashboard_black_24dp"-->
+<!--            android:title="@string/title_dashboard" />-->
+
     <item
-            android:id="@+id/navigation_dashboard"
-            android:icon="@drawable/ic_dashboard_black_24dp"
-            android:title="@string/title_dashboard" />
+            android:id="@+id/navigation_available_hustles"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="@string/title_available_hustles" />
 
 <!--    <item-->
 <!--            android:id="@+id/navigation_notifications"-->

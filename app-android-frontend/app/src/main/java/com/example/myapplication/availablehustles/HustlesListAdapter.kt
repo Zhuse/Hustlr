@@ -1,4 +1,4 @@
-package com.example.myapplication.hustles
+package com.example.myapplication.availablehustles
 
 import android.view.LayoutInflater
 import android.view.View

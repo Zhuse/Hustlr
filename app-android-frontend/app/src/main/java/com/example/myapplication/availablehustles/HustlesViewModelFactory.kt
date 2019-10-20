@@ -1,4 +1,4 @@
-package com.example.myapplication.hustles
+package com.example.myapplication.availablehustles
 
 import android.app.Application
 import androidx.lifecycle.ViewModel

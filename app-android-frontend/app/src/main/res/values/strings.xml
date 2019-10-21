@@ -13,4 +13,14 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Create Hustle strings -->
+    <string name="create_hustle_title">Title</string>
+    <string name="create_hustle_description">Description</string>
+    <string name="create_hustle_location">Location</string>
+    <string name="create_hustle_offer_price">Offer Price:</string>
+    <string name="create_hustle_dollar_sign">Dollar Sign</string>
+    <string name="create_hustle_completion_reward">Reward for completion</string>
+    <string name="create_hustle_categories_text">Categories:</string>
+    <string name="create_hustle_submit_button_text">Submit New Hustle</string>
 </resources>

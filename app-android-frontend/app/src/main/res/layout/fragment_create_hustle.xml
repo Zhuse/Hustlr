@@ -1,17 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
-    <FrameLayout
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/frameLayout3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".hustlrHub.CreateHustleFragment">
 
-        <!-- TODO: Update blank fragment layout -->
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Create Hustle" />
+        <EditText
+                android:id="@+id/titleText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="@string/create_hustle_title"
+                android:inputType="textPersonName"
+                android:singleLine="true"
+                android:textAlignment="textStart"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:targetApi="o" />
 
-    </FrameLayout>
+        <EditText
+                android:id="@+id/descriptionText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="@string/create_hustle_description"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleText" />
+
+        <EditText
+                android:id="@+id/locationText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:hint="@string/create_hustle_location"
+                android:importantForAutofill="no"
+                android:inputType="textPostalAddress"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/descriptionText" />
+
+        <TextView
+                android:id="@+id/offerPriceText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/create_hustle_offer_price"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/locationText" />
+
+        <ImageView
+                android:id="@+id/dollar_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:contentDescription="@string/create_hustle_dollar_sign"
+                android:scaleX="1.5"
+                android:scaleY="1.5"
+                app:layout_constraintStart_toEndOf="@+id/offerPriceText"
+                app:layout_constraintTop_toBottomOf="@+id/locationText"
+                app:srcCompat="@drawable/ic_attach_money_black_24dp" />
+
+        <EditText
+                android:id="@+id/offerPriceValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:hint="@string/create_hustle_completion_reward"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                app:layout_constraintStart_toEndOf="@+id/dollar_sign"
+                app:layout_constraintTop_toBottomOf="@+id/locationText" />
+
+        <TextView
+                android:id="@+id/categoriesText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/create_hustle_categories_text"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/offerPriceText" />
+
+        <com.google.android.material.chip.ChipGroup
+                android:id="@+id/categoriesChipGroup"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/categoriesText"
+                app:layout_constraintTop_toBottomOf="@+id/offerPriceValue" />
+
+        <Button
+                android:id="@+id/createHustleButton"
+                android:layout_width="200dp"
+                android:layout_height="52dp"
+                android:background="#AF978F8F"
+                android:text="@string/create_hustle_submit_button_text"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/categoriesText" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

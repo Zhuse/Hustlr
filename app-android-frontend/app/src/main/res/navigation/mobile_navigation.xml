@@ -6,12 +6,6 @@
         app:startDestination="@id/navigation_available_hustles">
 
     <fragment
-            android:id="@+id/navigation_home"
-            android:name="com.example.myapplication.navbarTest.ui.home.HomeFragment"
-            android:label="@string/title_home"
-            tools:layout="@layout/fragment_home" />
-
-    <fragment
             android:id="@+id/navigation_available_hustles"
             android:name="com.example.myapplication.availablehustles.AvailableHustlesFragment"
             android:label="@string/title_available_hustles"
@@ -50,4 +44,10 @@
                 android:id="@+id/action_navigation_view_hustle_to_navigation_available_hustles"
                 app:destination="@id/navigation_available_hustles" />
     </fragment>
+
+    <fragment
+        android:id="@+id/navigation_messages"
+        android:name="com.example.myapplication.message.MessageListFragment"
+        android:label="Messages"
+        tools:layout="@layout/activity_message_list" />
 </navigation>

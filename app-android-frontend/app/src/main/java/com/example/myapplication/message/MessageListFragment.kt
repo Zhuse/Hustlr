@@ -1,11 +1,18 @@
 package com.example.myapplication.message
 
+
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.MSG_DIALOG
@@ -17,25 +24,35 @@ import com.example.myapplication.message.model.UserType
 import kotlinx.android.synthetic.main.activity_message_list.*
 import kotlinx.android.synthetic.main.activity_message_list.view.*
 
-
 /**
- * TODO: We should use the MessageListFragment instead of this class
+ * A simple [Fragment] subclass.
  */
-@Deprecated("We should use the MessageListFragment ")
-class MessageListActivity: AppCompatActivity() {
+class MessageListFragment : Fragment() {
+    private lateinit var root: View
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        activity?.actionBar?.setDisplayHomeAsUpEnabled(true)
+        root = inflater.inflate(R.layout.activity_message_list, container, false)
+        initializeViewModel()
+        return root
+    }
 
     private lateinit var messageRecycler: RecyclerView
     private lateinit var messageAdapter: MessageListAdapter
     private lateinit var vm: MessageViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_message_list)
-        setActionBar(findViewById(R.id.message_toolbar))
-
-        actionBar!!.setDisplayHomeAsUpEnabled(true)
-        initializeViewModel()
-    }
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        setContentView(R.layout.activity_message_list)
+//        setActionBar(findViewById(R.id.message_toolbar))
+//
+//        actionBar!!.setDisplayHomeAsUpEnabled(true)
+//        initializeViewModel()
+//    }
 
     override fun onStart() {
         super.onStart()
@@ -53,7 +70,7 @@ class MessageListActivity: AppCompatActivity() {
         item?.let {
             return when (it.itemId) {
                 android.R.id.home -> {
-                    finish()
+//                    finish()
                     true
                 }
                 else -> super.onOptionsItemSelected(item)
@@ -69,14 +86,15 @@ class MessageListActivity: AppCompatActivity() {
     }
 
     private fun initializeViewModel() {
-        vm = ViewModelProvider.NewInstanceFactory().create(MessageViewModel::class.java)
+//        vm = ViewModelProvider.NewInstanceFactory().create(MessageViewModel::class.java)
+        vm = ViewModelProviders.of(this).get(MessageViewModel::class.java)
 
         vm.messageData.observe(this, Observer { it?.let { messageAdapter.addItem(it) } })
         vm.notificationData.observe(this, Observer {
             it?.let {
                 when (it.first) {
                     MSG_TOAST -> {
-                        Toast.makeText(this, it.second, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, it.second, Toast.LENGTH_SHORT).show()
                     }
                     MSG_DIALOG -> {
                         // TODO:
@@ -91,10 +109,12 @@ class MessageListActivity: AppCompatActivity() {
 
     private fun initializeRecyclerView() {
         messageAdapter = MessageListAdapter()
-        messageRecycler = findViewById<RecyclerView>(R.id.reyclerview_message_list).apply {
+        messageRecycler = root.findViewById<RecyclerView>(R.id.reyclerview_message_list).apply {
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(this@MessageListActivity)
+            layoutManager = LinearLayoutManager(context)
             adapter = messageAdapter
         }
     }
+
+
 }

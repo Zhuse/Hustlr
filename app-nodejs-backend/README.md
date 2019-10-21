@@ -21,6 +21,23 @@ Response (200):
 }
 ```
 
+__GET /user/email/{email}__
+Response (200):
+```javascript
+{
+    "userId": String
+    "properties": {
+        "score": Number,
+        "email": String,
+    },
+    "additionalProperties": {
+        "userDescription": String,
+        "dob": Date,
+        "phoneNumber": String
+    }
+}
+```
+
 __POST /user__
 Request:
 ```javascript
@@ -174,7 +191,9 @@ Response (200):
                 "messages": [
                     {
                         "text": String,
-                        "timestamp": Date
+                        "timestamp": Date,
+                        "senderId": String,
+                        "recipientId": String
                     }
                 ]
             }
@@ -193,7 +212,9 @@ Response (200):
         "messages": [
             {
                 "text": String,
-                "timestamp": Date
+                "timestamp": Date,
+                "senderId": String,
+                "recipientId": String
             }
         ]
     }

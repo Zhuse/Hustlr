@@ -12,6 +12,25 @@ Response (200):
     "properties": {
         "score": Number,
         "email": String,
+        "firstName": String,
+        "lastName": String
+    },
+    "additionalProperties": {
+        "userDescription": String,
+        "dob": Date,
+        "phoneNumber": String
+    }
+}
+```
+
+__GET /user/email/{email}__
+Response (200):
+```javascript
+{
+    "userId": String
+    "properties": {
+        "score": Number,
+        "email": String,
     },
     "additionalProperties": {
         "userDescription": String,
@@ -27,6 +46,8 @@ Request:
 {
     "properties": {
         "email": String,
+        "firstName": String,
+        "lastName": String
     },
     "additionalProperties": {
         "userDescription": String,
@@ -43,7 +64,9 @@ Response (201):
     "userId": String,
     "properties": {
         "score": Number
-        "email": String
+        "email": String,
+        "firstName": String,
+        "lastName": String
     },
     "additionalProperties": {
         "userDescription": String
@@ -129,6 +152,36 @@ Response (201):
 }
 ```
 
+__PATCH /hustle/users/{userId}/{hustleId}__
+Request:
+```javascript
+{
+    "properties": {
+        "hustle": {
+            // Whatever you want to change here
+        }
+    }
+}
+```
+
+Response (201):
+```javascript
+{
+    "userId": String
+    "properties": {
+        "hustle": {
+                "hustleId": String,
+                "providerId": String,
+                "category": String,
+                "price": Number,
+                "status": String, // completed, in_prog, posted, cancelled
+                "description": String
+            }
+        }
+    }
+}
+```
+
 Chat
 ====
 
@@ -144,7 +197,9 @@ Response (200):
                 "messages": [
                     {
                         "text": String,
-                        "timestamp": Date
+                        "timestamp": Date,
+                        "senderId": String,
+                        "recipientId": String
                     }
                 ]
             }
@@ -163,7 +218,9 @@ Response (200):
         "messages": [
             {
                 "text": String,
-                "timestamp": Date
+                "timestamp": Date,
+                "senderId": String,
+                "recipientId": String
             }
         ]
     }

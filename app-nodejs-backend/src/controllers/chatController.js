@@ -26,6 +26,8 @@ exports.create = function (req, res) {
     const userId = req.params.userId
     const recipientId = req.body.recipientId
     newMessage.timestamp = new Date()
+    newMessage.senderId = userId
+    newMessage.recipientId = recipientId
     newMessage.save()
         .then(result => {
             messageId = result._id

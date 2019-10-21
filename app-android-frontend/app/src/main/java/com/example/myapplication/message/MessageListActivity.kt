@@ -1,6 +1,7 @@
 package com.example.myapplication.message
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -25,7 +26,9 @@ class MessageListActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_message_list)
+        setActionBar(findViewById(R.id.message_toolbar))
 
+        actionBar!!.setDisplayHomeAsUpEnabled(true)
         initializeViewModel()
     }
 
@@ -39,6 +42,19 @@ class MessageListActivity: AppCompatActivity() {
             vm.sendMessage(message)
             messageAdapter.addItem(Message(message, User("Me", UserType.SENDER)))
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        item?.let {
+            return when (it.itemId) {
+                android.R.id.home -> {
+                    finish()
+                    true
+                }
+                else -> super.onOptionsItemSelected(item)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onDestroy() {

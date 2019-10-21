@@ -12,6 +12,8 @@ Response (200):
     "properties": {
         "score": Number,
         "email": String,
+        "firstName": String,
+        "lastName": String
     },
     "additionalProperties": {
         "userDescription": String,
@@ -44,6 +46,8 @@ Request:
 {
     "properties": {
         "email": String,
+        "firstName": String,
+        "lastName": String
     },
     "additionalProperties": {
         "userDescription": String,
@@ -60,7 +64,9 @@ Response (201):
     "userId": String,
     "properties": {
         "score": Number
-        "email": String
+        "email": String,
+        "firstName": String,
+        "lastName": String
     },
     "additionalProperties": {
         "userDescription": String

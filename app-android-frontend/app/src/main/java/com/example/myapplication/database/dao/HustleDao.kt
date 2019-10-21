@@ -1,14 +1,13 @@
 package com.example.myapplication.database.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.room.*
 import com.example.myapplication.database.model.Hustle
 
 @Dao
 interface HustleDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(hustle: Hustle)
 
     @Update
@@ -18,5 +17,8 @@ interface HustleDao {
     fun get(id: Long): Hustle?
 
     @Query("SELECT * from hustle_table")
-    fun getAll(): List<Hustle>
+    fun getAll(): LiveData<List<Hustle>>
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertAll(hustles: List<Hustle>)
 }

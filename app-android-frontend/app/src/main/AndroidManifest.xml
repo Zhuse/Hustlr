@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         package="com.example.myapplication">
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
             android:allowBackup="true"
@@ -50,6 +51,7 @@
                 <data android:scheme="myapplication.example.com" />
             </intent-filter>
         </activity>
+        <activity android:name=".message.MessageListActivity" />
     </application>
 
 </manifest>

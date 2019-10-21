@@ -63,4 +63,6 @@ dependencies {
 
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
 
+    // socket.io
+    implementation 'com.github.nkzawa:socket.io-client:0.6.0'
 }

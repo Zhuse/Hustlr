@@ -52,8 +52,9 @@ Response (201):
         "lastName": String
     },
     "additionalProperties": {
-        "userDescription": String
-        "dob": Date
+        "userDescription": String,
+        "dob": Date,
+        "phoneNumber": String
     }
 }
 ```

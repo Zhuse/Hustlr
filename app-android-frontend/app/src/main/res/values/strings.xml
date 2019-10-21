@@ -23,4 +23,7 @@
     <string name="create_hustle_completion_reward">Reward for completion</string>
     <string name="create_hustle_categories_text">Categories:</string>
     <string name="create_hustle_submit_button_text">Submit New Hustle</string>
+    <string name="view_hustle_submit_bid">Submit Bid for Hustle</string>
+    <string name="view_hustle_increment_bid">Increment value of bid</string>
+    <string name="view_hustle_decrement_bid">Decrement value of bid</string>
 </resources>

@@ -3,7 +3,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/mobile_navigation"
-        app:startDestination="@+id/navigation_home">
+        app:startDestination="@id/navigation_available_hustles">
 
     <fragment
             android:id="@+id/navigation_home"
@@ -15,7 +15,11 @@
             android:id="@+id/navigation_available_hustles"
             android:name="com.example.myapplication.availablehustles.AvailableHustlesFragment"
             android:label="@string/title_available_hustles"
-            tools:layout="@layout/fragment_available_hustles" />
+            tools:layout="@layout/fragment_available_hustles" >
+        <action
+                android:id="@+id/action_navigation_available_hustles_to_navigation_view_hustle"
+                app:destination="@id/navigation_view_hustle" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_hustlr_hub"
@@ -31,5 +35,19 @@
         android:id="@+id/navigation_create_hustle"
         android:name="com.example.myapplication.hustlrHub.CreateHustleFragment"
         android:label="Create Hustle"
-        tools:layout="@layout/fragment_create_hustle" />
+        tools:layout="@layout/fragment_create_hustle" >
+        <action
+                android:id="@+id/action_navigation_create_hustle_to_navigation_hustlr_hub2"
+                app:destination="@id/navigation_hustlr_hub" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_view_hustle"
+        android:name="com.example.myapplication.hustlrHub.ViewHustleFragment"
+        android:label="View Hustle"
+        tools:layout="@layout/fragment_view_hustle" >
+        <action
+                android:id="@+id/action_navigation_view_hustle_to_navigation_available_hustles"
+                app:destination="@id/navigation_available_hustles" />
+    </fragment>
 </navigation>

@@ -29,10 +29,6 @@ class HustlrHubFragment : Fragment() {
 
         val createHustleButton: FloatingActionButton = binding.createNewHustleButton
         createHustleButton.setOnClickListener {view: View ->
-//            val transaction = fragmentManager!!.beginTransaction()
-//            transaction.replace(R.id.container, CreateHustleFragment.newInstance())
-//            transaction.addToBackStack(null)
-//            transaction.commit()
             view.findNavController()
                 .navigate(R.id.action_navigation_hustlr_hub_to_navigation_create_hustle)
         }

@@ -30,6 +30,10 @@ class HustlrHubViewModel(application: Application) : AndroidViewModel(applicatio
         return hustlesList!!.filter { hustle -> hustle.hustleId == id }[0]
     }
 
+    fun postHustleBid(hustleId: Long, bidPrice: Int, providerId: Long) {
+
+    }
+
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()

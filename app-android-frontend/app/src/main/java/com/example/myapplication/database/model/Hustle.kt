@@ -19,7 +19,7 @@ data class Hustle(
     val datePosted: Long = System.currentTimeMillis(),
 
     @ColumnInfo(name = "price")
-    val price: Double,
+    val price: Int,
 
     @ColumnInfo(name = "description")
     val description: String,

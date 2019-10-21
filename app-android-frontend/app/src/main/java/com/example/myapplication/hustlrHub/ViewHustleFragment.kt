@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -64,8 +65,10 @@ class ViewHustleFragment : Fragment() {
             binding.offerPriceValue.setText(newPrice.toString())
         }
 
-        binding.submitHustleBidButton.setOnClickListener {
+        binding.submitHustleBidButton.setOnClickListener { view: View ->
             handleSubmit()
+            Toast.makeText(view.context, "Submitting Bid...", Toast.LENGTH_LONG)
+                .show()
             view!!.findNavController().navigate(R.id.action_navigation_view_hustle_to_navigation_available_hustles)
         }
     }
@@ -74,7 +77,7 @@ class ViewHustleFragment : Fragment() {
         vm.postHustleBid(
             hustleId = targetHustle.hustleId,
             bidPrice = binding.offerPriceValue.text.toString().toInt(),
-            providerId = targetHustle.provider.hustlrId
+            providerId = targetHustle.providerId
         )
     }
 

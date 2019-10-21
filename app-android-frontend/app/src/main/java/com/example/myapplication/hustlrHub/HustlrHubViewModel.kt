@@ -34,6 +34,11 @@ class HustlrHubViewModel(application: Application) : AndroidViewModel(applicatio
 
     }
 
+    fun postNewHustle(title: String, description: String, price: Int,
+                      location: String, categories: List<String>) {
+
+    }
+
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()

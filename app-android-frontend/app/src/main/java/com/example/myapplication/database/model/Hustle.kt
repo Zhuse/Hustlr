@@ -13,7 +13,7 @@ data class Hustle(
     var title: String,
 
     @ColumnInfo(name = "provider")
-    val provider: Hustlr,
+    val providerId: Long,
 
     @ColumnInfo(name = "date_posted")
     val datePosted: Long = System.currentTimeMillis(),

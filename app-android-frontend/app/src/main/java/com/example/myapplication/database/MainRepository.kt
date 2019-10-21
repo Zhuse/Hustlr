@@ -81,8 +81,8 @@ class MainRepository private  constructor(private val database: MainDatabase) {
         val provider = Hustlr(name = "John Wick")
         val list = mutableListOf<Hustle>()
 
-        for(i in 1..10) {
-            val hustle = Hustle(i.toLong(), "Help Moving Out", provider, price = 25, description = "I need help moving my stuff out of the house especially after tomorrow night",
+        for(i in 1..8) {
+            val hustle = Hustle(i.toLong(), "Help Moving Out", providerId =  provider.hustlrId, price = 25, description = "I need help moving my stuff out of the house especially after tomorrow night",
                 categories = listOf("Small Jobs,", "Heavy Muscle"), location = "1234 Safe St"
             )
             list.add(hustle)

@@ -25,5 +25,8 @@ data class Hustle(
     val description: String,
 
     @ColumnInfo(name = "categories")
-    val categories: List<String>
+    val categories: List<String>,
+
+    @ColumnInfo(name = "location")
+    val location: String
 )

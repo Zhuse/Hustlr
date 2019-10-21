@@ -1,8 +1,10 @@
 package com.example.myapplication.availablehustles
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.database.model.Hustle
@@ -26,6 +28,12 @@ class AvailableHustlesListAdapter: RecyclerView.Adapter<AvailableHustleViewHolde
         holder.title.text = item.title
         holder.price.text = item.price.toString()
         holder.descriptionSnippet.text = descriptionSnippet.toString()
+
+        holder.itemView.setOnClickListener { view ->
+            var bundle: Bundle = Bundle()
+            bundle.putLong("hustleId", item.hustleId)
+            view.findNavController().navigate(R.id.action_navigation_available_hustles_to_navigation_view_hustle, bundle)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : AvailableHustleViewHolder {

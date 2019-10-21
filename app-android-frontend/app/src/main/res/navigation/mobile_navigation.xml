@@ -12,7 +12,7 @@
             tools:layout="@layout/fragment_available_hustles" >
         <action
                 android:id="@+id/action_navigation_available_hustles_to_navigation_view_hustle"
-                app:destination="@id/navigation_view_hustle" />
+                app:destination="@+id/navigation_view_hustle" />
     </fragment>
 
     <fragment
@@ -43,6 +43,7 @@
         <action
                 android:id="@+id/action_navigation_view_hustle_to_navigation_available_hustles"
                 app:destination="@id/navigation_available_hustles" />
+        <argument android:name="hustle" />
     </fragment>
 
     <fragment

@@ -129,6 +129,36 @@ Response (201):
 }
 ```
 
+__PATCH /hustle/users/{userId}/{hustleId}__
+Request:
+```javascript
+{
+    "properties": {
+        "hustle": {
+            // Whatever you want to change here
+        }
+    }
+}
+```
+
+Response (201):
+```javascript
+{
+    "userId": String
+    "properties": {
+        "hustle": {
+                "hustleId": String,
+                "providerId": String,
+                "category": String,
+                "price": Number,
+                "status": String, // completed, in_prog, posted, cancelled
+                "description": String
+            }
+        }
+    }
+}
+```
+
 Chat
 ====
 

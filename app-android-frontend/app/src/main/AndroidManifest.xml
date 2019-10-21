@@ -52,7 +52,6 @@
                 <data android:scheme="myapplication.example.com" />
             </intent-filter>
         </activity>
-        <activity android:name=".message.MessageListActivity" />
     </application>
 
 </manifest>

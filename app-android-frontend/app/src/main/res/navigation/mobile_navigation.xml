@@ -49,5 +49,5 @@
         android:id="@+id/navigation_messages"
         android:name="com.example.myapplication.message.MessageListFragment"
         android:label="Messages"
-        tools:layout="@layout/activity_message_list" />
+        tools:layout="@layout/fragment_message_list" />
 </navigation>

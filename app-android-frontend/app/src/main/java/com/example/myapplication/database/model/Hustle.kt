@@ -13,17 +13,20 @@ data class Hustle(
     var title: String,
 
     @ColumnInfo(name = "provider")
-    val provider: Hustlr,
+    val providerId: Long,
 
     @ColumnInfo(name = "date_posted")
     val datePosted: Long = System.currentTimeMillis(),
 
     @ColumnInfo(name = "price")
-    val price: Double,
+    val price: Int,
 
     @ColumnInfo(name = "description")
     val description: String,
 
     @ColumnInfo(name = "categories")
-    val categories: List<String>
+    val categories: List<String>,
+
+    @ColumnInfo(name = "location")
+    val location: String
 )

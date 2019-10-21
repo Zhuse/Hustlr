@@ -29,6 +29,10 @@ app.use('/chat', routes.chat)
 
 // Start
 
-app.listen(3000, () =>
+const server = app.listen(3000, () =>
   console.log(`Hustlr server running on port ${3000}`),
 )
+
+
+// var http = require('http').createServer(app);
+module.exports.socketio = require('socket.io')(server);

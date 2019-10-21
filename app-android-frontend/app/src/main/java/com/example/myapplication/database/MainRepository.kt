@@ -70,13 +70,20 @@ class MainRepository private  constructor(private val database: MainDatabase) {
         }
     }
 
+    /**
+     * Get a specified Hustle by ID. This Hustle should exist in the local database
+     */
+    fun getHustleById(id: Long) : Hustle? {
+        return database.hustleDao.get(id)
+    }
+
     fun testHustles() : List<Hustle> {
         val provider = Hustlr(name = "John Wick")
         val list = mutableListOf<Hustle>()
 
-        for(i in 1..10) {
-            val hustle = Hustle(i.toLong(), "Help Moving Out", provider, price = 25.0, description = "I need help moving my stuff out of the house especially after tomorrow night",
-                categories = listOf("Small Jobs,", "Heavy Muscle")
+        for(i in 1..8) {
+            val hustle = Hustle(i.toLong(), "Help Moving Out", providerId =  provider.hustlrId, price = 25, description = "I need help moving my stuff out of the house especially after tomorrow night",
+                categories = listOf("Small Jobs,", "Heavy Muscle"), location = "1234 Safe St"
             )
             list.add(hustle)
         }

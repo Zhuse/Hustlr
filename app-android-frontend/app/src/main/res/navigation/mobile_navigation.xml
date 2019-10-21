@@ -21,5 +21,15 @@
         android:id="@+id/navigation_hustlr_hub"
         android:name="com.example.myapplication.hustlrHub.HustlrHubFragment"
         android:label="@string/title_hustlr_hub"
-        tools:layout="@layout/hustlr_hub_fragment" />
+        tools:layout="@layout/fragment_hustlr_hub" >
+        <action
+                android:id="@+id/action_navigation_hustlr_hub_to_navigation_create_hustle"
+                app:destination="@id/navigation_create_hustle" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_create_hustle"
+        android:name="com.example.myapplication.hustlrHub.CreateHustleFragment"
+        android:label="Create Hustle"
+        tools:layout="@layout/fragment_create_hustle" />
 </navigation>

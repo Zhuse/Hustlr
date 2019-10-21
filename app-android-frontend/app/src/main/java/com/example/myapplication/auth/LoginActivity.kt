@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.example.myapplication.*
 import com.example.myapplication.R
 import com.google.android.gms.common.SignInButton
@@ -27,19 +27,19 @@ class LoginActivity: AppCompatActivity() {
 
         val signInButton: SignInButton = btn_google_login
         signInButton.setSize(SignInButton.SIZE_WIDE)
-        signInButton.setOnClickListener { vm.sendGoogleAuthRequest(this) }
+        signInButton.setOnClickListener { vm.sendGoogleAuthRequest() }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         when (requestCode) {
-            RC_AUTH -> { vm.sendGoogleTokenRequest(this, data!!) }
+            RC_AUTH -> { vm.sendGoogleTokenRequest(data!!) }
         }
     }
 
     private fun initializeViewModel() {
-        vm = ViewModelProvider.NewInstanceFactory().create(LoginViewModel::class.java)
+        vm = ViewModelProviders.of(this).get(LoginViewModel::class.java)
 
         vm.navigation.observe(this, Observer {
             it?.let {

@@ -1,29 +1,41 @@
 package com.example.myapplication.auth
 
-import android.content.Context
+import android.accounts.Account
+import android.accounts.AccountManager
+import android.app.Application
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.myapplication.*
 import com.example.myapplication.R
+import com.example.myapplication.auth.api.UserApi
 import com.example.myapplication.main.HustlrMainActivity
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import net.openid.appauth.*
 
-class LoginViewModel: ViewModel() {
+class LoginViewModel(application: Application): AndroidViewModel(application) {
+
     val navigation: MutableLiveData<Pair<Int, Intent>> = MutableLiveData()
     val message: MutableLiveData<Pair<Int, Int>> = MutableLiveData()
 
     private var authService: AuthorizationService? = null
+    private var disposable: Disposable? = null
+    private val am: AccountManager by lazy { AccountManager.get(application) }
+    private val api: UserApi by lazy { UserApi.create() }
 
     override fun onCleared() {
         super.onCleared()
 
+        disposable?.dispose()
+        disposable = null
         authService = null
     }
 
-    fun sendGoogleAuthRequest(context: Context) {
+    fun sendGoogleAuthRequest() {
         val serviceConfig = AuthorizationServiceConfiguration(
             Uri.parse("https://accounts.google.com/o/oauth2/v2/auth"),
             Uri.parse("https://oauth2.googleapis.com/token")
@@ -36,22 +48,40 @@ class LoginViewModel: ViewModel() {
         val authRequest = authRequestBuilder
             .setScope("openid email profile")
             .build()
-        authService = AuthorizationService(context)
+        authService = AuthorizationService(getApplication())
         val authIntent = authService!!.getAuthorizationRequestIntent(authRequest)
         navigation.postValue(Pair(RC_AUTH, authIntent))
     }
 
-    fun sendGoogleTokenRequest(context: Context, data: Intent) {
+    fun sendGoogleTokenRequest(data: Intent) {
         val authResp = AuthorizationResponse.fromIntent(data)
         val authEx = AuthorizationException.fromIntent(data)
 
         if (authResp != null) {
             authService!!.performTokenRequest(authResp.createTokenExchangeRequest()) { tokenResp, tokenEx ->
-                if (tokenResp != null) {
-                    val intent = Intent(context, HustlrMainActivity::class.java)
-                    // TODO: backend call + create account?
+                tokenResp?.let {
+                    val intent = Intent(getApplication(), HustlrMainActivity::class.java)
                     navigation.postValue(Pair(START_NO_RESULT, intent))
-                } else {
+
+
+                    // TODO: Verify this works with backend
+                    /* disposable = api
+                        .getSession(tokenResp.accessToken, tokenResp.idToken)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                            { session ->
+                                val account = Account(session.properties.email, session.userId)
+                                am.addAccountExplicitly(account, "", null)
+                                val intent = Intent(getApplication(), HustlrMainActivity::class.java)
+                                navigation.postValue(Pair(START_NO_RESULT, intent))
+                            },
+                            { err ->
+                                Log.w(TAG, "Login Failed", err)
+                                message.postValue(Pair(MSG_TOAST, R.string.login_fail))
+                            }
+                        ) */
+                } ?: run {
                     Log.w(TAG, "Login Failed", tokenEx)
                     message.postValue(Pair(MSG_TOAST, R.string.login_fail))
                 }

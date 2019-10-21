@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.myapplication.MSG_TOAST
 import com.example.myapplication.R
+import com.example.myapplication.SOCKET_URL
 import com.example.myapplication.message.model.Message
 import com.example.myapplication.message.model.User
 import com.example.myapplication.message.model.UserType
@@ -43,7 +44,7 @@ class MessageViewModel : ViewModel() {
 
     fun openSocket() {
         try {
-            messageSocket = IO.socket("ws://35.247.127.17:3000")
+            messageSocket = IO.socket(SOCKET_URL)
         } catch (e: URISyntaxException) {
             Log.e(TAG, "Could not open socket", e)
         }

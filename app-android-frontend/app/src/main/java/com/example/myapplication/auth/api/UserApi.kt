@@ -1,5 +1,6 @@
 package com.example.myapplication.auth.api
 
+import com.example.myapplication.BASE_URL
 import io.reactivex.Single
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -17,7 +18,7 @@ interface UserApi {
             val retrofit = Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("TODO")
+                .baseUrl(BASE_URL)
                 .build()
 
             return retrofit.create(UserApi::class.java)

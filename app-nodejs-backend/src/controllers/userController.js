@@ -1,4 +1,5 @@
 const User = require('../models/user')
+const jwtDecode = require('jwt-decode')
 
 exports.create = function (req, res) {
     let newUser = new User(req.body)
@@ -27,11 +28,26 @@ exports.findById = function (req, res) {
     })
 }
 
-exports.findByEmail = function (req, res) {
-    User.findOne({"properties.email": req.params.email})
+exports.findByToken = function (req, res) {
+    const decoded = jwtDecode(req.header('IdToken'))
+    User.findOne({"properties.email": decoded.email})
     .then(result => {
         if (!result) {
             return res.status(400).send(err)
+        }
+        return res.status(200).send(result)
+    })
+    .catch(err => {
+        console.log(err)
+        return res.status(400).send(err)
+    })
+}
+
+exports.update = function (req, res) {
+    User.findOneAndUpdate({_id: req.params.userId}, { $set: req.body }, {runValidators: true, new: true})
+    .then(result => {
+        if (!result) {
+            return res.status(400).send({message: "User does not exist."})
         }
         return res.status(200).send(result)
     })

@@ -8,12 +8,11 @@ __GET /user/{id}__
 Response (200):
 ```javascript
 {
-    "userId": String
+    "_id": String
     "properties": {
         "score": Number,
         "email": String,
-        "firstName": String,
-        "lastName": String
+        "name": String
     },
     "additionalProperties": {
         "userDescription": String,
@@ -23,14 +22,15 @@ Response (200):
 }
 ```
 
-__GET /user/email/{email}__
+__GET /user/signOn__ with IdToken in header
 Response (200):
 ```javascript
 {
-    "userId": String
+    "_id": String
     "properties": {
         "score": Number,
         "email": String,
+        "name": String
     },
     "additionalProperties": {
         "userDescription": String,
@@ -46,8 +46,7 @@ Request:
 {
     "properties": {
         "email": String,
-        "firstName": String,
-        "lastName": String
+        "name": String
     },
     "additionalProperties": {
         "userDescription": String,
@@ -61,12 +60,11 @@ Request:
 Response (201):
 ```javascript
 {
-    "userId": String,
+    "_id": String,
     "properties": {
         "score": Number
         "email": String,
-        "firstName": String,
-        "lastName": String
+        "name": String
     },
     "additionalProperties": {
         "userDescription": String
@@ -86,7 +84,7 @@ Response (200):
     "properties": {
         "hustles": [
             {
-                "hustleId": String,
+                "_id": String,
                 "hustlrId": String,
                 "providerId": String,
                 "category": String,
@@ -107,7 +105,7 @@ Response (200):
     "properties": {
         "hustles": [
             {
-                "hustleId": String,
+                "_id": String,
                 "providerId": String,
                 "category": String,
                 "price": Number,
@@ -140,7 +138,7 @@ Response (201):
     "userId": String
     "properties": {
         "hustle": {
-                "hustleId": String,
+                "_id": String,
                 "providerId": String,
                 "category": String,
                 "price": Number,
@@ -170,7 +168,7 @@ Response (201):
     "userId": String
     "properties": {
         "hustle": {
-                "hustleId": String,
+                "_id": String,
                 "providerId": String,
                 "category": String,
                 "price": Number,

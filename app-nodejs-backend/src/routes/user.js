@@ -3,12 +3,16 @@ const userController = require('../controllers/userController')
 
 const router = Router()
 
+router.get('/signOn', (req, res) => {
+  userController.findByToken(req, res)
+})
+
 router.get('/:userId', (req, res) => {
   userController.findById(req, res)
 })
 
-router.get('/email/:email', (req, res) => {
-  userController.findByEmail(req, res)
+router.patch('/:userId', (req, res) => {
+  userController.findById(req, res)
 })
 
 router.post('/', (req, res) => {

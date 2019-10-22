@@ -17,6 +17,7 @@ class MainRepository private  constructor(private val database: MainDatabase) {
     var hustles: LiveData<List<Hustle>> = database.hustleDao.getAll()
     var hustleBids: LiveData<List<HustleBid>> = database.hustleBidDao.getAll()
     var hustlrs: LiveData<List<Hustlr>> = database.hustlrDao.getAll()
+    var myHustlrId: Long = 1 // TODO: Change this
 
     /**
      * Refresh the hustles stored in the offline database
@@ -71,10 +72,18 @@ class MainRepository private  constructor(private val database: MainDatabase) {
     }
 
     /**
-     * Get a specified Hustle by ID. This Hustle should exist in the local database
+     * Post a new Hustle and store it in the offline database
      */
-    fun getHustleById(id: Long) : Hustle? {
-        return database.hustleDao.get(id)
+    suspend fun postHustle(hustle: Hustle) {
+        withContext(Dispatchers.IO) {
+            // Post the hustle via REST Api
+
+            // Get the posted hustle (with the correct ID)
+            val postedHustle = hustle
+
+            // Store it into the local database
+            database.hustleDao.insert(hustle)
+        }
     }
 
     fun testHustles() : List<Hustle> {

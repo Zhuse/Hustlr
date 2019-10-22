@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.myapplication.database.MainDatabase
 import com.example.myapplication.database.MainRepository
 import com.example.myapplication.database.model.Hustle
+import com.example.myapplication.database.model.HustleBid
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -21,6 +22,7 @@ class HustlrHubViewModel(application: Application) : AndroidViewModel(applicatio
 
     private val hustles = repository.hustles
 
+
     /**
      * Get a hustle by specifying its ID
      * @param id Must be a valid ID for a hustle already cached locally
@@ -31,12 +33,20 @@ class HustlrHubViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     fun postHustleBid(hustleId: Long, bidPrice: Int, providerId: Long) {
-
+        val bid: HustleBid = HustleBid(hustleId = hustleId, bidPrice = bidPrice,
+            providerId = providerId, bidderId = repository.myHustlrId)
+        backgroundScope.launch {
+            repository.postHustleBid(bid)
+        }
     }
 
     fun postNewHustle(title: String, description: String, price: Int,
                       location: String, categories: List<String>) {
-
+        val hustle: Hustle = Hustle(title = title, providerId = repository.myHustlrId,
+            price = price, description = description, location = location, categories = categories)
+        backgroundScope.launch {
+            repository.postHustle(hustle)
+        }
     }
 
     override fun onCleared() {

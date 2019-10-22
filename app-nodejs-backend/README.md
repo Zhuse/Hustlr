@@ -110,7 +110,13 @@ Response (200):
                 "category": String,
                 "price": Number,
                 "status": String, // posted
-                "description": String
+                "description": String,
+                "bids": [{
+                    "userId": String,
+                    "description": String,
+                    "bidCost": Number,
+                    "timestamp": Date
+                }]
             }
         ]
     }
@@ -143,7 +149,43 @@ Response (201):
                 "category": String,
                 "price": Number,
                 "status": String, //posted
+                "description": String,
+                "bids": []
+            }
+        }
+    }
+}
+```
+
+__POST /hustle/users/{userId}/{hustleId}/bid__
+Request:
+```javascript
+{
+    "properties": {
+        "description": String,
+        "bidCost": Number
+    }
+}
+```
+
+Response (201):
+```javascript
+{
+    "userId": String
+    "properties": {
+        "hustle": {
+                "_id": String,
+                "providerId": String,
+                "category": String,
+                "price": Number,
+                "status": String, //posted
                 "description": String
+                "bids": [{
+                    "userId": String,
+                    "description": String,
+                    "bidCost": Number,
+                    "timestamp": Date
+                }]
             }
         }
     }
@@ -173,7 +215,13 @@ Response (201):
                 "category": String,
                 "price": Number,
                 "status": String, // completed, in_prog, posted, cancelled
-                "description": String
+                "description": String,
+                "bids": [{
+                    "userId": String,
+                    "description": String,
+                    "bidCost": Number,
+                    "timestamp": Date
+                }]
             }
         }
     }

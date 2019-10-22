@@ -44,36 +44,16 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
     suspend fun refreshHustles() {
         withContext(Dispatchers.IO) {
             // Fetch data from the REST Api
-//            getHustlesDisposable = hustleApi
-//                .getHustlesByUserMatched(myHustlrId)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe( { hustles ->
-//                    database.hustleDao.insertAll(hustles.properties.hustles)
-//                },
-//                    {err ->
-//                        err.printStackTrace()
-//                        Log.w(TAG, "Refreshing Hustles Failed. Err: ${err}")
-//                    }
-//                )
-
             val response = hustleApi
                 .getHustlesByUserMatched(myHustlrId).execute()
 
             if(response.isSuccessful) {
-                var newHustles = response.body()
+                val newHustles = response.body()
                 database.hustleDao.insertAll(newHustles!!.properties.hustles)
             } else if(!response.isSuccessful) {
                 Log.i(TAG, "Get Hustles failed")
                 Log.w(TAG, response.toString())
             }
-
-
-//            // For now use test hustles
-//            val newHustles = testHustles()
-//
-//            // Store data into the database
-//            database.hustleDao.insertAll(newHustles)
         }
     }
 
@@ -121,17 +101,6 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
     suspend fun postHustle(hustle: Hustle) {
         withContext(Dispatchers.IO) {
             // Post the hustle via REST Api
-//            postHustleDisposable = hustleApi
-//                .postHustle(hustle.providerId)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe( { postedHustle ->
-//                    database.hustleDao.insert(postedHustle)
-//                },
-//                    {err ->
-//                        Log.w(TAG, "Posting Hustle failed. Err: ${err}")
-//                    }
-//                )
             val hustleBody: HustleModel.HustleRequestModel = HustleModel.HustleRequestModel(
                 providerId = hustle.providerId, category = hustle.category, price = hustle.price,
                 description = hustle.description, title = hustle.title, location = hustle.location
@@ -146,12 +115,6 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
                 Log.w(TAG, "Post Hustle failed")
                 Log.d(TAG, response.toString())
             }
-
-//            // Get the posted hustle (with the correct ID)
-//            val postedHustle = hustle
-//
-//            // Store it into the local database
-//            database.hustleDao.insert(hustle)
         }
     }
 

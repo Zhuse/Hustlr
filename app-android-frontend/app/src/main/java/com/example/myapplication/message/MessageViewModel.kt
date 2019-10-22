@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.myapplication.MSG_TOAST
 import com.example.myapplication.R
-import com.example.myapplication.SOCKET_URL
+import com.example.myapplication.BASE_URL
 import com.example.myapplication.message.model.Message
 import com.example.myapplication.message.model.User
 import com.example.myapplication.message.model.UserType
@@ -22,13 +22,13 @@ class MessageViewModel : ViewModel() {
 
     private var messageSocket: Socket? = null
     private val onNewMessage: Emitter.Listener = Emitter.Listener {
-        val data: JSONObject = it[0] as JSONObject
+        // val data: JSONObject = it[0] as JSONObject
         val username: String
         val message: String
 
         try {
-            username = data.getString("username")
-            message = data.getString("message")
+            username = "Matchee" // data.getString("username")
+            message = it[0] as String // data.getString("message")
         } catch (e: JSONException) {
             return@Listener
         }
@@ -44,25 +44,25 @@ class MessageViewModel : ViewModel() {
 
     fun openSocket() {
         try {
-            messageSocket = IO.socket(SOCKET_URL)
+            messageSocket = IO.socket(BASE_URL)
         } catch (e: URISyntaxException) {
             Log.e(TAG, "Could not open socket", e)
         }
 
         messageSocket!!.apply {
-            on("new message", onNewMessage)
+            on("chat message", onNewMessage)
             connect()
         }
     }
 
     fun sendMessage(message: String) {
-        messageSocket!!.emit("new message", message)
+        messageSocket!!.emit("chat message", message)
     }
 
     fun closeSocket() {
         messageSocket!!.apply {
             disconnect()
-            off("new message", onNewMessage)
+            off("chat message", onNewMessage)
         }
     }
 

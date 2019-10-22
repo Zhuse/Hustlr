@@ -25,7 +25,6 @@ class MessageListFragment : Fragment() {
     private lateinit var root: View
 
     private lateinit var messageRecycler: RecyclerView
-    private lateinit var messageAdapter: MessageListAdapter
     private lateinit var vm: MessageViewModel
 
     override fun onCreateView(
@@ -34,6 +33,7 @@ class MessageListFragment : Fragment() {
     ): View? {
 
         root = inflater.inflate(R.layout.fragment_message_list, container, false)
+        initializeRecyclerView()
         initializeViewModel()
         return root
     }
@@ -42,11 +42,9 @@ class MessageListFragment : Fragment() {
         super.onStart()
 
         vm.openSocket()
-        initializeRecyclerView()
         button_chatbox_send.setOnClickListener {
-            val message = it.edittext_chatbox.toString()
-            vm.sendMessage(message)
-            messageAdapter.addItem(Message(message, User("Me", UserType.SENDER)))
+            vm.sendMessage(edittext_chatbox.text.toString())
+            edittext_chatbox.text.clear()
         }
     }
 
@@ -59,15 +57,24 @@ class MessageListFragment : Fragment() {
     private fun initializeViewModel() {
         vm = ViewModelProviders.of(this).get(MessageViewModel::class.java)
 
-        vm.messageData.observe(this, Observer { it?.let { messageAdapter.addItem(it) } })
+        vm.messageData.observe(this, Observer {
+            it?.let {
+                (messageRecycler.adapter as MessageListAdapter).apply {
+                    addItem(it)
+                    messageRecycler.smoothScrollToPosition(itemCount - 1)
+                }
+            }
+        })
     }
 
     private fun initializeRecyclerView() {
-        messageAdapter = MessageListAdapter()
+        val layout = LinearLayoutManager(context)
+        layout.stackFromEnd = true
+
         messageRecycler = root.findViewById<RecyclerView>(R.id.reyclerview_message_list).apply {
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(context)
-            adapter = messageAdapter
+            layoutManager = layout
+            adapter = MessageListAdapter()
         }
     }
 }

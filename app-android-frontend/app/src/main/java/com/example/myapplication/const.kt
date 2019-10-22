@@ -13,12 +13,11 @@ const val GOOGLE_CID = "393405290847-l4k2n5rrqgr0jo5febif4t9cvmuif0l3.apps.googl
 
 /* URLS */
 const val BASE_URL = "http://35.247.127.17:3000"
-const val SOCKET_URL = "ws://35.247.127.17:3000"
+
+/* Account Type */
+const val HUSTLR_ACCOUNT_TYPE = "example.com"
 
 /* Hustle Categories */
 enum class HustleCategory {
     transport, homework, other, lifting
 }
-
-/* Account Type */
-const val HUSTLR_ACCOUNT_TYPE = "example.com"

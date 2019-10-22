@@ -44,7 +44,8 @@ class MessageListAdapter: RecyclerView.Adapter<MessageViewHolder>() {
 
     fun addItem(message: Message) {
         messageList.add(message)
-        this.notifyItemChanged(itemCount)
+        this.notifyDataSetChanged()
+        // this.notifyItemInserted(itemCount)
     }
 
     companion object {

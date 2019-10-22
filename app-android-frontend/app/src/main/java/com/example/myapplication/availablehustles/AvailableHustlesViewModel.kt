@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class AvailableHustlesViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: MainRepository = MainRepository
-        .getInstance(MainDatabase.getInstance(application))
+        .getInstance(MainDatabase.getInstance(application), application)
 
     private var viewModelJob: Job = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)

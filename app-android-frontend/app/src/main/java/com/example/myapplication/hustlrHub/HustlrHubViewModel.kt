@@ -7,6 +7,7 @@ import com.example.myapplication.database.MainDatabase
 import com.example.myapplication.database.MainRepository
 import com.example.myapplication.database.model.Hustle
 import com.example.myapplication.database.model.HustleBid
+import com.example.myapplication.database.model.HustleStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -14,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class HustlrHubViewModel(application: Application) : AndroidViewModel(application) {
     // TODO: Implement the ViewModel
-    private val repository = MainRepository.getInstance(MainDatabase.getInstance(application))
+    private val repository = MainRepository.getInstance(MainDatabase.getInstance(application), application)
 
     private var viewModelJob: Job = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
@@ -27,23 +28,24 @@ class HustlrHubViewModel(application: Application) : AndroidViewModel(applicatio
      * Get a hustle by specifying its ID
      * @param id Must be a valid ID for a hustle already cached locally
      */
-    fun getHustle(id: Long) : Hustle {
+    fun getHustle(id: String) : Hustle {
         val hustlesList = hustles.value
-        return hustlesList!!.filter { hustle -> hustle.hustleId == id }[0]
+        return hustlesList!!.filter { hustle -> hustle._id.contentEquals(id) }[0]
     }
 
-    fun postHustleBid(hustleId: Long, bidPrice: Int, providerId: Long) {
+    fun postHustleBid(hustleId: String, bidPrice: Int) {
         val bid: HustleBid = HustleBid(hustleId = hustleId, bidPrice = bidPrice,
-            providerId = providerId, bidderId = repository.myHustlrId)
+            bidderId = repository.myHustlrId)
         backgroundScope.launch {
             repository.postHustleBid(bid)
         }
     }
 
     fun postNewHustle(title: String, description: String, price: Int,
-                      location: String, categories: List<String>) {
+                      location: String, category: String) {
         val hustle: Hustle = Hustle(title = title, providerId = repository.myHustlrId,
-            price = price, description = description, location = location, categories = categories)
+            price = price, description = description, location = location, category = category,
+            status = HustleStatus.posted.toString())
         backgroundScope.launch {
             repository.postHustle(hustle)
         }

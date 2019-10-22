@@ -33,7 +33,7 @@ class AvailableHustlesListAdapter: RecyclerView.Adapter<AvailableHustleViewHolde
 
         holder.itemView.setOnClickListener { view ->
             var bundle: Bundle = Bundle()
-            bundle.putLong("hustleId", item.hustleId)
+            bundle.putString("hustleId", item._id)
             view.findNavController().navigate(R.id.action_navigation_available_hustles_to_navigation_view_hustle, bundle)
         }
     }

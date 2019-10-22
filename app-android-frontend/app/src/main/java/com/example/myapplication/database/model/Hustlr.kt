@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "hustlr_table")
 data class Hustlr(
-    @PrimaryKey(autoGenerate = true)
-    var hustlrId: Long = 0L,
+    @PrimaryKey
+    var _id: String = "",
 
     @ColumnInfo(name = "name")
     var name: String = "",

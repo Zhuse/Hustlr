@@ -4,7 +4,7 @@
     <string name="login_fail">Login Failed! Something went Wrong.</string>
     <string name="error_message">Something went wrong! Please try again.</string>
     <string name="title_activity_navbar">navbar</string>
-    <string name="title_home">Home</string>
+    <string name="title_chat">Chat</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_hustlr_hub">My Hustlr Hub</string>

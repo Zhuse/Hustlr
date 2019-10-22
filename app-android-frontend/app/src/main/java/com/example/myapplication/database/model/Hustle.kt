@@ -4,16 +4,20 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+enum class HustleStatus {
+    completed, in_prog, cancelled, posted
+}
+
 @Entity(tableName = "hustle_table")
 data class Hustle(
-    @PrimaryKey(autoGenerate = true)
-    var hustleId: Long = 0L,
+    @PrimaryKey
+    var _id: String = "",
 
     @ColumnInfo(name = "title")
     var title: String,
 
     @ColumnInfo(name = "provider")
-    val providerId: Long,
+    val providerId: String,
 
     @ColumnInfo(name = "date_posted")
     val datePosted: Long = System.currentTimeMillis(),
@@ -24,9 +28,13 @@ data class Hustle(
     @ColumnInfo(name = "description")
     val description: String,
 
-    @ColumnInfo(name = "categories")
-    val categories: List<String>,
+    @ColumnInfo(name = "category")
+//    val categories: List<String>,
+    val category: String,
 
     @ColumnInfo(name = "location")
-    val location: String
+    val location: String,
+
+    @ColumnInfo(name = "status")
+    val status: String
 )

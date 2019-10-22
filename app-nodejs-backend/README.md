@@ -12,8 +12,7 @@ Response (200):
     "properties": {
         "score": Number,
         "email": String,
-        "firstName": String,
-        "lastName": String
+        "name": String
     },
     "additionalProperties": {
         "userDescription": String,
@@ -23,7 +22,7 @@ Response (200):
 }
 ```
 
-__GET /user/email/{email}__
+__GET /user/signOn__ with IdToken in header
 Response (200):
 ```javascript
 {
@@ -31,6 +30,7 @@ Response (200):
     "properties": {
         "score": Number,
         "email": String,
+        "name": String
     },
     "additionalProperties": {
         "userDescription": String,
@@ -46,8 +46,7 @@ Request:
 {
     "properties": {
         "email": String,
-        "firstName": String,
-        "lastName": String
+        "name": String
     },
     "additionalProperties": {
         "userDescription": String,
@@ -65,8 +64,7 @@ Response (201):
     "properties": {
         "score": Number
         "email": String,
-        "firstName": String,
-        "lastName": String
+        "name": String
     },
     "additionalProperties": {
         "userDescription": String

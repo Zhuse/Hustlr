@@ -17,17 +17,14 @@ interface HustleBidDao {
     fun update(hustleBid: HustleBid)
 
     @Query("SELECT * FROM hustle_bid_table WHERE hustleBidId = :id")
-    fun get(id: Long) : HustleBid?
+    fun get(id: String) : HustleBid?
 
     @Query("SELECT * FROM hustle_bid_table")
     fun getAll() : LiveData<List<HustleBid>>
 
-    @Query("SELECT * FROM hustle_bid_table WHERE providerId = :id")
-    fun getHustleBidsByProvider(id: Long) : LiveData<List<HustleBid>>
-
     @Query("SELECT * FROM hustle_bid_table WHERE bidderId = :id")
-    fun getHustleBidsByBidder(id: Long) : LiveData<List<HustleBid>>
+    fun getHustleBidsByBidder(id: String) : LiveData<List<HustleBid>>
 
     @Query("SELECT * FROM hustle_bid_table WHERE hustleId = :id")
-    fun getHustleBidsByHustleId(id: Long) : LiveData<List<HustleBid>>
+    fun getHustleBidsByHustleId(id: String) : LiveData<List<HustleBid>>
 }

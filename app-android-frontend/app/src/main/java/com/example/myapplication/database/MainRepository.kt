@@ -1,10 +1,19 @@
 package com.example.myapplication.database
 
+import android.accounts.AccountManager
+import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
+import com.example.myapplication.HustleCategory
+import com.example.myapplication.auth.api.UserApi
+import com.example.myapplication.database.api.HustleApi
 import com.example.myapplication.database.model.Hustle
 import com.example.myapplication.database.model.HustleBid
+import com.example.myapplication.database.model.HustleStatus
 import com.example.myapplication.database.model.Hustlr
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -13,11 +22,20 @@ import kotlinx.coroutines.withContext
  * as well as being the access point for the rest of the rest of the application's
  * persistent data.
  */
-class MainRepository private  constructor(private val database: MainDatabase) {
+class MainRepository private  constructor(private val database: MainDatabase, private val application: Application) {
     var hustles: LiveData<List<Hustle>> = database.hustleDao.getAll()
     var hustleBids: LiveData<List<HustleBid>> = database.hustleBidDao.getAll()
     var hustlrs: LiveData<List<Hustlr>> = database.hustlrDao.getAll()
-    var myHustlrId: Long = 1 // TODO: Change this
+
+    private val accountManager: AccountManager by lazy { AccountManager.get(application) }
+
+//    var myHustlrId: Long = 1 // TODO: Change this
+    var myHustlrId: String = accountManager.accounts[0].type
+
+    // Networking Stuff
+    private var postHustleDisposable: Disposable? = null
+    private var getHustlesDisposable: Disposable? = null
+    private val hustleApi: HustleApi by lazy { HustleApi.create() }
 
     /**
      * Refresh the hustles stored in the offline database
@@ -25,12 +43,23 @@ class MainRepository private  constructor(private val database: MainDatabase) {
     suspend fun refreshHustles() {
         withContext(Dispatchers.IO) {
             // Fetch data from the REST Api
+            getHustlesDisposable = hustleApi
+                .getHustlesByUserMatched(myHustlrId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe( { hustles ->
+                    database.hustleDao.insertAll(hustles)
+                },
+                    {
+                        Log.w(TAG, "Refreshing Hustles Failed")
+                    }
+                )
 
-            // For now use test hustles
-            val newHustles = testHustles()
-
-            // Store data into the database
-            database.hustleDao.insertAll(newHustles)
+//            // For now use test hustles
+//            val newHustles = testHustles()
+//
+//            // Store data into the database
+//            database.hustleDao.insertAll(newHustles)
         }
     }
 
@@ -63,6 +92,7 @@ class MainRepository private  constructor(private val database: MainDatabase) {
         withContext(Dispatchers.IO) {
             // Post the bid via REST Api
 
+
             // Get the Posted bid (with the correct ID)
             val postedBid = bid // Change this
 
@@ -77,12 +107,23 @@ class MainRepository private  constructor(private val database: MainDatabase) {
     suspend fun postHustle(hustle: Hustle) {
         withContext(Dispatchers.IO) {
             // Post the hustle via REST Api
+            postHustleDisposable = hustleApi
+                .postHustle(hustle.providerId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe( { postedHustle ->
+                    database.hustleDao.insert(postedHustle)
+                },
+                    {
+                        Log.w(TAG, "Posting Hustle failed")
+                    }
+                )
 
-            // Get the posted hustle (with the correct ID)
-            val postedHustle = hustle
-
-            // Store it into the local database
-            database.hustleDao.insert(hustle)
+//            // Get the posted hustle (with the correct ID)
+//            val postedHustle = hustle
+//
+//            // Store it into the local database
+//            database.hustleDao.insert(hustle)
         }
     }
 
@@ -91,8 +132,8 @@ class MainRepository private  constructor(private val database: MainDatabase) {
         val list = mutableListOf<Hustle>()
 
         for(i in 1..8) {
-            val hustle = Hustle(i.toLong(), "Help Moving Out", providerId =  provider.hustlrId, price = 25, description = "I need help moving my stuff out of the house especially after tomorrow night",
-                categories = listOf("Small Jobs,", "Heavy Muscle"), location = "1234 Safe St"
+            val hustle = Hustle(i.toString(), "Help Moving Out", providerId =  provider.hustlrId, price = 25, description = "I need help moving my stuff out of the house especially after tomorrow night",
+                categories = listOf(HustleCategory.homework.toString()), location = "1234 Safe St", status = HustleStatus.posted.toString()
             )
             list.add(hustle)
         }
@@ -114,9 +155,9 @@ class MainRepository private  constructor(private val database: MainDatabase) {
 
         private var TAG = this::class.java.canonicalName
 
-        fun getInstance(database: MainDatabase) : MainRepository {
+        fun getInstance(database: MainDatabase, application: Application) : MainRepository {
             if(instance == null) {
-                instance = MainRepository(database)
+                instance = MainRepository(database, application)
             }
 
             return instance!!

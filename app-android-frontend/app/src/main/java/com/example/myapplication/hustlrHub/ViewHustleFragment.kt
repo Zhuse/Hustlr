@@ -38,7 +38,7 @@ class ViewHustleFragment : Fragment() {
 
         // Get a reference to the viewmodel
         vm = ViewModelProviders.of(this).get(HustlrHubViewModel::class.java)
-        val hustleId: Long = arguments!!.getLong("hustleId")
+        val hustleId: String = arguments!!.getString("hustleId")
         targetHustle = vm.getHustle(hustleId)
 
         // Initialize Fields
@@ -76,8 +76,7 @@ class ViewHustleFragment : Fragment() {
     private fun handleSubmit() {
         vm.postHustleBid(
             hustleId = targetHustle.hustleId,
-            bidPrice = binding.offerPriceValue.text.toString().toInt(),
-            providerId = targetHustle.providerId
+            bidPrice = binding.offerPriceValue.text.toString().toInt()
         )
     }
 

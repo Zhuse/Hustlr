@@ -17,7 +17,7 @@ interface HustlrDao {
     fun update(hustlr: Hustlr)
 
     @Query("SELECT * from hustlr_table WHERE hustlrId = :id")
-    fun get(id: Long) : Hustlr?
+    fun get(id: String) : Hustlr?
 
     @Query("SELECT * from hustlr_table")
     fun getAll() : LiveData<List<Hustlr>>

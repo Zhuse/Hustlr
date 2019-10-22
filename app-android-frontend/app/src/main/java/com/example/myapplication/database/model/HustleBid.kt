@@ -6,20 +6,17 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "hustle_bid_table")
 data class HustleBid(
-    @PrimaryKey(autoGenerate = true)
-    var hustleBidId: Long = 0L,
+    @PrimaryKey
+    var hustleBidId: String = "",
 
     @ColumnInfo
-    val hustleId: Long,
+    val hustleId: String,
 
     @ColumnInfo
     val bidPrice: Int,
 
     @ColumnInfo
-    val bidderId: Long,
-
-    @ColumnInfo
-    val providerId: Long,
+    val bidderId: String,
 
     @ColumnInfo
     val bidAccepted: Boolean = false,

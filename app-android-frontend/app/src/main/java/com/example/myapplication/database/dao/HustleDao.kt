@@ -14,7 +14,7 @@ interface HustleDao {
     fun update(hustle: Hustle)
 
     @Query("SELECT * from hustle_table WHERE hustleId = :id")
-    fun get(id: Long): Hustle?
+    fun get(id: String): Hustle?
 
     @Query("SELECT * from hustle_table")
     fun getAll(): LiveData<List<Hustle>>

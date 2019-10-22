@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import com.example.myapplication.HustleCategory
 import com.example.myapplication.auth.api.UserApi
 import com.example.myapplication.database.api.HustleApi
+import com.example.myapplication.database.api.HustleModel
 import com.example.myapplication.database.model.Hustle
 import com.example.myapplication.database.model.HustleBid
 import com.example.myapplication.database.model.HustleStatus
@@ -30,7 +31,7 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
     private val accountManager: AccountManager by lazy { AccountManager.get(application) }
 
 //    var myHustlrId: Long = 1 // TODO: Change this
-    var myHustlrId: String = if(accountManager.accounts.isEmpty()) "5dae54b559570812dd6c73ca" else accountManager.accounts[0].type
+    var myHustlrId: String = accountManager.getUserData(accountManager.accounts[0], "userId")
 
     // Networking Stuff
     private var postHustleDisposable: Disposable? = null
@@ -64,7 +65,7 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
                 database.hustleDao.insertAll(newHustles!!.properties.hustles)
             } else if(!response.isSuccessful) {
                 Log.i(TAG, "Get Hustles failed")
-                Log.w(TAG, response.errorBody().toString())
+                Log.w(TAG, response.toString())
             }
 
 
@@ -131,14 +132,19 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
 //                        Log.w(TAG, "Posting Hustle failed. Err: ${err}")
 //                    }
 //                )
-            val response = hustleApi.postHustle(hustle.providerId, hustle).execute()
+            val hustleBody: HustleModel.HustleRequestModel = HustleModel.HustleRequestModel(
+                providerId = hustle.providerId, category = hustle.category, price = hustle.price,
+                description = hustle.description, title = hustle.title, location = hustle.location
+            )
+            val requestBody = HustleModel.HustleRequest(HustleModel.HustleRequestProperties(hustleBody))
+            val response = hustleApi.postHustle(hustle.providerId, requestBody).execute()
 
             if(response.isSuccessful) {
                 var postedHustle = response.body()!!
                 database.hustleDao.insert(postedHustle)
             } else {
                 Log.w(TAG, "Post Hustle failed")
-                Log.d(TAG, response.errorBody().toString())
+                Log.d(TAG, response.toString())
             }
 
 //            // Get the posted hustle (with the correct ID)

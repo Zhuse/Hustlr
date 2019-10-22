@@ -19,7 +19,7 @@ interface HustleApi {
     fun getHustlesByUserMatched(@Path("userId") hustlrId: String) : Call<HustleModel.HustleResponse>
 
     @POST("hustle/users/{userId}")
-    fun postHustle(@Path("userId") providerId: String, @Body hustle: Hustle) : Call<Hustle>
+    fun postHustle(@Path("userId") providerId: String, @Body hustle: HustleModel.HustleRequest) : Call<Hustle>
 
     @PATCH("hustle/users/{userId}/{hustleId}")
     fun updateHustle(@Path("userId") hustlrId: String, @Path("hustleId") hustleId: String, @Body hustle: Hustle) : Call<Hustle>

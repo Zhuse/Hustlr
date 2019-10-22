@@ -6,12 +6,13 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
-import retrofit2.http.Path
+import retrofit2.http.Header
 
 interface UserApi {
 
-    @GET("user/email/{user_email}")
-    fun getSession(@Path("user_email") email: String): Single<Model.Session>
+    @GET("user/signOn")
+    fun getUser(@Header("AccessToken") accessToken: String, @Header("IdToken") idToken: String)
+            : Single<Model.UserResponse>
 
     companion object {
         fun create(): UserApi {

@@ -14,6 +14,8 @@ const Hustle = new Schema ({
     price: {type: Number, required: true},
     status: {type: String, required: false, enum: ["completed", "in_prog", "cancelled", "posted"], default: () => {return "posted"}},
     description: {type: String, required: false},
+    title: {type: String, required: true},
+    location: {type: String, required: false},
     bids: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Bid'

@@ -90,7 +90,15 @@ Response (200):
                 "category": String,
                 "price": Number,
                 "status": String, // completed, in_prog, cancelled, posted
-                "description": String
+                "description": String,
+                "title": String,
+                "location": String
+                "bids": [{
+                    "userId": String,
+                    "description": String,
+                    "bidCost": Number,
+                    "timestamp": Date
+                }]
             }
         ]
     }
@@ -111,6 +119,8 @@ Response (200):
                 "price": Number,
                 "status": String, // posted
                 "description": String,
+                "title": String,
+                "location": String,
                 "bids": [{
                     "userId": String,
                     "description": String,
@@ -133,6 +143,8 @@ Request:
             "category": String,
             "price": Number,
             "description": String
+            "title": String,
+            "location": String
         }
     }
 }
@@ -150,6 +162,8 @@ Response (201):
                 "price": Number,
                 "status": String, //posted
                 "description": String,
+                "title": String,
+                "location": String,
                 "bids": []
             }
         }
@@ -179,7 +193,9 @@ Response (201):
                 "category": String,
                 "price": Number,
                 "status": String, //posted
-                "description": String
+                "description": String,
+                "title": String,
+                "location": String,
                 "bids": [{
                     "userId": String,
                     "description": String,
@@ -216,6 +232,8 @@ Response (201):
                 "price": Number,
                 "status": String, // completed, in_prog, posted, cancelled
                 "description": String,
+                "title": String,
+                "location": String,
                 "bids": [{
                     "userId": String,
                     "description": String,

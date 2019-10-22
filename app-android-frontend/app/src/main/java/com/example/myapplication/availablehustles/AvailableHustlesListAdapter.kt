@@ -22,7 +22,9 @@ class AvailableHustlesListAdapter: RecyclerView.Adapter<AvailableHustleViewHolde
     override fun onBindViewHolder(holder: AvailableHustleViewHolder, position: Int) {
         val item = data[position]
 
-        val descriptionSnippet = StringBuilder(item.description.substring(0, 30))
+        val descriptionEndIndex: Int = if(item.description.length < 30) item.description.length else 30
+//        val descriptionSnippet = StringBuilder(item.description.substring(0, 30))
+        val descriptionSnippet = StringBuilder(item.description.substring(0, descriptionEndIndex))
         descriptionSnippet.append("...")
 
         holder.title.text = item.title

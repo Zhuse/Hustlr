@@ -17,7 +17,7 @@ class MainRepository private  constructor(private val database: MainDatabase) {
     var hustles: LiveData<List<Hustle>> = database.hustleDao.getAll()
     var hustleBids: LiveData<List<HustleBid>> = database.hustleBidDao.getAll()
     var hustlrs: LiveData<List<Hustlr>> = database.hustlrDao.getAll()
-    var myHustlrId: Long? = null
+    var myHustlrId: Long = 1 // TODO: Change this
 
     /**
      * Refresh the hustles stored in the offline database

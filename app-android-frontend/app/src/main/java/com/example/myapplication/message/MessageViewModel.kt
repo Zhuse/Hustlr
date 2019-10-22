@@ -22,18 +22,19 @@ class MessageViewModel : ViewModel() {
 
     private var messageSocket: Socket? = null
     private val onNewMessage: Emitter.Listener = Emitter.Listener {
+        // TODO: Add logic to differentiate between sender and receiver
         // val data: JSONObject = it[0] as JSONObject
         val username: String
         val message: String
 
         try {
-            username = "Matchee" // data.getString("username")
+            username = "" // data.getString("username")
             message = it[0] as String // data.getString("message")
         } catch (e: JSONException) {
             return@Listener
         }
 
-        messageData.postValue(Message(message, User(username, UserType.RECIEVER)))
+        messageData.postValue(Message(message, User(username, UserType.SENDER)))
     }
 
     override fun onCleared() {

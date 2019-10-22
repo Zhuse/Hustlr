@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const MONGO_USERNAME = cpen32;
+const MONGO_USERNAME = process.env.HUSTLR_MONGO_USER;
 const MONGO_PASSWORD = process.env.HUSTLR_MONGO_PASSWORD;
 const MONGO_HOSTNAME = process.env.HUSTLR_MONGO_HOSTNAME;
 const MONGO_DB = process.env.HUSTLR_MONGO_DB;

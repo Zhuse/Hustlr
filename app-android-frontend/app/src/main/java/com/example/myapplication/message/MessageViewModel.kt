@@ -1,9 +1,11 @@
 package com.example.myapplication.message
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.myapplication.MSG_TOAST
 import com.example.myapplication.R
+import com.example.myapplication.SOCKET_URL
 import com.example.myapplication.message.model.Message
 import com.example.myapplication.message.model.User
 import com.example.myapplication.message.model.UserType
@@ -17,7 +19,6 @@ import java.net.URISyntaxException
 class MessageViewModel : ViewModel() {
 
     val messageData: MutableLiveData<Message> = MutableLiveData()
-    val notificationData: MutableLiveData<Pair<Int, Int>> = MutableLiveData()
 
     private var messageSocket: Socket? = null
     private val onNewMessage: Emitter.Listener = Emitter.Listener {
@@ -43,9 +44,14 @@ class MessageViewModel : ViewModel() {
 
     fun openSocket() {
         try {
-            messageSocket = IO.socket("TODO")
+            messageSocket = IO.socket(SOCKET_URL)
         } catch (e: URISyntaxException) {
-            notificationData.postValue(Pair(MSG_TOAST, R.string.error_message))
+            Log.e(TAG, "Could not open socket", e)
+        }
+
+        messageSocket!!.apply {
+            on("new message", onNewMessage)
+            connect()
         }
     }
 
@@ -58,5 +64,9 @@ class MessageViewModel : ViewModel() {
             disconnect()
             off("new message", onNewMessage)
         }
+    }
+
+    companion object {
+        const val TAG = "MessageViewModel"
     }
 }

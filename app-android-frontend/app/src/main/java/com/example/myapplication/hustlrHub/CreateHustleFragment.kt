@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
+import com.example.myapplication.HustleCategory
 
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentCreateHustleBinding
@@ -40,6 +42,7 @@ class CreateHustleFragment : Fragment() {
                 handleSubmitInput()
                 Toast.makeText(view.context, "Creating Hustle...", Toast.LENGTH_LONG)
                     .show()
+                view!!.findNavController().navigate(R.id.action_navigation_create_hustle_to_navigation_hustlr_hub2)
             } else {
                 Toast.makeText(view.context, "Error in the inputs", Toast.LENGTH_SHORT)
                     .show()
@@ -59,7 +62,8 @@ class CreateHustleFragment : Fragment() {
             description = binding.descriptionText.text.toString(),
             price = binding.offerPriceValue.text.toString().toInt(),
             location = binding.locationText.text.toString(),
-            categories = listOf<String>()
+            categories = listOf<String>(HustleCategory.other.toString(),
+                HustleCategory.lifting.toString())
         )
     }
 

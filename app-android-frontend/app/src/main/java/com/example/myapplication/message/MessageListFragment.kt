@@ -7,22 +7,16 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myapplication.MSG_DIALOG
-import com.example.myapplication.MSG_TOAST
 import com.example.myapplication.R
 import com.example.myapplication.message.model.Message
 import com.example.myapplication.message.model.User
 import com.example.myapplication.message.model.UserType
-import kotlinx.android.synthetic.main.activity_message_list.*
-import kotlinx.android.synthetic.main.activity_message_list.view.*
+import kotlinx.android.synthetic.main.fragment_message_list.*
+import kotlinx.android.synthetic.main.fragment_message_list.view.*
 
 /**
  * A simple [Fragment] subclass.
@@ -30,29 +24,19 @@ import kotlinx.android.synthetic.main.activity_message_list.view.*
 class MessageListFragment : Fragment() {
     private lateinit var root: View
 
+    private lateinit var messageRecycler: RecyclerView
+    private lateinit var messageAdapter: MessageListAdapter
+    private lateinit var vm: MessageViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        activity?.actionBar?.setDisplayHomeAsUpEnabled(true)
-        root = inflater.inflate(R.layout.activity_message_list, container, false)
+        root = inflater.inflate(R.layout.fragment_message_list, container, false)
         initializeViewModel()
         return root
     }
-
-    private lateinit var messageRecycler: RecyclerView
-    private lateinit var messageAdapter: MessageListAdapter
-    private lateinit var vm: MessageViewModel
-
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_message_list)
-//        setActionBar(findViewById(R.id.message_toolbar))
-//
-//        actionBar!!.setDisplayHomeAsUpEnabled(true)
-//        initializeViewModel()
-//    }
 
     override fun onStart() {
         super.onStart()
@@ -66,19 +50,6 @@ class MessageListFragment : Fragment() {
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        item?.let {
-            return when (it.itemId) {
-                android.R.id.home -> {
-//                    finish()
-                    true
-                }
-                else -> super.onOptionsItemSelected(item)
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
     override fun onDestroy() {
         super.onDestroy()
 
@@ -86,25 +57,9 @@ class MessageListFragment : Fragment() {
     }
 
     private fun initializeViewModel() {
-//        vm = ViewModelProvider.NewInstanceFactory().create(MessageViewModel::class.java)
         vm = ViewModelProviders.of(this).get(MessageViewModel::class.java)
 
         vm.messageData.observe(this, Observer { it?.let { messageAdapter.addItem(it) } })
-        vm.notificationData.observe(this, Observer {
-            it?.let {
-                when (it.first) {
-                    MSG_TOAST -> {
-                        Toast.makeText(context, it.second, Toast.LENGTH_SHORT).show()
-                    }
-                    MSG_DIALOG -> {
-                        // TODO:
-                    }
-                    else -> {
-
-                    }
-                }
-            }
-        })
     }
 
     private fun initializeRecyclerView() {
@@ -115,6 +70,4 @@ class MessageListFragment : Fragment() {
             adapter = messageAdapter
         }
     }
-
-
 }

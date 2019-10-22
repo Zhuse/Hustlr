@@ -1,4 +1,5 @@
 const Hustle = require('../models/hustle')
+const User = require('../models/user')
 const Bid = require('../models/bid')
 const _ = require('lodash')
 
@@ -40,21 +41,65 @@ exports.findById = function (req, res) {
     })
 }
 
+// TODO break logic out
 exports.findMatches = function (req, res) {
-    Hustle.find({status: "posted", providerId: {$ne: req.params.userId}}).populate('bids')
+    User.findById(req.params.userId)
     .then(result => {
-        let preSend = {
-            userId: req.params.userId,
-            properties: {
-                hustles: result
-            }
-        }
-        return res.status(200).send(preSend)
+        // TODO err case
+        let currUser = result;
+        let userScore = currUser.properties.score;
+        let preferredCategories = currUser.properties.preferredCategories;
+
+        Hustle.find({status: "posted", providerId: {$ne: req.params.userId}}).populate('bids')
+        .then(results => {
+
+            let providerIds = results.map((result) => {return result.providerId});
+
+            User.find({_id: {$in: providerIds}})
+            .then( providers => {
+                let validProviders = providers.filter((provider) => {
+                    return Math.abs(provider.properties.score - userScore) < 10;
+                });
+
+                let validProviderIds = validProviders.map((provider) => {
+                    return provider._id.toString();
+                });
+
+                let filtered = [];
+
+                results.forEach((hustle) => {
+                    if (validProviderIds.includes(hustle.providerId.toString()) &&
+                            preferredCategories.includes(hustle.category)) {
+                        filtered.push(hustle);
+                    }
+                });
+
+                let preSend = {
+                    userId: req.params.userId,
+                    properties: {
+                        hustles: filtered
+                    }
+                };
+                return res.status(200).send(preSend)
+
+            })
+            .catch(err => {
+                console.log(err)
+                return res.status(500).send(err)
+
+            });
+
+        })
+        .catch(err => {
+            console.log(err)
+            return res.status(400).send(err)
+        });
     })
     .catch(err => {
         console.log(err)
         return res.status(400).send(err)
     })
+
 }
 
 exports.update = function (req, res) {

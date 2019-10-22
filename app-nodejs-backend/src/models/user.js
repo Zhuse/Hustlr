@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 
 const User = new Schema ({
     properties: { 
-        score: {type: String, required: false, default: () => {return 0}},
+        score: {type: String, required: false, default: () => {return 50}},
         email: {type: String, required: true},
         name: {type: String, required: true},
         preferredCategories: {type: [String], required: true, enum: ["lifting", "homework", "transportation", "other"], default: () => {return "other"}}

@@ -7,25 +7,22 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.PATCH
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface HustleApi {
 
     @GET("hustle/users/{userId}")
-    fun getHustlesByUser(@Path("userId") hustlrId: String) : Single<List<Hustle>>
+    fun getHustlesByUser(@Path("userId") hustlrId: String) : Call<List<Hustle>>
 
     @GET("hustle/users/{userId}/matched")
-//    fun getHustlesByUserMatched(@Path("userId") hustlrId: String) : Single<List<Hustle>>
+//    fun getHustlesByUserMatched(@Path("userId") hustlrId: String) : Single<HustleModel.HustleResponse>
     fun getHustlesByUserMatched(@Path("userId") hustlrId: String) : Call<HustleModel.HustleResponse>
 
     @POST("hustle/users/{userId}")
-    fun postHustle(@Path("userId") providerId: String) : Single<Hustle>
+    fun postHustle(@Path("userId") providerId: String, @Body hustle: Hustle) : Call<Hustle>
 
     @PATCH("hustle/users/{userId}/{hustleId}")
-    fun updateHustle(@Path("userId") hustlrId: String, @Path("hustleId") hustleId: String) : Single<Hustle>
+    fun updateHustle(@Path("userId") hustlrId: String, @Path("hustleId") hustleId: String, @Body hustle: Hustle) : Call<Hustle>
 
     companion object {
         fun create(): HustleApi {

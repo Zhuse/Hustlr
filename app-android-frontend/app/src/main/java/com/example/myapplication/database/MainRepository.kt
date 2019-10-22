@@ -48,19 +48,18 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
 //                .subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe( { hustles ->
-//                    database.hustleDao.insertAll(hustles)
+//                    database.hustleDao.insertAll(hustles.properties.hustles)
 //                },
 //                    {err ->
 //                        err.printStackTrace()
 //                        Log.w(TAG, "Refreshing Hustles Failed. Err: ${err}")
 //                    }
 //                )
-//
-                val response = hustleApi
+
+            val response = hustleApi
                 .getHustlesByUserMatched(myHustlrId).execute()
 
             if(response.isSuccessful) {
-                Log.i(TAG, response.toString())
                 var newHustles = response.body()
                 database.hustleDao.insertAll(newHustles!!.properties.hustles)
             } else if(!response.isSuccessful) {
@@ -120,17 +119,26 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
     suspend fun postHustle(hustle: Hustle) {
         withContext(Dispatchers.IO) {
             // Post the hustle via REST Api
-            postHustleDisposable = hustleApi
-                .postHustle(hustle.providerId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe( { postedHustle ->
-                    database.hustleDao.insert(postedHustle)
-                },
-                    {err ->
-                        Log.w(TAG, "Posting Hustle failed. Err: ${err}")
-                    }
-                )
+//            postHustleDisposable = hustleApi
+//                .postHustle(hustle.providerId)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe( { postedHustle ->
+//                    database.hustleDao.insert(postedHustle)
+//                },
+//                    {err ->
+//                        Log.w(TAG, "Posting Hustle failed. Err: ${err}")
+//                    }
+//                )
+            val response = hustleApi.postHustle(hustle.providerId, hustle).execute()
+
+            if(response.isSuccessful) {
+                var postedHustle = response.body()!!
+                database.hustleDao.insert(postedHustle)
+            } else {
+                Log.w(TAG, "Post Hustle failed")
+                Log.d(TAG, response.message())
+            }
 
 //            // Get the posted hustle (with the correct ID)
 //            val postedHustle = hustle

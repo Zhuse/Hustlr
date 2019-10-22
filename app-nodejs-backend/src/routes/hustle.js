@@ -10,6 +10,10 @@ router.get('/users/:userId/matched', (req, res) => {
   hustle.findMatches(req, res)
 })
 
+router.post('/users/:userId/:hustleId/bid', (req, res) => {
+  hustle.bid(req, res)
+})
+
 router.post('/users/:userId', (req, res) => {
   hustle.create(req, res)
 })

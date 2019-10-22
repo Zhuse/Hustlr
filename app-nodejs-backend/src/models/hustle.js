@@ -7,7 +7,11 @@ const Hustle = new Schema ({
     category: {type: String, required: true, enum: ["lifting", "homework", "transporation", "other"]},
     price: {type: Number, required: true},
     status: {type: String, required: false, enum: ["completed", "in_prog", "cancelled", "posted"], default: () => {return "posted"}},
-    description: {type: String, required: false}
+    description: {type: String, required: false},
+    bids: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Bid'
+    }]
 })
 
 module.exports = mongoose.model('Hustle', Hustle)

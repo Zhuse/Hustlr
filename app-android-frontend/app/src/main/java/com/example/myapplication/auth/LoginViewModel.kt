@@ -5,6 +5,7 @@ import android.accounts.AccountManager
 import android.app.Application
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -59,20 +60,25 @@ class LoginViewModel(application: Application): AndroidViewModel(application) {
 
         if (authResp != null) {
             authService!!.performTokenRequest(authResp.createTokenExchangeRequest()) { tokenResp, tokenEx ->
-                tokenResp?.let {
-                    val intent = Intent(getApplication(), HustlrMainActivity::class.java)
-                    navigation.postValue(Pair(START_NO_RESULT, intent))
-
-
-                    // TODO: Verify this works with backend
-                    /* disposable = api
-                        .getSession(tokenResp.accessToken, tokenResp.idToken)
+                if (tokenResp != null) {
+                    disposable = api
+                        .getUser(tokenResp.accessToken!!, tokenResp.idToken!!)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
-                            { session ->
-                                val account = Account(session.properties.email, session.userId)
-                                am.addAccountExplicitly(account, "", null)
+                            { userResp ->
+                                val account = Account(userResp.properties.email, HUSTLR_ACCOUNT_TYPE)
+                                val userData = Bundle().apply {
+                                    putString("accessToken", tokenResp.accessToken)
+                                    putString("refreshToken", tokenResp.refreshToken)
+                                    putString("idToken", tokenResp.idToken)
+                                    putString("tokenType", tokenResp.tokenType)
+                                    putString("scope", tokenResp.scope)
+                                    putLong("accessTokenExpiry", tokenResp.accessTokenExpirationTime!!)
+                                    putString("userId", userResp._id)
+                                }
+                                am.addAccountExplicitly(account, "", userData)
+
                                 val intent = Intent(getApplication(), HustlrMainActivity::class.java)
                                 navigation.postValue(Pair(START_NO_RESULT, intent))
                             },
@@ -80,8 +86,8 @@ class LoginViewModel(application: Application): AndroidViewModel(application) {
                                 Log.w(TAG, "Login Failed", err)
                                 message.postValue(Pair(MSG_TOAST, R.string.login_fail))
                             }
-                        ) */
-                } ?: run {
+                        )
+                } else {
                     Log.w(TAG, "Login Failed", tokenEx)
                     message.postValue(Pair(MSG_TOAST, R.string.login_fail))
                 }

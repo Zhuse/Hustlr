@@ -11,7 +11,8 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:usesCleartextTraffic="true">
         <activity
                 android:name=".navbarTest.navbar"
                 android:label="@string/title_activity_navbar"></activity>
@@ -52,6 +53,16 @@
                 <data android:scheme="myapplication.example.com" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name="com.example.myapplication.auth.syncadapter.HustlrAuthenticatorService">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator" />
+        </service>
     </application>
 
 </manifest>

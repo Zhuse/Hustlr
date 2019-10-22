@@ -19,3 +19,6 @@ const val SOCKET_URL = "ws://35.247.127.17:3000"
 enum class HustleCategory {
     transport, homework, other, lifting
 }
+
+/* Account Type */
+const val HUSTLR_ACCOUNT_TYPE = "example.com"

@@ -8,7 +8,7 @@ __GET /user/{id}__
 Response (200):
 ```javascript
 {
-    "userId": String
+    "_id": String
     "properties": {
         "score": Number,
         "email": String,
@@ -26,7 +26,7 @@ __GET /user/signOn__ with IdToken in header
 Response (200):
 ```javascript
 {
-    "userId": String
+    "_id": String
     "properties": {
         "score": Number,
         "email": String,
@@ -60,7 +60,7 @@ Request:
 Response (201):
 ```javascript
 {
-    "userId": String,
+    "_id": String,
     "properties": {
         "score": Number
         "email": String,
@@ -84,7 +84,7 @@ Response (200):
     "properties": {
         "hustles": [
             {
-                "hustleId": String,
+                "_id": String,
                 "hustlrId": String,
                 "providerId": String,
                 "category": String,
@@ -105,12 +105,18 @@ Response (200):
     "properties": {
         "hustles": [
             {
-                "hustleId": String,
+                "_id": String,
                 "providerId": String,
                 "category": String,
                 "price": Number,
                 "status": String, // posted
-                "description": String
+                "description": String,
+                "bids": [{
+                    "userId": String,
+                    "description": String,
+                    "bidCost": Number,
+                    "timestamp": Date
+                }]
             }
         ]
     }
@@ -138,12 +144,48 @@ Response (201):
     "userId": String
     "properties": {
         "hustle": {
-                "hustleId": String,
+                "_id": String,
+                "providerId": String,
+                "category": String,
+                "price": Number,
+                "status": String, //posted
+                "description": String,
+                "bids": []
+            }
+        }
+    }
+}
+```
+
+__POST /hustle/users/{userId}/{hustleId}/bid__
+Request:
+```javascript
+{
+    "properties": {
+        "description": String,
+        "bidCost": Number
+    }
+}
+```
+
+Response (201):
+```javascript
+{
+    "userId": String
+    "properties": {
+        "hustle": {
+                "_id": String,
                 "providerId": String,
                 "category": String,
                 "price": Number,
                 "status": String, //posted
                 "description": String
+                "bids": [{
+                    "userId": String,
+                    "description": String,
+                    "bidCost": Number,
+                    "timestamp": Date
+                }]
             }
         }
     }
@@ -168,12 +210,18 @@ Response (201):
     "userId": String
     "properties": {
         "hustle": {
-                "hustleId": String,
+                "_id": String,
                 "providerId": String,
                 "category": String,
                 "price": Number,
                 "status": String, // completed, in_prog, posted, cancelled
-                "description": String
+                "description": String,
+                "bids": [{
+                    "userId": String,
+                    "description": String,
+                    "bidCost": Number,
+                    "timestamp": Date
+                }]
             }
         }
     }

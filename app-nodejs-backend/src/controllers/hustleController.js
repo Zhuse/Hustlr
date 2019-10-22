@@ -40,7 +40,7 @@ exports.findById = function (req, res) {
 }
 
 exports.findMatches = function (req, res) {
-    Hustle.find({status: "posted"})
+    Hustle.find({status: "posted", providerId: {$ne: req.params.userId}})
     .then(result => {
         let preSend = {
             userId: req.params.userId,

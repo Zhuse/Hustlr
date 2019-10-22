@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
-const MONGO_USERNAME = process.env.HUSTLR_MONGO_USER;
-const MONGO_PASSWORD = process.env.HUSTLR_MONGO_PASSWORD;
-const MONGO_HOSTNAME = process.env.HUSTLR_MONGO_HOSTNAME;
-const MONGO_DB = process.env.HUSTLR_MONGO_DB;
+const MONGO_USERNAME = 'cpen321';
+const MONGO_PASSWORD = 'b2ygRqSgVJaKLkWpqNLrG5rM';
+const MONGO_HOSTNAME = 'cpen321-hustlr-pytyl.gcp.mongodb.net';
+const MONGO_DB = 'hustlr';
 
 const url = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}/${MONGO_DB}?retryWrites=true&w=majority`;
 

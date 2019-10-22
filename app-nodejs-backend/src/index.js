@@ -4,6 +4,7 @@ const express = require('express')
 
 const routes = require('./routes')
 const db = require('./db')
+const services = require('./services')
 const app = express()
 
 // Application-Level Middleware
@@ -33,6 +34,7 @@ const server = app.listen(3000, () =>
   console.log(`Hustlr server running on port ${3000}`),
 )
 
+// bootup socketio
 
-// var http = require('http').createServer(app);
-module.exports.socketio = require('socket.io')(server);
+const socketio = require('socket.io')(server);
+services.chatService.startSockets(socketio);

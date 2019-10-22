@@ -2,8 +2,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Hustle = new Schema ({
-    hustlrId: {type: String, required: false},
-    providerId: {type: String, required: true},
+    hustlrId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    providerId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
     category: {type: String, required: true, enum: ["lifting", "homework", "transporation", "other"]},
     price: {type: Number, required: true},
     status: {type: String, required: false, enum: ["completed", "in_prog", "cancelled", "posted"], default: () => {return "posted"}},

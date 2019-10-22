@@ -19,5 +19,5 @@ const val HUSTLR_ACCOUNT_TYPE = "example.com"
 
 /* Hustle Categories */
 enum class HustleCategory {
-    transport, homework, other, lifting
+    transporation, homework, other, lifting
 }

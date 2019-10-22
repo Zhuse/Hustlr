@@ -4,7 +4,7 @@
     <item
             android:id="@+id/navigation_messages"
             android:icon="@drawable/ic_chat_black_24dp"
-            android:title="@string/title_home" />
+            android:title="@string/title_chat" />
 
     <item
             android:id="@+id/navigation_available_hustles"

@@ -63,6 +63,7 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
                 var newHustles = response.body()
                 database.hustleDao.insertAll(newHustles!!.properties.hustles)
             } else if(!response.isSuccessful) {
+                Log.i(TAG, "Get Hustles failed")
                 Log.w(TAG, response.errorBody().toString())
             }
 
@@ -137,7 +138,7 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
                 database.hustleDao.insert(postedHustle)
             } else {
                 Log.w(TAG, "Post Hustle failed")
-                Log.d(TAG, response.message())
+                Log.d(TAG, response.errorBody().toString())
             }
 
 //            // Get the posted hustle (with the correct ID)

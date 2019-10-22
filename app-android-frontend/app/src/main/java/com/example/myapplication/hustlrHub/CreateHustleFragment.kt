@@ -62,7 +62,7 @@ class CreateHustleFragment : Fragment() {
             description = binding.descriptionText.text.toString(),
             price = binding.offerPriceValue.text.toString().toInt(),
             location = binding.locationText.text.toString(),
-            categories = listOf<String>(HustleCategory.homework.toString())
+            category = HustleCategory.homework.toString()
         )
     }
 

@@ -30,7 +30,7 @@ class HustlrHubViewModel(application: Application) : AndroidViewModel(applicatio
      */
     fun getHustle(id: String) : Hustle {
         val hustlesList = hustles.value
-        return hustlesList!!.filter { hustle -> hustle.hustleId.contentEquals(id) }[0]
+        return hustlesList!!.filter { hustle -> hustle._id.contentEquals(id) }[0]
     }
 
     fun postHustleBid(hustleId: String, bidPrice: Int) {
@@ -42,9 +42,9 @@ class HustlrHubViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     fun postNewHustle(title: String, description: String, price: Int,
-                      location: String, categories: List<String>) {
+                      location: String, category: String) {
         val hustle: Hustle = Hustle(title = title, providerId = repository.myHustlrId,
-            price = price, description = description, location = location, categories = categories,
+            price = price, description = description, location = location, category = category,
             status = HustleStatus.posted.toString())
         backgroundScope.launch {
             repository.postHustle(hustle)

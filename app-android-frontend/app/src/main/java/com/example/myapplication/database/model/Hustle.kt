@@ -11,7 +11,7 @@ enum class HustleStatus {
 @Entity(tableName = "hustle_table")
 data class Hustle(
     @PrimaryKey
-    var hustleId: String = "",
+    var _id: String = "",
 
     @ColumnInfo(name = "title")
     var title: String,
@@ -28,8 +28,9 @@ data class Hustle(
     @ColumnInfo(name = "description")
     val description: String,
 
-    @ColumnInfo(name = "categories")
-    val categories: List<String>,
+    @ColumnInfo(name = "category")
+//    val categories: List<String>,
+    val category: String,
 
     @ColumnInfo(name = "location")
     val location: String,

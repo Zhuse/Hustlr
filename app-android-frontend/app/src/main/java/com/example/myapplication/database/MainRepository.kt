@@ -30,7 +30,7 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
     private val accountManager: AccountManager by lazy { AccountManager.get(application) }
 
 //    var myHustlrId: Long = 1 // TODO: Change this
-    var myHustlrId: String = accountManager.accounts[0].type
+    var myHustlrId: String = if(accountManager.accounts.isEmpty()) "5dae54b559570812dd6c73ca" else accountManager.accounts[0].type
 
     // Networking Stuff
     private var postHustleDisposable: Disposable? = null
@@ -43,17 +43,30 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
     suspend fun refreshHustles() {
         withContext(Dispatchers.IO) {
             // Fetch data from the REST Api
-            getHustlesDisposable = hustleApi
-                .getHustlesByUserMatched(myHustlrId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe( { hustles ->
-                    database.hustleDao.insertAll(hustles)
-                },
-                    {
-                        Log.w(TAG, "Refreshing Hustles Failed")
-                    }
-                )
+//            getHustlesDisposable = hustleApi
+//                .getHustlesByUserMatched(myHustlrId)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe( { hustles ->
+//                    database.hustleDao.insertAll(hustles)
+//                },
+//                    {err ->
+//                        err.printStackTrace()
+//                        Log.w(TAG, "Refreshing Hustles Failed. Err: ${err}")
+//                    }
+//                )
+//
+                val response = hustleApi
+                .getHustlesByUserMatched(myHustlrId).execute()
+
+            if(response.isSuccessful) {
+                Log.i(TAG, response.toString())
+                var newHustles = response.body()
+                database.hustleDao.insertAll(newHustles!!.properties.hustles)
+            } else if(!response.isSuccessful) {
+                Log.w(TAG, response.errorBody().toString())
+            }
+
 
 //            // For now use test hustles
 //            val newHustles = testHustles()
@@ -114,8 +127,8 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
                 .subscribe( { postedHustle ->
                     database.hustleDao.insert(postedHustle)
                 },
-                    {
-                        Log.w(TAG, "Posting Hustle failed")
+                    {err ->
+                        Log.w(TAG, "Posting Hustle failed. Err: ${err}")
                     }
                 )
 
@@ -132,8 +145,8 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
         val list = mutableListOf<Hustle>()
 
         for(i in 1..8) {
-            val hustle = Hustle(i.toString(), "Help Moving Out", providerId =  provider.hustlrId, price = 25, description = "I need help moving my stuff out of the house especially after tomorrow night",
-                categories = listOf(HustleCategory.homework.toString()), location = "1234 Safe St", status = HustleStatus.posted.toString()
+            val hustle = Hustle(i.toString(), "Help Moving Out", providerId =  provider._id, price = 25, description = "I need help moving my stuff out of the house especially after tomorrow night",
+                category = HustleCategory.homework.toString(), location = "1234 Safe St", status = HustleStatus.posted.toString()
             )
             list.add(hustle)
         }

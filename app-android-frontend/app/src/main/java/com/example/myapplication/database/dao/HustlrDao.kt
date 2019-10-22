@@ -16,7 +16,7 @@ interface HustlrDao {
     @Update
     fun update(hustlr: Hustlr)
 
-    @Query("SELECT * from hustlr_table WHERE hustlrId = :id")
+    @Query("SELECT * from hustlr_table WHERE _id = :id")
     fun get(id: String) : Hustlr?
 
     @Query("SELECT * from hustlr_table")

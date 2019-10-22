@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "hustle_bid_table")
 data class HustleBid(
     @PrimaryKey
-    var hustleBidId: String = "",
+    var _id: String = "",
 
     @ColumnInfo
     val hustleId: String,

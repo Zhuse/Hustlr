@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "hustlr_table")
 data class Hustlr(
     @PrimaryKey
-    var hustlrId: String = "",
+    var _id: String = "",
 
     @ColumnInfo(name = "name")
     var name: String = "",

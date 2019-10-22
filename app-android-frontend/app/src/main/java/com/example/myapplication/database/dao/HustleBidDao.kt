@@ -16,7 +16,7 @@ interface HustleBidDao {
     @Update
     fun update(hustleBid: HustleBid)
 
-    @Query("SELECT * FROM hustle_bid_table WHERE hustleBidId = :id")
+    @Query("SELECT * FROM hustle_bid_table WHERE _id = :id")
     fun get(id: String) : HustleBid?
 
     @Query("SELECT * FROM hustle_bid_table")

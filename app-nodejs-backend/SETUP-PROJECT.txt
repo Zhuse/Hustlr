@@ -1,1 +1,15 @@
 Setup project here
+
+Running the backend:
+
+    export $(xargs < hustlr-dev.env) # set env variables
+    npm start
+
+    OR
+
+    docker run --env-file hustlr-dev.env $(docker build -q .)
+
+"Deployment":
+
+    Run push-gcr.sh from the scripts directory to build and push a new image to GCR. This can then be deployed to
+    a GCP CE instance.

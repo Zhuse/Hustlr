@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".hustlrHub.ViewHustleFragment">
+
+        <TextView
+                android:id="@+id/titleText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="@string/create_hustle_title"
+                android:singleLine="true"
+                android:textAlignment="textStart"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:targetApi="o" />
+
+        <TextView
+                android:id="@+id/descriptionText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="@string/create_hustle_description"
+                android:importantForAutofill="no"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleText" />
+
+        <TextView
+                android:id="@+id/locationText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:hint="@string/create_hustle_location"
+                android:importantForAutofill="no"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/descriptionText" />
+
+        <TextView
+                android:id="@+id/offerPriceText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/create_hustle_offer_price"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/categoriesText" />
+
+        <ImageView
+                android:id="@+id/dollar_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:contentDescription="@string/create_hustle_dollar_sign"
+                android:scaleX="1.5"
+                android:scaleY="1.5"
+                app:layout_constraintStart_toEndOf="@+id/offerPriceText"
+                app:layout_constraintTop_toTopOf="@+id/offerPriceText"
+                app:srcCompat="@drawable/ic_attach_money_black_24dp" />
+
+        <EditText
+                android:id="@+id/offerPriceValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:ems="10"
+                android:hint="@string/create_hustle_completion_reward"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                app:layout_constraintStart_toEndOf="@+id/dollar_sign"
+                app:layout_constraintTop_toTopOf="@+id/offerPriceText" />
+
+        <TextView
+                android:id="@+id/categoriesText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/create_hustle_categories_text"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/locationText" />
+
+        <com.google.android.material.chip.ChipGroup
+                android:id="@+id/categoriesChipGroup"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/categoriesText"
+                app:layout_constraintTop_toBottomOf="@+id/locationText" />
+
+        <Button
+                android:id="@+id/submitHustleBidButton"
+                android:layout_width="239dp"
+                android:layout_height="55dp"
+                android:background="#AF978F8F"
+                android:text="@string/view_hustle_submit_bid"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/categoriesText" />
+
+        <ImageButton
+                android:id="@+id/decrementValueButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:contentDescription="@string/view_hustle_decrement_bid"
+                android:src="@drawable/ic_remove_circle_outline_black_24dp"
+                app:layout_constraintEnd_toStartOf="@+id/offerPriceValue"
+                app:layout_constraintHorizontal_bias="0.97"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/offerPriceValue" />
+
+        <ImageButton
+                android:id="@+id/incrementValueButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:contentDescription="@string/view_hustle_increment_bid"
+                android:src="@drawable/ic_add_circle_outline_black_24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.43"
+                app:layout_constraintStart_toEndOf="@+id/dollar_sign"
+                app:layout_constraintTop_toBottomOf="@+id/offerPriceValue" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

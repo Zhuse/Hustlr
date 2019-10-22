@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/mobile_navigation"
+        app:startDestination="@id/navigation_available_hustles">
+
+    <fragment
+            android:id="@+id/navigation_available_hustles"
+            android:name="com.example.myapplication.availablehustles.AvailableHustlesFragment"
+            android:label="@string/title_available_hustles"
+            tools:layout="@layout/fragment_available_hustles" >
+        <action
+                android:id="@+id/action_navigation_available_hustles_to_navigation_view_hustle"
+                app:destination="@+id/navigation_view_hustle" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_hustlr_hub"
+        android:name="com.example.myapplication.hustlrHub.HustlrHubFragment"
+        android:label="@string/title_hustlr_hub"
+        tools:layout="@layout/fragment_hustlr_hub" >
+        <action
+                android:id="@+id/action_navigation_hustlr_hub_to_navigation_create_hustle"
+                app:destination="@id/navigation_create_hustle" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_create_hustle"
+        android:name="com.example.myapplication.hustlrHub.CreateHustleFragment"
+        android:label="Create Hustle"
+        tools:layout="@layout/fragment_create_hustle" >
+        <action
+                android:id="@+id/action_navigation_create_hustle_to_navigation_hustlr_hub2"
+                app:destination="@id/navigation_hustlr_hub" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_view_hustle"
+        android:name="com.example.myapplication.hustlrHub.ViewHustleFragment"
+        android:label="View Hustle"
+        tools:layout="@layout/fragment_view_hustle" >
+        <action
+                android:id="@+id/action_navigation_view_hustle_to_navigation_available_hustles"
+                app:destination="@id/navigation_available_hustles"
+                app:popUpTo="@+id/navigation_available_hustles" />
+        <argument android:name="hustle" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_messages"
+        android:name="com.example.myapplication.message.MessageListFragment"
+        android:label="Messages"
+        tools:layout="@layout/fragment_message_list" />
+</navigation>

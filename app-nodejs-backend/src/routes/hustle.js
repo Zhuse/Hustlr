@@ -1,17 +1,24 @@
 const { Router } = require('express')
-const hustlr = require('../controllers/hustleController')
+const hustle = require('../controllers/hustleController')
 const router = Router()
 
 router.get('/users/:userId', (req, res) => {
-  hustlr.findById(req, res)
+  hustle.findById(req, res)
 })
 
 router.get('/users/:userId/matched', (req, res) => {
-  hustlr.findById(req, res)
+  hustle.findMatches(req, res)
+})
+
+router.post('/users/:userId/:hustleId/bid', (req, res) => {
+  hustle.bid(req, res)
 })
 
 router.post('/users/:userId', (req, res) => {
-  hustlr.create(req, res)
+  hustle.create(req, res)
 })
 
+router.patch('/users/:userId/:hustleId', (req, res) => {
+  hustle.update(req, res)
+})
 module.exports = router

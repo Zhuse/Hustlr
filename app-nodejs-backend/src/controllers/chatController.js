@@ -21,11 +21,14 @@ exports.create = function (req, res) {
     } finally {
 
     }*/
-    let newMessage = new Message(req.body.properties.message)
+    let messagePreInsert = {}
     let messageId = ''
     const userId = req.params.userId
     const recipientId = req.body.recipientId
-    newMessage.timestamp = new Date()
+    messagePreInsert.timestamp = new Date()
+    messagePreInsert.senderId = userId
+    messagePreInsert.recipientId = recipientId
+    let newMessage = new Message(messagePreInsert)
     newMessage.save()
         .then(result => {
             messageId = result._id

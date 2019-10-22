@@ -2,4 +2,28 @@
     <string name="app_name">My Application</string>
     <string name="action_settings">Settings</string>
     <string name="login_fail">Login Failed! Something went Wrong.</string>
+    <string name="error_message">Something went wrong! Please try again.</string>
+    <string name="title_activity_navbar">navbar</string>
+    <string name="title_chat">Chat</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_hustlr_hub">My Hustlr Hub</string>
+    <string name="title_available_hustles">Available Hustles</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Create Hustle strings -->
+    <string name="create_hustle_title">Title</string>
+    <string name="create_hustle_description">Description</string>
+    <string name="create_hustle_location">Location</string>
+    <string name="create_hustle_offer_price">Offer Price:</string>
+    <string name="create_hustle_dollar_sign">Dollar Sign</string>
+    <string name="create_hustle_completion_reward">Reward for completion</string>
+    <string name="create_hustle_categories_text">Categories:</string>
+    <string name="create_hustle_submit_button_text">Submit New Hustle</string>
+    <string name="view_hustle_submit_bid">Submit Bid for Hustle</string>
+    <string name="view_hustle_increment_bid">Increment value of bid</string>
+    <string name="view_hustle_decrement_bid">Decrement value of bid</string>
 </resources>

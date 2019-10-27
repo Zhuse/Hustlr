@@ -28,6 +28,13 @@ class LoginViewModel(application: Application): AndroidViewModel(application) {
     private val am: AccountManager by lazy { AccountManager.get(application) }
     private val api: UserApi by lazy { UserApi.create() }
 
+    init {
+        if (!am.getAccountsByType(HUSTLR_ACCOUNT_TYPE).isEmpty()) {
+            val intent = Intent(getApplication(), HustlrMainActivity::class.java)
+            navigation.postValue(Pair(START_NO_RESULT, intent))
+        }
+    }
+
     override fun onCleared() {
         super.onCleared()
 

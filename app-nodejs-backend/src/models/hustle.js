@@ -10,7 +10,7 @@ const Hustle = new Schema ({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    category: {type: String, required: true, enum: ["lifting", "homework", "transporation", "other"]},
+    category: {type: String, required: true, enum: ["lifting", "homework", "transportation", "other"]},
     price: {type: Number, required: true},
     status: {type: String, required: false, enum: ["completed", "in_prog", "cancelled", "posted"], default: () => {return "posted"}},
     description: {type: String, required: false},

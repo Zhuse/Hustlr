@@ -1,5 +1,5 @@
-const chatService = require('./chatService')
+const chatService = require("./chatService");
 
-module.exports =  {
+module.exports = {
     chatService
-}
+};

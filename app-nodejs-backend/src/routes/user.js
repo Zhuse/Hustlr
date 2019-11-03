@@ -1,22 +1,22 @@
-const { Router } = require('express')
-const userController = require('../controllers/userController')
+const { Router } = require("express");
+const userController = require("../controllers/userController");
 
-const router = Router()
+const router = Router();
 
-router.get('/signOn', (req, res) => {
-  userController.findByToken(req, res)
-})
+router.get("/signOn", (req, res) => {
+    userController.findByToken(req, res);
+});
 
-router.get('/:userId', (req, res) => {
-  userController.findById(req, res)
-})
+router.get("/:userId", (req, res) => {
+    userController.findById(req, res);
+});
 
-router.patch('/:userId', (req, res) => {
-  userController.findById(req, res)
-})
+router.patch("/:userId", (req, res) => {
+    userController.findById(req, res);
+});
 
-router.post('/', (req, res) => {
-  userController.create(req, res)
-})
+router.post("/", (req, res) => {
+    userController.create(req, res);
+});
 
-module.exports = router
+module.exports = router;

@@ -49,6 +49,7 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
 
             if(response.isSuccessful) {
                 val newHustles = response.body()
+                database.hustleDao.deleteAll()
                 database.hustleDao.insertAll(newHustles!!.properties.hustles)
             } else if(!response.isSuccessful) {
                 Log.i(TAG, "Get Hustles failed")

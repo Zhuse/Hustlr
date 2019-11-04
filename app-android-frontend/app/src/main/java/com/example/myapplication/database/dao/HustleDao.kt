@@ -39,4 +39,10 @@ interface HustleDao {
      */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertAll(hustles: List<Hustle>)
+
+    /**
+     * Delete all hustles for refresh
+     */
+    @Query("DELETE from hustle_table")
+    fun deleteAll()
 }

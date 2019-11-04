@@ -5,6 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import java.lang.IllegalArgumentException
 
+/**
+ * ViewModelFactory for LoginViewModel to instantiate AndroidViewModel
+ */
 class LoginViewModelFactory(private val application: Application) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>) : T {

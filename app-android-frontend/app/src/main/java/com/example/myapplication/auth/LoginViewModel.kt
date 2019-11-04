@@ -18,6 +18,13 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import net.openid.appauth.*
 
+/**
+ * View Model class that prepared and manages data for Login Activity.
+ * This class authenticates the user through OAuth and backend calls, and stores a Hustlr account
+ * in AccountManager.
+ *
+ * @param application - application context of Login Activity
+ */
 class LoginViewModel(application: Application): AndroidViewModel(application) {
 
     val navigation: MutableLiveData<Pair<Int, Intent>> = MutableLiveData()
@@ -43,6 +50,10 @@ class LoginViewModel(application: Application): AndroidViewModel(application) {
         authService = null
     }
 
+    /**
+     * Build and send a /auth request to Google.
+     * This function will redirect the user to Google's login screen.
+     */
     fun sendGoogleAuthRequest() {
         val serviceConfig = AuthorizationServiceConfiguration(
             Uri.parse("https://accounts.google.com/o/oauth2/v2/auth"),
@@ -61,6 +72,12 @@ class LoginViewModel(application: Application): AndroidViewModel(application) {
         navigation.postValue(Pair(RC_AUTH, authIntent))
     }
 
+    /**
+     * Build and send a /token request to Google and retrieve a userId through a backend call.
+     * On success, this a Hustlr account will be stored in AccountManager.
+     *
+     * @param data - Intent from Auth Request
+     */
     fun sendGoogleTokenRequest(data: Intent) {
         val authResp = AuthorizationResponse.fromIntent(data)
         val authEx = AuthorizationException.fromIntent(data)
@@ -90,22 +107,23 @@ class LoginViewModel(application: Application): AndroidViewModel(application) {
                                 navigation.postValue(Pair(START_NO_RESULT, intent))
                             },
                             { err ->
-                                Log.w(TAG, "Login Failed", err)
+                                Log.w(TAG, LOGIN_FAILED, err)
                                 message.postValue(Pair(MSG_TOAST, R.string.login_fail))
                             }
                         )
                 } else {
-                    Log.w(TAG, "Login Failed", tokenEx)
+                    Log.w(TAG, LOGIN_FAILED, tokenEx)
                     message.postValue(Pair(MSG_TOAST, R.string.login_fail))
                 }
             }
         } else {
-            Log.w(TAG, "Login Failed", authEx)
+            Log.w(TAG, LOGIN_FAILED, authEx)
             message.postValue(Pair(MSG_TOAST, R.string.login_fail))
         }
     }
 
     companion object {
         const val TAG = "LoginViewModel"
+        const val LOGIN_FAILED = "Login Failed"
     }
 }

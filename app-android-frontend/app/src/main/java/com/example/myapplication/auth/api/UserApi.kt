@@ -8,13 +8,25 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Header
 
+/**
+ * Retrofit interface for UserApi Requests.
+ */
 interface UserApi {
 
+    /**
+     * Exchange OAuth tokens with userId.
+     *
+     * @param accessToken
+     * @param idToken
+     */
     @GET("user/signOn")
     fun getUser(@Header("AccessToken") accessToken: String, @Header("IdToken") idToken: String)
             : Single<Model.UserResponse>
 
     companion object {
+        /**
+         * Create implementation of UserApi endpoints.
+         */
         fun create(): UserApi {
             val retrofit = Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

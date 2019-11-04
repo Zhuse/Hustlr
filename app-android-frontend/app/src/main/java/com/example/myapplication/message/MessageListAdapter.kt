@@ -8,6 +8,9 @@ import com.example.myapplication.R
 import com.example.myapplication.message.model.Message
 import com.example.myapplication.message.model.UserType
 
+/**
+ * RecyclerView for chat messages.
+ */
 class MessageListAdapter: RecyclerView.Adapter<MessageViewHolder>() {
     private val messageList: ArrayList<Message> = ArrayList()
 
@@ -42,6 +45,11 @@ class MessageListAdapter: RecyclerView.Adapter<MessageViewHolder>() {
         return messageList.size
     }
 
+    /**
+     * Add a new message to adapter.
+     *
+     * @param message - message object to add
+     */
     fun addItem(message: Message) {
         messageList.add(message)
         this.notifyDataSetChanged()

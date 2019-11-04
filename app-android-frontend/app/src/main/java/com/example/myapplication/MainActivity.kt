@@ -11,6 +11,9 @@ import com.example.myapplication.auth.LoginActivity
 
 import kotlinx.android.synthetic.main.activity_main.*
 
+/**
+ * Main Activity of Application.
+ */
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -3,8 +3,6 @@ package com.example.myapplication.message
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.myapplication.MSG_TOAST
-import com.example.myapplication.R
 import com.example.myapplication.BASE_URL
 import com.example.myapplication.message.model.Message
 import com.example.myapplication.message.model.User
@@ -13,9 +11,12 @@ import com.github.nkzawa.emitter.Emitter
 import com.github.nkzawa.socketio.client.IO
 import com.github.nkzawa.socketio.client.Socket
 import org.json.JSONException
-import org.json.JSONObject
 import java.net.URISyntaxException
 
+/**
+ * View Model class that prepares and manages data for MessageListFragment.
+ * This class manages the socket connection for chat and sending/receiving messages.
+ */
 class MessageViewModel : ViewModel() {
 
     val messageData: MutableLiveData<Message> = MutableLiveData()
@@ -30,11 +31,10 @@ class MessageViewModel : ViewModel() {
         try {
             username = "" // data.getString("username")
             message = it[0] as String // data.getString("message")
+            messageData.postValue(Message(message, User(username, UserType.SENDER)))
         } catch (e: JSONException) {
-            return@Listener
+            Log.e(TAG, "Error parsing message data", e)
         }
-
-        messageData.postValue(Message(message, User(username, UserType.SENDER)))
     }
 
     override fun onCleared() {
@@ -43,6 +43,10 @@ class MessageViewModel : ViewModel() {
         closeSocket()
     }
 
+    /**
+     * Open a connection to the socket.
+     * This connection will need to be closed with a call to closeSocket().
+     */
     fun openSocket() {
         try {
             messageSocket = IO.socket(BASE_URL)
@@ -51,23 +55,33 @@ class MessageViewModel : ViewModel() {
         }
 
         messageSocket!!.apply {
-            on("chat message", onNewMessage)
+            on(EVENT_MESSAGE, onNewMessage)
             connect()
         }
     }
 
+    /**
+     * Send a message to the socket.
+     *
+     * @param message - message to be sent to socket
+     */
     fun sendMessage(message: String) {
-        messageSocket!!.emit("chat message", message)
+        messageSocket!!.emit(EVENT_MESSAGE, message)
     }
 
+    /**
+     * Close the connection to the socket.
+     * A connection to the socket must have been opened with a call to openSocket() before this call.
+     */
     fun closeSocket() {
         messageSocket!!.apply {
             disconnect()
-            off("chat message", onNewMessage)
+            off(EVENT_MESSAGE, onNewMessage)
         }
     }
 
     companion object {
         const val TAG = "MessageViewModel"
+        const val EVENT_MESSAGE = "chat message"
     }
 }

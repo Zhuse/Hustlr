@@ -11,6 +11,10 @@ import com.example.myapplication.R
 import com.google.android.gms.common.SignInButton
 import kotlinx.android.synthetic.main.activity_login.*
 
+/**
+ * LoginActivity of application.
+ * Manages UI and user interaction with login screen.
+ */
 class LoginActivity: AppCompatActivity() {
 
     private lateinit var vm: LoginViewModel

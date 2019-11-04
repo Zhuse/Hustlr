@@ -52,7 +52,6 @@ exports.create = function (req, res) {
             return res.status(201).send(result);
         })
         .catch((err) => {
-            ;
             return res.status(400).send(err);
         });
 };
@@ -84,7 +83,6 @@ exports.findRecipients = function (req, res) {
             return res.status(200).send(preSend);
         })
         .catch((err) => {
-            ;
             return res.status(400).send(err);
         });
 };

@@ -8,7 +8,6 @@ exports.create = function (req, res) {
             return res.status(200).send(result);
         })
         .catch((err) => {
-            ;
             return res.status(400).send(err);
         });
 };
@@ -36,7 +35,6 @@ exports.findByToken = function (req, res) {
             return res.status(200).send(result);
         })
         .catch((err) => {
-            ;
             return res.status(400).send(err);
         });
 };
@@ -50,7 +48,6 @@ exports.update = function (req, res) {
             return res.status(200).send(result);
         })
         .catch((err) => {
-            ;
             return res.status(400).send(err);
         });
 };

@@ -18,12 +18,12 @@ module.exports.findMatches = function (userId) {
                         }).filter((hustle) => {
                             return Math.abs(hustle.providerId.properties.score - userScore) < 10;
                         });
-
+                        const properties = {
+                            hustles: validHustles
+                        };
                         const preSend = {
-                            userId: userId,
-                            properties: {
-                                hustles: validHustles
-                            }
+                            userId,
+                            properties
                         };
                         resolve(preSend);
                     })

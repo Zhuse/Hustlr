@@ -4,6 +4,9 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+/**
+ * Local database representation of a Hustlr user.
+ */
 @Entity(tableName = "hustlr_table")
 data class Hustlr(
     @PrimaryKey

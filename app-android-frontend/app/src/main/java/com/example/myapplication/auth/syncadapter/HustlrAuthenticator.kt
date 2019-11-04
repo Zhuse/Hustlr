@@ -7,6 +7,9 @@ import android.accounts.NetworkErrorException
 import android.content.Context
 import android.os.Bundle
 
+/**
+ * Hustlr AccountAuthenticator for creating Hustlr accounts.
+ */
 class HustlrAuthenticator(context: Context) // Simple constructor
     : AbstractAccountAuthenticator(context) {
 

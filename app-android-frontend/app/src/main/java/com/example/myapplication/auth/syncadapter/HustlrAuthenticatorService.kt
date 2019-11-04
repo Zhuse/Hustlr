@@ -4,6 +4,9 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 
+/**
+ * Service for HustlrAuthenticator operations.
+ */
 class HustlrAuthenticatorService : Service() {
 
     // Instance field that stores the authenticator object

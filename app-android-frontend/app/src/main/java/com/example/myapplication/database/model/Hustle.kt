@@ -4,10 +4,16 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+/**
+ * Status of a Hustle.
+ */
 enum class HustleStatus {
     completed, in_prog, cancelled, posted
 }
 
+/**
+ * Local database representation of a hustle.
+ */
 @Entity(tableName = "hustle_table")
 data class Hustle(
     @PrimaryKey

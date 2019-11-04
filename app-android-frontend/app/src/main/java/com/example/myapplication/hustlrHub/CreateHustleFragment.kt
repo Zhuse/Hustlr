@@ -24,6 +24,9 @@ import kotlinx.android.synthetic.main.list_item_available_hustle.*
 class CreateHustleFragment : Fragment() {
 
     companion object {
+        /**
+         * Get a new instance of the Create Hustle Fragment
+         */
         fun newInstance() = CreateHustleFragment()
     }
 

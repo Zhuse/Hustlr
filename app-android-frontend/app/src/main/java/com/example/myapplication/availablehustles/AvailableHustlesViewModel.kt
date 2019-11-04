@@ -13,6 +13,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel for Available Hustles View
+ */
 class AvailableHustlesViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: MainRepository = MainRepository
         .getInstance(MainDatabase.getInstance(application), application)

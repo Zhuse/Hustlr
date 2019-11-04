@@ -12,9 +12,15 @@ import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentHustlrHubBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
+/**
+ * Simple HustlrHub Fragment
+ */
 class HustlrHubFragment : Fragment() {
 
     companion object {
+        /**
+         * Get a new instance of the HustlrHub Fragment
+         */
         fun newInstance() = HustlrHubFragment()
     }
 

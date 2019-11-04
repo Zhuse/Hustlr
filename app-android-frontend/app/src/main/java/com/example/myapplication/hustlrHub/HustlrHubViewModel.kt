@@ -13,6 +13,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
+/**
+ * HustlrHub ViewModel
+ */
 class HustlrHubViewModel(application: Application) : AndroidViewModel(application) {
     // TODO: Implement the ViewModel
     private val repository = MainRepository.getInstance(MainDatabase.getInstance(application), application)
@@ -33,6 +36,9 @@ class HustlrHubViewModel(application: Application) : AndroidViewModel(applicatio
         return hustlesList!!.filter { hustle -> hustle._id.contentEquals(id) }[0]
     }
 
+    /**
+     * Post a new hustle bid
+     */
     fun postHustleBid(hustleId: String, bidPrice: Int) {
         val bid: HustleBid = HustleBid(hustleId = hustleId, bidPrice = bidPrice,
             bidderId = repository.myHustlrId)
@@ -41,6 +47,9 @@ class HustlrHubViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
+    /**
+     * Post a new hustle
+     */
     fun postNewHustle(title: String, description: String, price: Int,
                       location: String, category: String) {
         val hustle: Hustle = Hustle(title = title, providerId = repository.myHustlrId,

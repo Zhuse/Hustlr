@@ -12,6 +12,9 @@ import com.example.myapplication.database.model.Hustle
 import com.example.myapplication.database.model.HustleBid
 import com.example.myapplication.database.model.Hustlr
 
+/**
+ * Application's main local database
+ */
 @Database(entities = [Hustlr::class, Hustle::class, HustleBid::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class MainDatabase : RoomDatabase() {
@@ -25,6 +28,9 @@ abstract class MainDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: MainDatabase? = null
 
+        /**
+         * Get an instance of the database
+         */
         fun getInstance(context: Context): MainDatabase {
             synchronized(this) {
                 var instance = INSTANCE

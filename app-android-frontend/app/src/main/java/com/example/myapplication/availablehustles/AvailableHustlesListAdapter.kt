@@ -10,6 +10,9 @@ import com.example.myapplication.R
 import com.example.myapplication.database.model.Hustle
 import java.lang.StringBuilder
 
+/**
+ * Adapter for Available Hustles List
+ */
 class AvailableHustlesListAdapter: RecyclerView.Adapter<AvailableHustleViewHolder>() {
     var data = listOf<Hustle>()
         set(value) {

@@ -17,7 +17,9 @@ const val BASE_URL = "http://35.247.127.17:3000"
 /* Account Type */
 const val HUSTLR_ACCOUNT_TYPE = "example.com"
 
-/* Hustle Categories */
+/**
+ * Hustle Category enum
+ */
 enum class HustleCategory {
     transporation, homework, other, lifting
 }

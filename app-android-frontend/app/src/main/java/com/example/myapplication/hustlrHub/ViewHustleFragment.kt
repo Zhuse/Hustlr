@@ -23,6 +23,9 @@ import com.example.myapplication.databinding.FragmentViewHustleBinding
 class ViewHustleFragment : Fragment() {
 
     companion object {
+        /**
+         * Get a new instance of the ViewHustle Fragment
+         */
         fun newInstance() = ViewHustleFragment()
     }
 

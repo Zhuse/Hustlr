@@ -118,20 +118,9 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
         }
     }
 
-    fun testHustles() : List<Hustle> {
-        val provider = Hustlr(name = "John Wick")
-        val list = mutableListOf<Hustle>()
-
-        for(i in 1..8) {
-            val hustle = Hustle(i.toString(), "Help Moving Out", providerId =  provider._id, price = 25, description = "I need help moving my stuff out of the house especially after tomorrow night",
-                category = HustleCategory.homework.toString(), location = "1234 Safe St", status = HustleStatus.posted.toString()
-            )
-            list.add(hustle)
-        }
-
-        return list
-    }
-
+    /**
+     * Refresh all local data with updates from the server
+     */
     suspend fun refreshAll() {
         withContext(Dispatchers.IO) {
             refreshHustleBids()
@@ -146,6 +135,9 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
 
         private var TAG = this::class.java.canonicalName
 
+        /**
+         * Get an instance of the main repository
+         */
         fun getInstance(database: MainDatabase, application: Application) : MainRepository {
             if(instance == null) {
                 instance = MainRepository(database, application)

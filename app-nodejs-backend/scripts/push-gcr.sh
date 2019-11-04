@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Get the directory of the script so we know where we are
 # Allows us to run the script from anywhere
 

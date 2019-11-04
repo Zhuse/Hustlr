@@ -18,6 +18,7 @@
         "indent": ["error", 4],
         "semi": ["error", "always"],
         "arrow-parens": ["error", "always"],
-        "quotes": ["error", "double"]
+        "quotes": ["error", "double"],
+        "object-shorthand": ["error", "always"]
     }
 }

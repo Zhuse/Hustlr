@@ -3,13 +3,12 @@ const jwtDecode = require("jwt-decode");
 
 exports.create = function (req, res) {
     const newUser = new User(req.body);
-    console.log(req.body);
     newUser.save()
         .then((result) => {
             return res.status(200).send(result);
         })
         .catch((err) => {
-            console.log(err);
+            ;
             return res.status(400).send(err);
         });
 };
@@ -23,7 +22,7 @@ exports.findById = function (req, res) {
             return res.status(201).send(result);
         })
         .catch((err) => {
-            console.log(err);
+            ;
             return res.status(400).send(err);
         });
 };
@@ -38,7 +37,7 @@ exports.findByToken = function (req, res) {
             return res.status(200).send(result);
         })
         .catch((err) => {
-            console.log(err);
+            ;
             return res.status(400).send(err);
         });
 };
@@ -52,7 +51,7 @@ exports.update = function (req, res) {
             return res.status(200).send(result);
         })
         .catch((err) => {
-            console.log(err);
+            ;
             return res.status(400).send(err);
         });
 };

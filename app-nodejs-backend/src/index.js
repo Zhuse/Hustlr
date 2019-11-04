@@ -17,8 +17,6 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use((err, req, res, next) => {
-    console.error(err);
-
     // body-parser will set this to 400 if the json is in error
     if (err.status === 400) { return res.status(err.status).send({ message: "Invalid JSON." }); }
 
@@ -32,9 +30,7 @@ app.use("/chat", routes.chat);
 
 // Start
 
-const server = app.listen(3000, () =>
-    console.log(`Hustlr server running on port ${3000}`)
-);
+const server = app.listen(3000, () => {});
 
 // bootup socketio
 

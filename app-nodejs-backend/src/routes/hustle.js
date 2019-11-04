@@ -1,6 +1,6 @@
-const { Router } = require("express");
+const express = require("express");
 const hustle = require("../controllers/hustleController");
-const router = Router();
+const router = express.Router();
 
 router.get("/users/:userId", (req, res) => {
     hustle.findById(req, res);

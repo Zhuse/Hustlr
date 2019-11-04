@@ -13,7 +13,6 @@ exports.create = function (req, res) {
             return res.status(201).send(result)
         })
         .catch(err => {
-            console.log(err)
             return res.status(400).send(err)
         })
     } catch (err) {
@@ -53,7 +52,7 @@ exports.create = function (req, res) {
             return res.status(201).send(result);
         })
         .catch((err) => {
-            console.log(err);
+            ;
             return res.status(400).send(err);
         });
 };
@@ -67,15 +66,17 @@ exports.findRecipients = function (req, res) {
                 properties: {
                     recipients: result.map((chat) => {
                         let recipientId = "";
+                        const socketId = chat.id;
+                        const messages = chat.messages;
                         if (chat.userOne === req.params.userId) {
                             recipientId = chat.userTwo;
                         } else {
                             recipientId = chat.userOne;
                         }
                         return {
-                            socketId: chat._id,
-                            recipientId: recipientId,
-                            messages: chat.messages
+                            socketId,
+                            recipientId,
+                            messages
                         };
                     })
                 }
@@ -83,7 +84,7 @@ exports.findRecipients = function (req, res) {
             return res.status(200).send(preSend);
         })
         .catch((err) => {
-            console.log(err);
+            ;
             return res.status(400).send(err);
         });
 };
@@ -103,7 +104,7 @@ exports.findByIds = function (req, res) {
             return res.status(200).send(preSend);
         })
         .catch((err) => {
-            console.log(err);
+            ;
             return res.status(400).send(err);
         });
 };

@@ -1,4 +1,6 @@
 // init script for docker compose mongo
+/* eslint-disable */
+const db = global.db
 db.createUser(
     {
         user: "cpen321",

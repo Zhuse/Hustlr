@@ -1,7 +1,7 @@
-const { Router } = require("express");
+const express = require("express");
 const userController = require("../controllers/userController");
 
-const router = Router();
+const router = express.Router();
 
 router.get("/signOn", (req, res) => {
     userController.findByToken(req, res);

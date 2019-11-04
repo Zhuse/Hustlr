@@ -19,7 +19,6 @@ exports.create = function (req, res) {
             return res.status(201).send(preSend);
         })
         .catch((err) => {
-            console.log(err);
             return res.status(400).send(err);
         });
 };
@@ -36,7 +35,6 @@ exports.findById = function (req, res) {
             return res.status(200).send(preSend);
         })
         .catch((err) => {
-            console.log(err);
             return res.status(400).send(err);
         });
 };
@@ -82,17 +80,14 @@ exports.findMatches = function (req, res) {
                             return res.status(200).send(preSend);
                         })
                         .catch((err) => {
-                            console.log(err);
                             return res.status(500).send(err);
                         });
                 })
                 .catch((err) => {
-                    console.log(err);
                     return res.status(400).send(err);
                 });
         })
         .catch((err) => {
-            console.log(err);
             return res.status(400).send(err);
         });
 };
@@ -112,7 +107,6 @@ exports.update = function (req, res) {
             return res.status(200).send(preSend);
         })
         .catch((err) => {
-            console.log(err);
             return res.status(400).send(err);
         });
 };
@@ -137,7 +131,6 @@ exports.bid = function (req, res) {
             return res.status(200).send(preSend);
         })
         .catch((err) => {
-            console.log(err);
             return res.status(400).send(err);
         });
 };

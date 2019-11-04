@@ -1,6 +1,6 @@
-const express = require("express");
+const { Router } = require("express");
 const chat = require("../controllers/chatController");
-const router = express.Router();
+const router = new Router();
 
 router.get("/users/:userId", (req, res) => {
     chat.findRecipients(req, res);

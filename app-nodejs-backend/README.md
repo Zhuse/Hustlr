@@ -1,7 +1,7 @@
 # API Documentation
 API Documentation for our backend
 
-## User ##
+## User
 ====
 
 __GET /user/{id}__
@@ -73,7 +73,7 @@ Response (201):
 }
 ```
 
-## Hustle ##
+## Hustle
 ====
 
 __GET /hustle/users/{userId}/__
@@ -246,7 +246,7 @@ Response (201):
 }
 ```
 
-## Chat ##
+## Chat
 ====
 
 __GET /chat/users/{userId}/__

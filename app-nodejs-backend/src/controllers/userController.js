@@ -22,7 +22,6 @@ exports.findById = function (req, res) {
             return res.status(201).send(result);
         })
         .catch((err) => {
-            ;
             return res.status(400).send(err);
         });
 };

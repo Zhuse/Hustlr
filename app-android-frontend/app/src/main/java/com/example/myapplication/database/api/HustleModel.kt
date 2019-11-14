@@ -37,4 +37,14 @@ object HustleModel {
         val title: String,
         val location: String
     )
+
+    /**
+     * Hustle Bid Request Model
+     */
+    data class HustleBidRequest(val properties: HustleBidRequestProperties)
+
+    /**
+     * Hustle Bid Request Properties
+     */
+    data class HustleBidRequestProperties(val description: String, val bidCost: Int)
 }

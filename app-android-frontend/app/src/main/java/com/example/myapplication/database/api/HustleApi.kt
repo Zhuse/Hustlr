@@ -39,6 +39,12 @@ interface HustleApi {
     @PATCH("hustle/users/{userId}/{hustleId}")
     fun updateHustle(@Path("userId") hustlrId: String, @Path("hustleId") hustleId: String, @Body hustle: Hustle) : Call<Hustle>
 
+    /**
+     * Post a hustle bid
+     */
+    @POST("hustle/users/{userId}/{hustleId}/bid")
+    fun postHustleBid(@Path("userId") userId: String, @Path("hustleId") hustleId: String, @Body hustleBid: HustleModel.HustleBidRequest) : Call<Hustle>
+
     companion object {
         /**
          * Create a HustleApi object

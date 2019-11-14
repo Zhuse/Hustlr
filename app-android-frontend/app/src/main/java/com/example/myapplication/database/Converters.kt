@@ -2,6 +2,7 @@ package com.example.myapplication.database
 
 import androidx.room.TypeConverter
 import com.example.myapplication.database.model.Hustle
+import com.example.myapplication.database.model.HustleBid
 import com.example.myapplication.database.model.Hustlr
 import com.google.gson.Gson
 
@@ -95,6 +96,24 @@ class Converters {
     @TypeConverter
     fun jsonToCategoriesList(value: String) : List<String>? {
         val objects = Gson().fromJson(value, Array<String>::class.java) as Array<String>
+        val list = objects.toList()
+        return list
+    }
+
+    /**
+     * Convert from a list of Hustle Bids to a Json string
+     */
+    @TypeConverter
+    fun hustleBidListToJson(value: List<HustleBid>) : String {
+        return Gson().toJson(value)
+    }
+
+    /**
+     * Convert from a JSON string to a list of HustleBid
+     */
+    @TypeConverter
+    fun jsonToHustleBidList(value: String) : List<HustleBid> {
+        val objects = Gson().fromJson(value, Array<HustleBid>::class.java) as Array<HustleBid>
         val list = objects.toList()
         return list
     }

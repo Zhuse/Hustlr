@@ -39,11 +39,9 @@ class HustlrHubViewModel(application: Application) : AndroidViewModel(applicatio
     /**
      * Post a new hustle bid
      */
-    fun postHustleBid(hustleId: String, bidPrice: Int) {
-        val bid: HustleBid = HustleBid(hustleId = hustleId, bidPrice = bidPrice,
-            bidderId = repository.myHustlrId)
+    fun postHustleBid(hustleId: String, bidCost: Int, description: String) {
         backgroundScope.launch {
-            repository.postHustleBid(bid)
+            repository.postHustleBid(description, bidCost, hustleId)
         }
     }
 
@@ -54,7 +52,7 @@ class HustlrHubViewModel(application: Application) : AndroidViewModel(applicatio
                       location: String, category: String) {
         val hustle: Hustle = Hustle(title = title, providerId = repository.myHustlrId,
             price = price, description = description, location = location, category = category,
-            status = HustleStatus.posted.toString())
+            status = HustleStatus.posted.toString(), bids = listOf(), hustlrId = "")
         backgroundScope.launch {
             repository.postHustle(hustle)
         }

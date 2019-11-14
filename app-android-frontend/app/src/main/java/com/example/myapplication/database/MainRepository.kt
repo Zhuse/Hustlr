@@ -25,7 +25,6 @@ import kotlinx.coroutines.withContext
  */
 class MainRepository private  constructor(private val database: MainDatabase, private val application: Application) {
     var hustles: LiveData<List<Hustle>> = database.hustleDao.getAll()
-    var hustleBids: LiveData<List<HustleBid>> = database.hustleBidDao.getAll()
     var hustlrs: LiveData<List<Hustlr>> = database.hustlrDao.getAll()
 
     private val accountManager: AccountManager by lazy { AccountManager.get(application) }
@@ -83,16 +82,18 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
     /**
      * Post a new hustleBid and store it in the offline database
      */
-    suspend fun postHustleBid(bid: HustleBid) {
+    suspend fun postHustleBid(description: String, bidCost: Int, hustleId: String) {
         withContext(Dispatchers.IO) {
             // Post the bid via REST Api
+            val hustleBidBody = HustleModel.HustleBidRequest(HustleModel.HustleBidRequestProperties(description, bidCost))
+            val response = hustleApi.postHustleBid(myHustlrId, hustleId, hustleBidBody).execute()
 
-
-            // Get the Posted bid (with the correct ID)
-            val postedBid = bid // Change this
-
-            // Store it into the local database
-            database.hustleBidDao.insert(postedBid)
+            if(response.isSuccessful) {
+                var updatedHustle = response.body()!!
+                database.hustleDao.update(updatedHustle)
+            } else {
+                Log.w(TAG, "Post HustleBid failed")
+            }
         }
     }
 

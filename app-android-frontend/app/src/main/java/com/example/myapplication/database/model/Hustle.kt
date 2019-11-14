@@ -42,5 +42,11 @@ data class Hustle(
     val location: String,
 
     @ColumnInfo(name = "status")
-    val status: String
+    val status: String,
+
+    @ColumnInfo(name = "hustlr_id")
+    val hustlrId: String,
+
+    @ColumnInfo(name = "bids")
+    val bids: List<HustleBid>
 )

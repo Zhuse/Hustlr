@@ -105,7 +105,8 @@ class ViewHustleFragment : Fragment() {
     private fun handleSubmit() {
         vm.postHustleBid(
             hustleId = targetHustle._id,
-            bidPrice = binding.offerPriceValue.text.toString().toInt()
+            bidCost = binding.offerPriceValue.text.toString().toInt(),
+            description = ""
         )
     }
 

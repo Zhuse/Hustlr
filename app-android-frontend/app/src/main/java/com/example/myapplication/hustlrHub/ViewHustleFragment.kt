@@ -16,6 +16,8 @@ import com.example.myapplication.R
 import com.example.myapplication.database.model.Hustle
 import com.example.myapplication.database.model.HustleBid
 import com.example.myapplication.databinding.FragmentViewHustleBinding
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 
 /**
  * A simple [Fragment] subclass.
@@ -32,6 +34,7 @@ class ViewHustleFragment : Fragment() {
     private lateinit var binding: FragmentViewHustleBinding
     private lateinit var vm: HustlrHubViewModel
     private lateinit var targetHustle: Hustle
+    private lateinit var categoryChipGroup: ChipGroup
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -89,6 +92,14 @@ class ViewHustleFragment : Fragment() {
                 .show()
             view!!.findNavController().navigate(R.id.action_navigation_view_hustle_to_navigation_available_hustles)
         }
+
+        categoryChipGroup = binding.categoriesChipGroup
+        val category = Chip(context)
+        category.text = hustle.category
+        category.isCloseIconVisible = false
+        category.isCheckable = false
+        category.isClickable = false
+        categoryChipGroup.addView(category as View)
     }
 
     private fun handleSubmit() {

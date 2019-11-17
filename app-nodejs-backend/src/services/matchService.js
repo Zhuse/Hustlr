@@ -17,15 +17,18 @@ module.exports.findMatches = function (userId) {
                             return preferredCategories.includes(hustle.category);
                         }).filter((hustle) => {
                             return Math.abs(hustle.providerId.properties.score - userScore) < 10;
+                        }).map((hustle) => {
+                            hustle.providerId = hustle.providerId._id;
+                            return hustle;
                         });
                         const properties = {
                             hustles: validHustles
                         };
-                        const preSend = {
+                        const data = {
                             userId,
                             properties
                         };
-                        resolve(preSend);
+                        resolve(data);
                     })
                     .catch((err) => {
                         reject(err);

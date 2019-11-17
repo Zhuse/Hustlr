@@ -109,6 +109,31 @@ class CreateHustleFragment : Fragment() {
             return false
         }
 
+        // Check other inputs
+        if(binding.titleText.text.isEmpty()) {
+            Toast.makeText(context, "Please a enter a title", Toast.LENGTH_SHORT)
+                .show()
+            return false
+        }
+
+        if(binding.descriptionText.text.isEmpty()) {
+            Toast.makeText(context, "Please a enter a description", Toast.LENGTH_SHORT)
+                .show()
+            return false
+        }
+
+        if(binding.locationText.text.isEmpty()) {
+            Toast.makeText(context, "Please a enter a location", Toast.LENGTH_SHORT)
+                .show()
+            return false
+        }
+
+        if(binding.offerPriceValue.text.isEmpty()) {
+            Toast.makeText(context, "Please a enter a reward", Toast.LENGTH_SHORT)
+                .show()
+            return false
+        }
+
         return true // TODO: Implement this
     }
 

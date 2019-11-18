@@ -13,7 +13,7 @@ interface HustleDao {
     /**
      * Insert a hustle
      */
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(hustle: Hustle)
 
     /**
@@ -37,7 +37,7 @@ interface HustleDao {
     /**
      * Insert a list Hustles
      */
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(hustles: List<Hustle>)
 
     /**

@@ -12,5 +12,5 @@ data class HustleBid(
     var userId: String = "",
     val description: String,
     val bidCost: Int,
-    val timestamp: Long = System.currentTimeMillis()
+    val timestamp: String
 )

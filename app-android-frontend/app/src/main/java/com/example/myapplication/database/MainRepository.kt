@@ -90,7 +90,8 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
 
             if(response.isSuccessful) {
                 var updatedHustle = response.body()!!
-                database.hustleDao.update(updatedHustle)
+                //TODO: Issue with the backend not sending back the updated Hustle
+//                database.hustleDao.update(updatedHustle)
             } else {
                 Log.w(TAG, "Post HustleBid failed")
             }

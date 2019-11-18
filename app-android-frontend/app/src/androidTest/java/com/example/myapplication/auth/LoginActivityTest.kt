@@ -21,6 +21,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+/**
+ *  Login UI Test.
+ */
 @LargeTest
 @RunWith(AndroidJUnit4::class)
 class LoginActivityTest {
@@ -29,6 +32,9 @@ class LoginActivityTest {
     @JvmField
     var mActivityTestRule = ActivityTestRule(LoginActivity::class.java)
 
+    /**
+     * Login UI Test to check UI components of initial login screen and sign in.
+     */
     @Test
     fun loginActivityTest() {
         val textView = onView(

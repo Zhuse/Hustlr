@@ -22,6 +22,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+/**
+ * MessageList UI Test.
+ */
 @LargeTest
 @RunWith(AndroidJUnit4::class)
 class MessageListFragmentTest {
@@ -30,8 +33,11 @@ class MessageListFragmentTest {
     @JvmField
     var mActivityTestRule = ActivityTestRule(LoginActivity::class.java)
 
+    /**
+     * MessageList test to send a simple message.
+     */
     @Test
-    fun messageListFragmentTest() {
+    fun messageTest() {
         val bottomNavigationItemView = onView(
             allOf(
                 withId(R.id.navigation_messages), withContentDescription("Chat"),

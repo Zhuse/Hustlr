@@ -10,5 +10,15 @@ matrix:
       script:
         - jest --forceExit
 
+    - language: java
+      jdk:
+        - oraclejdk8
+      before_install:
+        - cd app-android-frontend
+        - chmod +x gradlew
+        - chmod +x gradle/wrapper/gradle-wrapper.jar
+      script:
+        - ./gradlew test build
+
 notifications:
   email: false

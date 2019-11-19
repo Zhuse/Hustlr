@@ -1,0 +1,14 @@
+matrix:
+  include:
+    - language: node_js
+      node_js:
+        - 10
+      before_install:
+        - cd app-nodejs-backend
+      install:
+        - npm install
+      script:
+        - jest --forceExit
+
+notifications:
+  email: false

@@ -18,7 +18,8 @@ interface HustleApi {
      * Get a list of hustles given a user id
      */
     @GET("hustle/users/{userId}")
-    fun getHustlesByUser(@Path("userId") hustlrId: String) : Call<List<Hustle>>
+//    fun getHustlesByUser(@Path("userId") hustlrId: String) : Call<List<Hustle>>
+    fun getHustlesByUser(@Path("userId") hustlrId: String) : Call<HustleModel.HustleResponse>
 
     /**
      * Get all hustles that a user has been matched with

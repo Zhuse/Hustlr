@@ -32,7 +32,7 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
     var biddableHustles: LiveData<List<Hustle>> = database.hustleDao.getAllBiddableHustles(myHustlrId)
     var hustlrs: LiveData<List<Hustlr>> = database.hustlrDao.getAll()
     var bidsSubmitted: LiveData<List<HustleBid>> = database.hustleBidDao.getHustleBidsByBidder(myHustlrId)
-    var bidsReceived: MutableLiveData<List<HustleBid>> = MutableLiveData<List<HustleBid>>()
+    var bidsReceived: MutableLiveData<List<HustleBid>> = MutableLiveData()
     var hustlesPosted: LiveData<List<Hustle>> = database.hustleDao.getHustlesWePosted(myHustlrId)
 
     // Networking Stuff
@@ -73,7 +73,37 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
      * Refresh the hustleBids received and submitted
      */
     suspend fun refreshHustleBids() {
-        // TODO: Implement this
+        withContext(Dispatchers.IO) {
+            val response = hustleApi.getHustlesByUser(myHustlrId).execute()
+
+            if(response.isSuccessful) {
+                val hustles = response.body()!!.properties.hustles
+                database.hustleDao.insertAll(hustles)
+
+
+            } else {
+                Log.i(TAG, "Refresh Hustle Bids failed")
+                return@withContext
+            }
+
+            /* Start with bids on hustles we've posted */
+            val hustleBids = mutableListOf<HustleBid>()
+            val postedHustles = hustlesPosted.value!!
+            for(hustle in postedHustles) {
+                hustleBids.addAll(hustle.bids)
+            }
+            bidsReceived.postValue(hustleBids)
+
+            /* Now add bids for hustles we've bid on */
+            val hustlesBidOn = biddableHustles.value!!
+            for(hustle in hustlesBidOn) {
+                val ourBidIndex = hustle.bids.indexOfFirst { bid -> bid.userId.contentEquals(myHustlrId) }
+                if(ourBidIndex == -1) continue
+                hustleBids.add(hustle.bids[ourBidIndex])
+            }
+
+            database.hustleBidDao.insertAll(hustleBids)
+        }
     }
 
     /**

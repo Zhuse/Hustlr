@@ -29,7 +29,7 @@ exports.findById = function (req, res) {
             const preSend = {
                 userId: req.params.userId,
                 properties: {
-                    hustle: result
+                    hustles: result
                 }
             };
             return res.status(200).send(preSend);

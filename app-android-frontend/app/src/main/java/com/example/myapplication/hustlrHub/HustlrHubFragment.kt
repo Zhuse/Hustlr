@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 
 import com.example.myapplication.R
@@ -32,6 +33,7 @@ class HustlrHubFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHustlrHubBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProviders.of(this).get(HustlrHubViewModel::class.java)
 
         val createHustleButton: FloatingActionButton = binding.createNewHustleButton
         createHustleButton.setOnClickListener {view: View ->
@@ -39,13 +41,31 @@ class HustlrHubFragment : Fragment() {
                 .navigate(R.id.action_navigation_hustlr_hub_to_navigation_create_hustle)
         }
 
+        val bidsReceivedAdapter = HustleBidListAdapter(viewModel.myHustlrId)
+        val bidsSubmittedAdapter = HustleBidListAdapter(viewModel.myHustlrId)
+
+        binding.bidsReceivedList.adapter = bidsReceivedAdapter
+        binding.bidsSubmittedList.adapter = bidsSubmittedAdapter
+
+        viewModel.hustles.observe(this, Observer {
+            it?.let {
+                bidsReceivedAdapter.hustles = it
+                bidsSubmittedAdapter.hustles = it
+            }
+        })
+
+        viewModel.bidsReceived.observe(this, Observer {
+            it?.let {
+                bidsReceivedAdapter.bids = it
+            }
+        })
+
+        viewModel.bidsSubmitted.observe(this, Observer {
+            it?.let {
+                bidsSubmittedAdapter.bids = it
+            }
+        })
+
         return binding.root
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(HustlrHubViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
-
 }

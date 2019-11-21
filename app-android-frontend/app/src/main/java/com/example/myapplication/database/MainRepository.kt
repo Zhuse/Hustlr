@@ -28,7 +28,8 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
     private val accountManager: AccountManager by lazy { AccountManager.get(application) }
     var myHustlrId: String = accountManager.getUserData(accountManager.accounts[0], "userId")
 
-    var hustles: LiveData<List<Hustle>> = database.hustleDao.getAllBiddableHustles(myHustlrId)
+    var hustles: LiveData<List<Hustle>> = database.hustleDao.getAll()
+    var biddableHustles: LiveData<List<Hustle>> = database.hustleDao.getAllBiddableHustles(myHustlrId)
     var hustlrs: LiveData<List<Hustlr>> = database.hustlrDao.getAll()
     var bidsSubmitted: LiveData<List<HustleBid>> = database.hustleBidDao.getHustleBidsByBidder(myHustlrId)
     var bidsReceived: MutableLiveData<List<HustleBid>> = MutableLiveData<List<HustleBid>>()

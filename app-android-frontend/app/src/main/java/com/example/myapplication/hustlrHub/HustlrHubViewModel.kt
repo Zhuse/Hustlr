@@ -25,10 +25,12 @@ class HustlrHubViewModel(application: Application) : AndroidViewModel(applicatio
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
     private val backgroundScope = CoroutineScope(Dispatchers.IO + viewModelJob)
 
-    private val hustles = repository.hustles
+    val hustles = repository.hustles
 
     var bidsSubmitted: LiveData<List<HustleBid>> = repository.bidsSubmitted
     var bidsReceived: LiveData<List<HustleBid>> = repository.bidsReceived
+
+    val myHustlrId = repository.myHustlrId
 
     init {
         initalize()

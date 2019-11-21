@@ -2,6 +2,7 @@ package com.example.myapplication.hustlrHub
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.myapplication.database.MainDatabase
 import com.example.myapplication.database.MainRepository
@@ -25,6 +26,19 @@ class HustlrHubViewModel(application: Application) : AndroidViewModel(applicatio
     private val backgroundScope = CoroutineScope(Dispatchers.IO + viewModelJob)
 
     private val hustles = repository.hustles
+
+    var bidsSubmitted: LiveData<List<HustleBid>> = repository.bidsSubmitted
+    var bidsReceived: LiveData<List<HustleBid>> = repository.bidsReceived
+
+    init {
+        initalize()
+    }
+
+    private fun initalize() {
+        backgroundScope.launch {
+            refreshHustleBids()
+        }
+    }
 
 
     /**
@@ -58,8 +72,14 @@ class HustlrHubViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
+    private suspend fun refreshHustleBids() = repository.refreshHustleBids()
+
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
+    }
+
+    companion object {
+        val TAG = this::class.java.canonicalName
     }
 }

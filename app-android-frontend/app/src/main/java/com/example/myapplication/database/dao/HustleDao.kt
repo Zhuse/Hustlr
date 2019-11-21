@@ -35,6 +35,33 @@ interface HustleDao {
     fun getAll(): LiveData<List<Hustle>>
 
     /**
+     * Get all biddable hustles
+     */
+    @Query("SELECT * FROM hustle_table WHERE provider != :myId")
+    fun getAllBiddableHustles(myId: String) : LiveData<List<Hustle>>
+
+    /**
+     * Get all hustles we've posted
+     */
+    @Query("SELECT * FROM hustle_table WHERE provider == :myId")
+    fun getHustlesWePosted(myId: String) : LiveData<List<Hustle>>
+
+    /**
+     * Delete all biddable hustles
+     */
+    @Query("DELETE FROM hustle_table WHERE provider != :myId")
+    fun deleteAllBiddableHustles(myId: String)
+
+//    /**
+//     * Get all hustles for which we've submitted a bid
+//     */
+//    @Query("SELECT * from hustle_table WHERE")
+//
+//    /**
+//     * Get all hustles for which we've received a bid
+//     */
+
+    /**
      * Insert a list Hustles
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)

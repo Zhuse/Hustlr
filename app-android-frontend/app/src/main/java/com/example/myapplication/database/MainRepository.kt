@@ -4,6 +4,7 @@ import android.accounts.AccountManager
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.myapplication.HustleCategory
 import com.example.myapplication.auth.api.UserApi
 import com.example.myapplication.database.api.HustleApi
@@ -24,17 +25,16 @@ import kotlinx.coroutines.withContext
  * persistent data.
  */
 class MainRepository private  constructor(private val database: MainDatabase, private val application: Application) {
-    var hustles: LiveData<List<Hustle>> = database.hustleDao.getAll()
-    var hustlrs: LiveData<List<Hustlr>> = database.hustlrDao.getAll()
-
     private val accountManager: AccountManager by lazy { AccountManager.get(application) }
-
-//    var myHustlrId: Long = 1 // TODO: Change this
     var myHustlrId: String = accountManager.getUserData(accountManager.accounts[0], "userId")
 
+    var hustles: LiveData<List<Hustle>> = database.hustleDao.getAllBiddableHustles(myHustlrId)
+    var hustlrs: LiveData<List<Hustlr>> = database.hustlrDao.getAll()
+    var bidsSubmitted: LiveData<List<HustleBid>> = database.hustleBidDao.getHustleBidsByBidder(myHustlrId)
+    var bidsReceived: MutableLiveData<List<HustleBid>> = MutableLiveData<List<HustleBid>>()
+    var hustlesPosted: LiveData<List<Hustle>> = database.hustleDao.getHustlesWePosted(myHustlrId)
+
     // Networking Stuff
-    private var postHustleDisposable: Disposable? = null
-    private var getHustlesDisposable: Disposable? = null
     private val hustleApi: HustleApi by lazy { HustleApi.create() }
 
     /**
@@ -48,7 +48,7 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
 
             if(response.isSuccessful) {
                 val newHustles = response.body()
-                database.hustleDao.deleteAll()
+                database.hustleDao.deleteAllBiddableHustles(myHustlrId)
                 database.hustleDao.insertAll(newHustles!!.properties.hustles)
             } else if(!response.isSuccessful) {
                 Log.i(TAG, "Get Hustles failed")
@@ -69,14 +69,10 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
     }
 
     /**
-     * Refresh the hustleBids stored in the offline database
+     * Refresh the hustleBids received and submitted
      */
     suspend fun refreshHustleBids() {
-        withContext(Dispatchers.IO) {
-            // Fetch data from the REST Api
-
-            // Store the data into the local database
-        }
+        // TODO: Implement this
     }
 
     /**

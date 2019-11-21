@@ -15,7 +15,7 @@ import com.example.myapplication.database.model.Hustlr
 /**
  * Application's main local database
  */
-@Database(entities = [Hustlr::class, Hustle::class], version = 2, exportSchema = false)
+@Database(entities = [Hustlr::class, Hustle::class, HustleBid::class], version = 2, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class MainDatabase : RoomDatabase() {
 

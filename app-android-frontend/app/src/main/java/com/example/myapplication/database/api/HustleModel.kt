@@ -17,7 +17,17 @@ object HustleModel {
     data class HustleResponseProperties(val hustles: List<Hustle>)
 
     /**
-     * Representation of a Hustle in the request body to the server
+     * Hustle Patch Response
+     */
+    data class HustlePatchResponse(val userId: String, val properties: HustlePatchResponseProperties)
+
+    /**
+     * Hustle Patch Response Properties
+     */
+    data class HustlePatchResponseProperties(val hustle: Hustle)
+
+    /**
+    * Representation of a Hustle in the request body to the server
      */
     data class HustleRequest(val properties: HustleRequestProperties)
 
@@ -37,6 +47,21 @@ object HustleModel {
         val title: String,
         val location: String
     )
+
+    /**
+     * Representation of a Hustle in the PATCH request body
+     */
+    data class HustlePatchRequest(val properties: HustlePatchRequestProperties)
+
+    /**
+     * HustlePatchRequestProperties
+     */
+    data class HustlePatchRequestProperties(val hustle: HustlePatchRequestModel)
+
+    /**
+     * HustlePatchRequestModel
+     */
+    data class HustlePatchRequestModel(val hustlrId: String, val status: String)
 
     /**
      * Hustle Bid Request Model

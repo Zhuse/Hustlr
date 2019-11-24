@@ -86,11 +86,13 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
 
             /* Start with bids on hustles we've posted */
             val hustleBids = mutableListOf<HustleBid>()
+            val newBidsReceived = mutableListOf<HustleBid>()
             for(hustle in postedHustles) {
                 hustle.bids.forEach { bid -> bid.hustleId = hustle._id }
                 hustleBids.addAll(hustle.bids)
+                newBidsReceived.addAll(hustle.bids.filter { !it.ignored})
             }
-            bidsReceived.postValue(hustleBids)
+            bidsReceived.postValue(newBidsReceived)
 
             /* Now add bids for hustles we've bid on */
             val hustlesBidOn = biddableHustles.value!!
@@ -103,6 +105,37 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
             }
 
             database.hustleBidDao.insertAll(hustleBids)
+        }
+    }
+
+    /**
+     * Mark a hustleBid as ignored
+     */
+    suspend fun ignoreHustleBid(bid: HustleBid) {
+        withContext(Dispatchers.IO) {
+            database.hustleBidDao.update(bid)
+        }
+    }
+
+    /**
+     * Accept a hustleBid
+     */
+    suspend fun acceptHustleBid(bid: HustleBid) {
+        withContext(Dispatchers.IO) {
+            val hustle = database.hustleDao.get(bid.hustleId)!!
+            val patchRequest = HustleModel.HustlePatchRequestModel(bid.userId, "in_prog")
+            val patchResponse = hustleApi.updateHustle(hustle.providerId,
+                    hustle._id,
+                    HustleModel.HustlePatchRequest(HustleModel.HustlePatchRequestProperties(patchRequest)))
+                .execute()
+
+            if(!patchResponse.isSuccessful) {
+                Log.w(TAG, "Update hustle failed")
+                return@withContext
+            }
+
+            val updatedHustle = patchResponse.body()!!.properties.hustle
+            database.hustleDao.update(updatedHustle)
         }
     }
 

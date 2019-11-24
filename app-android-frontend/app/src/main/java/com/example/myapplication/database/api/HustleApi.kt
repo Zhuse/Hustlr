@@ -38,7 +38,7 @@ interface HustleApi {
      * Update an existing hustle
      */
     @PATCH("hustle/users/{userId}/{hustleId}")
-    fun updateHustle(@Path("userId") hustlrId: String, @Path("hustleId") hustleId: String, @Body hustle: Hustle) : Call<Hustle>
+    fun updateHustle(@Path("userId") hustlrId: String, @Path("hustleId") hustleId: String, @Body hustle: HustleModel.HustlePatchRequest) : Call<HustleModel.HustlePatchResponse>
 
     /**
      * Post a hustle bid

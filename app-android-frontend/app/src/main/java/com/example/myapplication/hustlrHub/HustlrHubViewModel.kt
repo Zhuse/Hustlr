@@ -36,6 +36,9 @@ class HustlrHubViewModel(application: Application) : AndroidViewModel(applicatio
         initalize()
     }
 
+    /**
+     * Initial setup for viewmodel
+     */
     private fun initalize() {
         backgroundScope.launch {
             refreshHustleBids()
@@ -62,6 +65,24 @@ class HustlrHubViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     /**
+     * Set a bid as ignored
+     */
+    fun ignoreBid(bid: HustleBid) {
+        backgroundScope.launch {
+            repository.ignoreHustleBid(bid)
+        }
+    }
+
+    /**
+     * Accept a bid
+     */
+    fun acceptBid(bid: HustleBid) {
+        backgroundScope.launch {
+            repository.acceptHustleBid(bid)
+        }
+    }
+
+    /**
      * Post a new hustle
      */
     fun postNewHustle(title: String, description: String, price: Int,
@@ -74,6 +95,9 @@ class HustlrHubViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
+    /**
+     * Refresh hustle bids
+     */
     private suspend fun refreshHustleBids() = repository.refreshHustleBids()
 
     override fun onCleared() {

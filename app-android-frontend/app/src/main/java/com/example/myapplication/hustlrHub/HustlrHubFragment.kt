@@ -41,8 +41,8 @@ class HustlrHubFragment : Fragment() {
                 .navigate(R.id.action_navigation_hustlr_hub_to_navigation_create_hustle)
         }
 
-        val bidsReceivedAdapter = HustleBidListAdapter(viewModel.myHustlrId)
-        val bidsSubmittedAdapter = HustleBidListAdapter(viewModel.myHustlrId)
+        val bidsReceivedAdapter = HustleBidListAdapter(viewModel.myHustlrId, viewModel::acceptBid, viewModel::ignoreBid)
+        val bidsSubmittedAdapter = HustleBidListAdapter(viewModel.myHustlrId, null, null)
 
         binding.bidsReceivedList.adapter = bidsReceivedAdapter
         binding.bidsSubmittedList.adapter = bidsSubmittedAdapter

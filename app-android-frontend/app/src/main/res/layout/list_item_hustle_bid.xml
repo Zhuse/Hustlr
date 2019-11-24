@@ -3,7 +3,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="120dp">
 
     <TextView
             android:id="@+id/title"
@@ -32,7 +32,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/dollar_sign"
             app:layout_constraintStart_toStartOf="@+id/title"
-            app:layout_constraintTop_toBottomOf="@+id/title" />
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
             android:id="@+id/dollar_sign"
@@ -63,7 +64,7 @@
             android:id="@+id/bidStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
             android:text="Bid Status"
             android:textSize="12sp"
             android:textStyle="bold"
@@ -71,4 +72,38 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/descriptionSnippet"
             app:layout_constraintTop_toBottomOf="@+id/dollar_sign" />
+
+    <Button
+            android:id="@+id/acceptBidButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:backgroundTint="@android:color/holo_green_dark"
+            android:scaleX="1"
+            android:scaleY="1"
+            android:text="Accept"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/bidStatus"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toEndOf="@+id/ignoreBidButton"
+            app:layout_constraintTop_toBottomOf="@+id/descriptionSnippet" />
+
+    <Button
+            android:id="@+id/ignoreBidButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:scaleX="1"
+            android:scaleY="1"
+            android:text="Ignore"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/acceptBidButton"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/descriptionSnippet" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

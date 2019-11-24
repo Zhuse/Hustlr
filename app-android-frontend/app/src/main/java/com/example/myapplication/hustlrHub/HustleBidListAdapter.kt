@@ -9,12 +9,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.database.model.Hustle
 import com.example.myapplication.database.model.HustleBid
+import kotlinx.android.synthetic.main.list_item_hustle_bid.view.*
 import java.lang.StringBuilder
 
 /**
  * Adapter for Available Hustles List
  */
-class HustleBidListAdapter(private val myHustlrId: String): RecyclerView.Adapter<HustleBidViewHolder>() {
+class HustleBidListAdapter(private val myHustlrId: String,
+                           val bidAcceptedHandler: ((bid: HustleBid) -> Unit)?,
+                           val ignoreBidHandler: ((bid: HustleBid) -> Unit)?): RecyclerView.Adapter<HustleBidViewHolder>() {
     var bids = listOf<HustleBid>()
         set(value) {
             field = value
@@ -43,15 +46,29 @@ class HustleBidListAdapter(private val myHustlrId: String): RecyclerView.Adapter
         holder.price.text = bid.bidCost.toString()
         holder.descriptionSnippet.text = descriptionSnippet.toString()
 
+        val actionButtonVisibility = if(hustle.providerId.contentEquals(myHustlrId) && hustle.hustlrId == null) View.VISIBLE else View.GONE
+        holder.itemView.acceptBidButton.visibility = actionButtonVisibility
+        holder.itemView.ignoreBidButton.visibility = actionButtonVisibility
+
+        if(actionButtonVisibility == View.VISIBLE) {
+            holder.itemView.acceptBidButton.setOnClickListener {
+                bidAcceptedHandler?.invoke(bid)
+            }
+
+            holder.itemView.ignoreBidButton.setOnClickListener {
+                ignoreBidHandler?.invoke(bid)
+            }
+        }
+
         var statusText = ""
-        if(hustle.providerId.contentEquals(myHustlrId)) {
-            statusText = when {
+        statusText = if(hustle.providerId.contentEquals(myHustlrId)) {
+            when {
                 hustle.hustlrId == null -> "New Bid"
                 hustle.hustlrId == bid.userId -> "Bid Awarded"
                 else -> "Not Awarded"
             }
         } else {
-            statusText = when {
+            when {
                 hustle.hustlrId == null -> "Pending Decision"
                 hustle.hustlrId == myHustlrId -> "Bid Accepted"
                 else -> "Bid Rejected"

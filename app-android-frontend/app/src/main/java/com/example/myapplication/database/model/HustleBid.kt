@@ -15,5 +15,6 @@ data class HustleBid(
     val description: String,
     val bidCost: Int,
     val timestamp: String,
-    var hustleId: String
+    var hustleId: String,
+    var ignored: Boolean = false
 )

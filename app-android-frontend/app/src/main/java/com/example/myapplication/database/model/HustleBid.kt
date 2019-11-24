@@ -15,5 +15,5 @@ data class HustleBid(
     val description: String,
     val bidCost: Int,
     val timestamp: String,
-    val hustleId: String
+    var hustleId: String
 )

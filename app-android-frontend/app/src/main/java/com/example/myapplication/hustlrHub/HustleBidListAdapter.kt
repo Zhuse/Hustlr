@@ -31,6 +31,7 @@ class HustleBidListAdapter(private val myHustlrId: String): RecyclerView.Adapter
 
     override fun onBindViewHolder(holder: HustleBidViewHolder, position: Int) {
         val bid = bids[position]
+        if(hustles.isEmpty()) return
         val hustle = hustles.first { hustle -> hustle._id == bid.hustleId }
 
         val descriptionEndIndex: Int = if(bid.description.length < 25) bid.description.length else 25

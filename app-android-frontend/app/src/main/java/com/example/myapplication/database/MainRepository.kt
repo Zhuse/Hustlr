@@ -124,18 +124,19 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
         withContext(Dispatchers.IO) {
             val hustle = database.hustleDao.get(bid.hustleId)!!
             val patchRequest = HustleModel.HustlePatchRequestModel(bid.userId, "in_prog")
-            val patchResponse = hustleApi.updateHustle(hustle.providerId,
-                    hustle._id,
-                    HustleModel.HustlePatchRequest(HustleModel.HustlePatchRequestProperties(patchRequest)))
-                .execute()
-
-            if(!patchResponse.isSuccessful) {
-                Log.w(TAG, "Update hustle failed")
-                return@withContext
-            }
-
-            val updatedHustle = patchResponse.body()!!.properties.hustle
-            database.hustleDao.update(updatedHustle)
+            // TODO: Waiting for backend verification
+//            val patchResponse = hustleApi.updateHustle(hustle.providerId,
+//                    hustle._id,
+//                    HustleModel.HustlePatchRequest(HustleModel.HustlePatchRequestProperties(patchRequest)))
+//                .execute()
+//
+//            if(!patchResponse.isSuccessful) {
+//                Log.w(TAG, "Update hustle failed")
+//                return@withContext
+//            }
+//
+//            val updatedHustle = patchResponse.body()!!.properties.hustle
+//            database.hustleDao.update(updatedHustle)
         }
     }
 

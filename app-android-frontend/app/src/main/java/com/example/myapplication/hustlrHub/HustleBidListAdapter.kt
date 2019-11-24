@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
@@ -52,10 +53,12 @@ class HustleBidListAdapter(private val myHustlrId: String,
 
         if(actionButtonVisibility == View.VISIBLE) {
             holder.itemView.acceptBidButton.setOnClickListener {
+                Toast.makeText(it.context, "Accepting bid...", Toast.LENGTH_SHORT).show()
                 bidAcceptedHandler?.invoke(bid)
             }
 
             holder.itemView.ignoreBidButton.setOnClickListener {
+                Toast.makeText(it.context, "Rejecting bid...", Toast.LENGTH_SHORT).show()
                 ignoreBidHandler?.invoke(bid)
             }
         }

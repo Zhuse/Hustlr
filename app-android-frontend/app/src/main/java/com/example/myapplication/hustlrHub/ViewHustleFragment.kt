@@ -57,13 +57,8 @@ class ViewHustleFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         item?.let {
-            when(it.itemId) {
-                android.R.id.home -> {
-                    findNavController().navigate(R.id.action_navigation_view_hustle_to_navigation_available_hustles)
-                }
-                else -> {
-
-                }
+            if (it.itemId == android.R.id.home) {
+                findNavController().navigate(R.id.action_navigation_view_hustle_to_navigation_available_hustles)
             }
         }
         return super.onOptionsItemSelected(item)

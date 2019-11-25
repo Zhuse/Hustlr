@@ -27,8 +27,8 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
     private val accountManager: AccountManager by lazy { AccountManager.get(application) }
     private var time: Long = 0
 
-    private val myUserId: String = accountManager.getUserData(accountManager.accounts[0], "userId")
-    private val myUsername: String = accountManager.getUserData(accountManager.accounts[0], "username")
+    private val myUserId: String = accountManager.getUserData(accountManager.accounts[0], KEY_ID)
+    private val myUsername: String = accountManager.getUserData(accountManager.accounts[0], KEY_NAME)
 
     val messageData: MutableLiveData<Message> = MutableLiveData()
 
@@ -41,9 +41,9 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
         val userId: String
 
         try {
-            message = data.getString("message")
-            userId = data.getString("userId")
-            username = data.getString("username")
+            message = data.getString(KEY_MESSAGE)
+            userId = data.getString(KEY_NAME)
+            username = data.getString(KEY_ID)
 
             if (userId == myUserId) {
                 messageData.postValue(Message(message, User(username, UserType.SENDER)))
@@ -94,10 +94,10 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
         time = System.currentTimeMillis()
         val socketInfo = JSONObject()
         try {
-            socketInfo.put("message", message)
-            socketInfo.put("username", myUsername)
-            socketInfo.put("userId", myUserId)
-        } catch(e: Exception) {
+            socketInfo.put(KEY_MESSAGE, message)
+            socketInfo.put(KEY_NAME, myUsername)
+            socketInfo.put(KEY_ID, myUserId)
+        } catch(e: JSONException) {
             Log.e(TAG, "error sending message", e)
         }
         messageSocket!!.emit(EVENT_MESSAGE, socketInfo)
@@ -117,5 +117,8 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
     companion object {
         const val TAG = "MessageViewModel"
         const val EVENT_MESSAGE = "chat message"
+        const val KEY_MESSAGE = "message"
+        const val KEY_NAME = "username"
+        const val KEY_ID = "userId"
     }
 }

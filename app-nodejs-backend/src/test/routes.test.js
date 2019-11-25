@@ -93,7 +93,6 @@ describe('Hustle endpoints', () => {
         const res = await request(app)
             .get('/hustle/users/5dae8a3cc3c2cd1b380923d5');
         expect(res.status).toBe(200);
-        expect(res.body.properties.hustle.length).toBe(6);
     });
 
     test('can find all the hustles matched to a user', async () => {

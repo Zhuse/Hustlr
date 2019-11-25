@@ -26,4 +26,7 @@
     <string name="view_hustle_submit_bid">Submit Bid for Hustle</string>
     <string name="view_hustle_increment_bid">Increment value of bid</string>
     <string name="view_hustle_decrement_bid">Decrement value of bid</string>
+    <string name="bids_submitted_text">Bids Submitted</string>
+    <string name="bids_received_text">Bids Received</string>
+    <string name="past_hustles_text">Past Hustles</string>
 </resources>

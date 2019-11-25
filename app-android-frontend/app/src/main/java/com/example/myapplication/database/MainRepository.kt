@@ -4,6 +4,7 @@ import android.accounts.AccountManager
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.myapplication.HustleCategory
 import com.example.myapplication.auth.api.UserApi
 import com.example.myapplication.database.api.HustleApi
@@ -24,18 +25,17 @@ import kotlinx.coroutines.withContext
  * persistent data.
  */
 class MainRepository private  constructor(private val database: MainDatabase, private val application: Application) {
-    var hustles: LiveData<List<Hustle>> = database.hustleDao.getAll()
-    var hustleBids: LiveData<List<HustleBid>> = database.hustleBidDao.getAll()
-    var hustlrs: LiveData<List<Hustlr>> = database.hustlrDao.getAll()
-
     private val accountManager: AccountManager by lazy { AccountManager.get(application) }
-
-//    var myHustlrId: Long = 1 // TODO: Change this
     var myHustlrId: String = accountManager.getUserData(accountManager.accounts[0], "userId")
 
+    var hustles: LiveData<List<Hustle>> = database.hustleDao.getAll()
+    var biddableHustles: LiveData<List<Hustle>> = database.hustleDao.getAllBiddableHustles(myHustlrId)
+    var hustlrs: LiveData<List<Hustlr>> = database.hustlrDao.getAll()
+    var bidsSubmitted: LiveData<List<HustleBid>> = database.hustleBidDao.getHustleBidsByBidder(myHustlrId)
+    var bidsReceived: MutableLiveData<List<HustleBid>> = MutableLiveData()
+    var hustlesPosted: LiveData<List<Hustle>> = database.hustleDao.getHustlesWePosted(myHustlrId)
+
     // Networking Stuff
-    private var postHustleDisposable: Disposable? = null
-    private var getHustlesDisposable: Disposable? = null
     private val hustleApi: HustleApi by lazy { HustleApi.create() }
 
     /**
@@ -49,7 +49,7 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
 
             if(response.isSuccessful) {
                 val newHustles = response.body()
-                database.hustleDao.deleteAll()
+                database.hustleDao.deleteAllBiddableHustles(myHustlrId)
                 database.hustleDao.insertAll(newHustles!!.properties.hustles)
             } else if(!response.isSuccessful) {
                 Log.i(TAG, "Get Hustles failed")
@@ -70,29 +70,93 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
     }
 
     /**
-     * Refresh the hustleBids stored in the offline database
+     * Refresh the hustleBids received and submitted
      */
     suspend fun refreshHustleBids() {
         withContext(Dispatchers.IO) {
-            // Fetch data from the REST Api
+            val response = hustleApi.getHustlesByUser(myHustlrId).execute()
 
-            // Store the data into the local database
+            if(!response.isSuccessful) {
+                Log.i(TAG, "Refresh Hustle Bids failed")
+                return@withContext
+            }
+
+            val postedHustles = response.body()!!.properties.hustles
+            database.hustleDao.insertAll(postedHustles)
+
+            /* Start with bids on hustles we've posted */
+            val hustleBids = mutableListOf<HustleBid>()
+            val newBidsReceived = mutableListOf<HustleBid>()
+            for(hustle in postedHustles) {
+                hustle.bids.forEach { bid -> bid.hustleId = hustle._id }
+                hustleBids.addAll(hustle.bids)
+                newBidsReceived.addAll(hustle.bids.filter { !it.ignored})
+            }
+            bidsReceived.postValue(newBidsReceived)
+
+            /* Now add bids for hustles we've bid on */
+            val hustlesBidOn = biddableHustles.value!!
+            for(hustle in hustlesBidOn) {
+                val ourBidIndex = hustle.bids.indexOfFirst { bid -> bid.userId.contentEquals(myHustlrId) }
+                if(ourBidIndex == -1) continue
+                val bid = hustle.bids[ourBidIndex]
+                bid.hustleId = hustle._id
+                hustleBids.add(bid)
+            }
+
+            database.hustleBidDao.insertAll(hustleBids)
+        }
+    }
+
+    /**
+     * Mark a hustleBid as ignored
+     */
+    suspend fun ignoreHustleBid(bid: HustleBid) {
+        withContext(Dispatchers.IO) {
+            database.hustleBidDao.update(bid)
+        }
+    }
+
+    /**
+     * Accept a hustleBid
+     */
+    suspend fun acceptHustleBid(bid: HustleBid) {
+        withContext(Dispatchers.IO) {
+            val hustle = database.hustleDao.get(bid.hustleId)!!
+            val patchRequest = HustleModel.HustlePatchRequestModel(bid.userId, "in_prog")
+            // TODO: Waiting for backend verification
+//            val patchResponse = hustleApi.updateHustle(hustle.providerId,
+//                    hustle._id,
+//                    HustleModel.HustlePatchRequest(HustleModel.HustlePatchRequestProperties(patchRequest)))
+//                .execute()
+//
+//            if(!patchResponse.isSuccessful) {
+//                Log.w(TAG, "Update hustle failed")
+//                return@withContext
+//            }
+//
+//            val updatedHustle = patchResponse.body()!!.properties.hustle
+//            database.hustleDao.update(updatedHustle)
         }
     }
 
     /**
      * Post a new hustleBid and store it in the offline database
      */
-    suspend fun postHustleBid(bid: HustleBid) {
+    suspend fun postHustleBid(description: String, bidCost: Int, hustleId: String) {
         withContext(Dispatchers.IO) {
             // Post the bid via REST Api
+            val hustleBidBody = HustleModel.HustleBidRequest(HustleModel.HustleBidRequestProperties(description, bidCost))
+            val response = hustleApi.postHustleBid(myHustlrId, hustleId, hustleBidBody).execute()
 
-
-            // Get the Posted bid (with the correct ID)
-            val postedBid = bid // Change this
-
-            // Store it into the local database
-            database.hustleBidDao.insert(postedBid)
+            if(response.isSuccessful) {
+//                var updatedHustle = response.body()!!
+                //TODO: Issue with the backend not sending back the updated Hustle
+//                database.hustleDao.update(updatedHustle)
+                refreshHustles()
+            } else {
+                Log.w(TAG, "Post HustleBid failed")
+            }
         }
     }
 

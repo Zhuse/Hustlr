@@ -18,7 +18,8 @@ interface HustleApi {
      * Get a list of hustles given a user id
      */
     @GET("hustle/users/{userId}")
-    fun getHustlesByUser(@Path("userId") hustlrId: String) : Call<List<Hustle>>
+//    fun getHustlesByUser(@Path("userId") hustlrId: String) : Call<List<Hustle>>
+    fun getHustlesByUser(@Path("userId") hustlrId: String) : Call<HustleModel.HustleResponse>
 
     /**
      * Get all hustles that a user has been matched with
@@ -37,7 +38,13 @@ interface HustleApi {
      * Update an existing hustle
      */
     @PATCH("hustle/users/{userId}/{hustleId}")
-    fun updateHustle(@Path("userId") hustlrId: String, @Path("hustleId") hustleId: String, @Body hustle: Hustle) : Call<Hustle>
+    fun updateHustle(@Path("userId") hustlrId: String, @Path("hustleId") hustleId: String, @Body hustle: HustleModel.HustlePatchRequest) : Call<HustleModel.HustlePatchResponse>
+
+    /**
+     * Post a hustle bid
+     */
+    @POST("hustle/users/{userId}/{hustleId}/bid")
+    fun postHustleBid(@Path("userId") userId: String, @Path("hustleId") hustleId: String, @Body hustleBid: HustleModel.HustleBidRequest) : Call<Hustle>
 
     companion object {
         /**

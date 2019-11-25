@@ -2,23 +2,98 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
+
     <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/frameLayout2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".hustlrHub.HustlrHubFragment" >
+            tools:context=".hustlrHub.HustlrHubFragment">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/createNewHustleButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
                 android:clickable="true"
+                android:focusable="true"
                 android:src="@drawable/ic_add_black_24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+        <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintBottom_toTopOf="@+id/createNewHustleButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bidsReceivedList" />
+
+        <TextView
+                android:id="@+id/bidsSubmitted"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bids_submitted_text"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/bidsSubmittedList"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:focusable="true" />
+                app:layout_constraintVertical_bias="0.110000014"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+                android:id="@+id/bidsReceived"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/bids_received_text"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/bidsReceivedList"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bidsSubmittedList" />
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/bidsSubmittedList"
+                android:layout_width="match_parent"
+                android:layout_height="190dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toTopOf="@+id/bidsReceived"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bidsSubmitted">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <View
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintBottom_toTopOf="@+id/bidsReceived"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bidsSubmittedList" />
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/bidsReceivedList"
+                android:layout_width="match_parent"
+                android:layout_height="190dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toTopOf="@+id/divider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bidsReceived">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

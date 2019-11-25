@@ -26,7 +26,7 @@ class AvailableHustlesViewModel(application: Application) : AndroidViewModel(app
 
     // Do a bunch of other view model kinda stuff
 
-    var hustles: LiveData<List<Hustle>> = repository.hustles
+    var hustles: LiveData<List<Hustle>> = repository.biddableHustles
 
     init {
         initialize()

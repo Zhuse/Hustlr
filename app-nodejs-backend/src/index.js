@@ -36,3 +36,5 @@ const server = app.listen(3000, () => {});
 
 const socketio = require("socket.io")(server);
 services.chatService.startSockets(socketio);
+
+module.exports.app = app;

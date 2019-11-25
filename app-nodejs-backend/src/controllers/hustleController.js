@@ -29,7 +29,7 @@ exports.findById = function (req, res) {
             const preSend = {
                 userId: req.params.userId,
                 properties: {
-                    hustle: result
+                    hustles: result
                 }
             };
             return res.status(200).send(preSend);
@@ -51,6 +51,7 @@ exports.findMatches = function (req, res) {
 
 exports.update = function (req, res) {
     Hustle.findOneAndUpdate({ providerId: req.params.userId, _id: req.params.hustleId }, { $set: req.body.properties.hustle }, { runValidators: true, new: true })
+        .populate("bids")
         .then((result) => {
             if (!result) {
                 return res.status(400).send({ message: "Hustle or User does not exist." });

@@ -3,6 +3,7 @@ package com.example.myapplication.database.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.sql.Date
 
 /**
  * Status of a Hustle.
@@ -25,8 +26,8 @@ data class Hustle(
     @ColumnInfo(name = "provider")
     val providerId: String,
 
-    @ColumnInfo(name = "date_posted")
-    val datePosted: Long = System.currentTimeMillis(),
+//    @ColumnInfo(name = "date_posted")
+//    val datePosted: String,
 
     @ColumnInfo(name = "price")
     val price: Int,
@@ -42,5 +43,11 @@ data class Hustle(
     val location: String,
 
     @ColumnInfo(name = "status")
-    val status: String
+    val status: String,
+
+    @ColumnInfo(name = "hustlr_id")
+    val hustlrId: String?,
+
+    @ColumnInfo(name = "bids")
+    val bids: List<HustleBid>
 )

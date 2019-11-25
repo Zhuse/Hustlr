@@ -1,0 +1,26 @@
+matrix:
+  include:
+    - language: node_js
+      node_js:
+        - 10
+      before_install:
+        - cd app-nodejs-backend
+      install:
+        - npm install
+      script:
+        - jest --forceExit
+
+    - language: android
+      dist: trusty
+      android:
+        components:
+          - build-tools-28.0.3
+          - android-28
+          - sys-img-x86-android-26
+      before_install:
+        - cd app-android-frontend
+      script:
+        - ./gradlew test
+
+notifications:
+  email: false

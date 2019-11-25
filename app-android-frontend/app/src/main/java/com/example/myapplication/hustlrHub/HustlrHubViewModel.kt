@@ -2,6 +2,7 @@ package com.example.myapplication.hustlrHub
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.myapplication.database.MainDatabase
 import com.example.myapplication.database.MainRepository
@@ -24,7 +25,25 @@ class HustlrHubViewModel(application: Application) : AndroidViewModel(applicatio
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
     private val backgroundScope = CoroutineScope(Dispatchers.IO + viewModelJob)
 
-    private val hustles = repository.hustles
+    val hustles = repository.hustles
+
+    var bidsSubmitted: LiveData<List<HustleBid>> = repository.bidsSubmitted
+    var bidsReceived: LiveData<List<HustleBid>> = repository.bidsReceived
+
+    val myHustlrId = repository.myHustlrId
+
+    init {
+        initalize()
+    }
+
+    /**
+     * Initial setup for viewmodel
+     */
+    private fun initalize() {
+        backgroundScope.launch {
+            refreshHustleBids()
+        }
+    }
 
 
     /**
@@ -39,11 +58,27 @@ class HustlrHubViewModel(application: Application) : AndroidViewModel(applicatio
     /**
      * Post a new hustle bid
      */
-    fun postHustleBid(hustleId: String, bidPrice: Int) {
-        val bid: HustleBid = HustleBid(hustleId = hustleId, bidPrice = bidPrice,
-            bidderId = repository.myHustlrId)
+    fun postHustleBid(hustleId: String, bidCost: Int, description: String) {
         backgroundScope.launch {
-            repository.postHustleBid(bid)
+            repository.postHustleBid(description, bidCost, hustleId)
+        }
+    }
+
+    /**
+     * Set a bid as ignored
+     */
+    fun ignoreBid(bid: HustleBid) {
+        backgroundScope.launch {
+            repository.ignoreHustleBid(bid)
+        }
+    }
+
+    /**
+     * Accept a bid
+     */
+    fun acceptBid(bid: HustleBid) {
+        backgroundScope.launch {
+            repository.acceptHustleBid(bid)
         }
     }
 
@@ -54,14 +89,23 @@ class HustlrHubViewModel(application: Application) : AndroidViewModel(applicatio
                       location: String, category: String) {
         val hustle: Hustle = Hustle(title = title, providerId = repository.myHustlrId,
             price = price, description = description, location = location, category = category,
-            status = HustleStatus.posted.toString())
+            status = HustleStatus.posted.toString(), bids = listOf(), hustlrId = "")
         backgroundScope.launch {
             repository.postHustle(hustle)
         }
     }
 
+    /**
+     * Refresh hustle bids
+     */
+    private suspend fun refreshHustleBids() = repository.refreshHustleBids()
+
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
+    }
+
+    companion object {
+        val TAG = this::class.java.canonicalName
     }
 }

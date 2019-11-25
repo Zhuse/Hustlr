@@ -36,7 +36,12 @@ class HustleBidListAdapter(private val myHustlrId: String,
     override fun onBindViewHolder(holder: HustleBidViewHolder, position: Int) {
         val bid = bids[position]
         if(hustles.isEmpty()) return
-        val hustle = hustles.first { hustle -> hustle._id == bid.hustleId }
+        val filteredHustles = hustles.filter { hustle -> hustle._id == bid.hustleId }
+        if(filteredHustles.isEmpty()) {
+            return
+        }
+//        val hustle = hustles.first { hustle -> hustle._id == bid.hustleId
+        val hustle = filteredHustles[0]
 
         val descriptionEndIndex: Int = if(bid.description.length < 25) bid.description.length else 25
 //        val descriptionSnippet = StringBuilder(item.description.substring(0, 30))

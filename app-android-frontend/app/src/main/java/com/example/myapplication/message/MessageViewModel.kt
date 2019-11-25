@@ -42,8 +42,8 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
 
         try {
             message = data.getString(KEY_MESSAGE)
-            userId = data.getString(KEY_NAME)
-            username = data.getString(KEY_ID)
+            userId = data.getString(KEY_ID)
+            username = data.getString(KEY_NAME)
 
             if (userId == myUserId) {
                 messageData.postValue(Message(message, User(username, UserType.SENDER)))

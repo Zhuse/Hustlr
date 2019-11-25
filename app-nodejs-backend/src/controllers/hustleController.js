@@ -51,6 +51,7 @@ exports.findMatches = function (req, res) {
 
 exports.update = function (req, res) {
     Hustle.findOneAndUpdate({ providerId: req.params.userId, _id: req.params.hustleId }, { $set: req.body.properties.hustle }, { runValidators: true, new: true })
+        .populate("bids")
         .then((result) => {
             if (!result) {
                 return res.status(400).send({ message: "Hustle or User does not exist." });

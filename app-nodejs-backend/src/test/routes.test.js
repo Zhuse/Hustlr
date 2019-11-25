@@ -1,62 +1,62 @@
-const request = require('supertest');
-const index = require('../index');
+const request = require("supertest");
+const index = require("../index");
 const app = index.app;
 
-describe('User Endpoints', () => {
-    test('can create an user with the given fields', async () => {
+describe("User Endpoints", () => {
+    test("can create an user with the given fields", async () => {
         const res = await request(app)
-            .post('/user')
+            .post("/user")
             .send({
                 properties: {
-                    email: 'test@test.ca',
-                    name: 'test',
-                    preferredCategories: 'homework'
-                },
+                    email: "test@test.ca",
+                    name: "test",
+                    preferredCategories: "homework"
+                }
             });
         expect(res.status).toBe(200);
-        expect(res.body.properties.email).toBe('test@test.ca');
+        expect(res.body.properties.email).toBe("test@test.ca");
     });
 
-    test('create returns 400 when required fields are missing', async () => {
+    test("create returns 400 when required fields are missing", async () => {
         const res = await request(app)
-            .post('/user')
+            .post("/user")
             .send({
                 properties: {
-                    email: 'missingNameField@test.ca'
-                },
+                    email: "missingNameField@test.ca"
+                }
             });
         expect(res.status).toBe(400);
     });
 
-    test('can find an user given a userid', async () => {
+    test("can find an user given a userid", async () => {
         const res = await request(app)
-            .get('/user/5dae51be848936125abdcfd3');
+            .get("/user/5dae51be848936125abdcfd3");
         expect(res.status).toBe(201);
-        expect(res.body.properties.email).toBe('aut@gmail.com');
+        expect(res.body.properties.email).toBe("aut@gmail.com");
     });
 
-    test('returns 400 when userId does not exist', async () => {
+    test("returns 400 when userId does not exist", async () => {
         const res = await request(app)
-            .get('/user/doesnotexist');
+            .get("/user/doesnotexist");
         expect(res.status).toBe(400);
     });
 
-    test('update successfully updates an user', async () => {
+    test("update successfully updates an user", async () => {
         const res = await request(app)
-            .patch('/user/5dae51be848936125abdcfd3')
+            .patch("/user/5dae51be848936125abdcfd3")
             .send({
                 properties: {
-                    preferredCategories: 'lifting'
-                },
+                    preferredCategories: "lifting"
+                }
             });
         expect(res.status).toBe(201);
     });
 });
 
-describe('Hustle endpoints', () => {
-    test('can create a hustle for a user', async (done) => {
+describe("Hustle endpoints", () => {
+    test("can create a hustle for a user", async (done) => {
         const res = await request(app)
-            .post('/hustle/users/5dae51be848936125abdcfd3')
+            .post("/hustle/users/5dae51be848936125abdcfd3")
             .send({
                 properties: {
                     hustle: {
@@ -75,13 +75,13 @@ describe('Hustle endpoints', () => {
         done();
     });
 
-    test('hustle create returns 400 when required fields are missing', async () => {
+    test("hustle create returns 400 when required fields are missing", async () => {
         const res = await request(app)
-            .post('/hustle/users/5dae51be848936125abdcfd3')
+            .post("/hustle/users/5dae51be848936125abdcfd3")
             .send({
                 properties: {
                     hustle: {
-                        title: "unit test",
+                        title: "unit test"
                     }
                 }
             });
@@ -89,22 +89,22 @@ describe('Hustle endpoints', () => {
         expect(res.status).toBe(400);
     });
 
-    test('can find all the hustles belonging to a user', async () => {
+    test("can find all the hustles belonging to a user", async () => {
         const res = await request(app)
-            .get('/hustle/users/5dae8a3cc3c2cd1b380923d5');
+            .get("/hustle/users/5dae8a3cc3c2cd1b380923d5");
         expect(res.status).toBe(200);
     });
 
-    test('can find all the hustles matched to a user', async () => {
+    test("can find all the hustles matched to a user", async () => {
         const res = await request(app)
-            .get('/hustle/users/5dae8a3cc3c2cd1b380923d5/matched');
+            .get("/hustle/users/5dae8a3cc3c2cd1b380923d5/matched");
         expect(res.status).toBe(200);
         expect(res.body.properties.hustles.length).toBe(4);
     });
 
-    test('can update a hustle', async () => {
+    test("can update a hustle", async () => {
         const res = await request(app)
-            .patch('/hustle/users/5dae51be848936125abdcfd3/5dd2c480b35a63a4d45bb041')
+            .patch("/hustle/users/5dae51be848936125abdcfd3/5dd2c480b35a63a4d45bb041")
             .send({
                 properties: {
                     hustle: {
@@ -113,13 +113,12 @@ describe('Hustle endpoints', () => {
                 }
             });
         expect(res.status).toBe(200);
-        expect(res.body.properties.hustle.title).toBe('unit test update');
-
+        expect(res.body.properties.hustle.title).toBe("unit test update");
     });
 
-    test('can bid on a hustle', async () => {
+    test("can bid on a hustle", async () => {
         const res = await request(app)
-            .post('/hustle/users/5dae51be848936125abdcfd3/5dd2c480b35a63a4d45bb041/bid')
+            .post("/hustle/users/5dae51be848936125abdcfd3/5dd2c480b35a63a4d45bb041/bid")
             .send({
                 properties: {
                     description: "unit test bid",
@@ -129,8 +128,3 @@ describe('Hustle endpoints', () => {
         expect(res.status).toBe(200);
     });
 });
-
-
-
-
-

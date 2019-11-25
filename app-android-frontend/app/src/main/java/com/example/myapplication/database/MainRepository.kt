@@ -76,35 +76,34 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
         withContext(Dispatchers.IO) {
             val response = hustleApi.getHustlesByUser(myHustlrId).execute()
 
-            if(!response.isSuccessful) {
-                Log.i(TAG, "Refresh Hustle Bids failed")
-                return@withContext
+            if(response.isSuccessful) {
+                val postedHustles = response.body()!!.properties.hustles
+                database.hustleDao.insertAll(postedHustles)
+
+                /* Start with bids on hustles we've posted */
+                val hustleBids = mutableListOf<HustleBid>()
+                val newBidsReceived = mutableListOf<HustleBid>()
+                for(hustle in postedHustles) {
+                    hustle.bids?.forEach { bid -> bid.hustleId = hustle._id } ?: continue
+                    hustleBids.addAll(hustle.bids)
+                    newBidsReceived.addAll(hustle.bids.filter { !it.ignored})
+                }
+                bidsReceived.postValue(newBidsReceived)
+
+                /* Now add bids for hustles we've bid on */
+                val hustlesBidOn = biddableHustles.value!!
+                for(hustle in hustlesBidOn) {
+                    val ourBidIndex = hustle.bids?.indexOfFirst { bid -> bid.userId.contentEquals(myHustlrId) } ?: continue
+                    if(ourBidIndex == -1) continue
+                    val bid = hustle.bids[ourBidIndex]
+                    bid.hustleId = hustle._id
+                    hustleBids.add(bid)
+                }
+
+                database.hustleBidDao.insertAll(hustleBids)
+            } else {
+                Log.i(TAG, "Refresh Hustle Bids Failed")
             }
-
-            val postedHustles = response.body()!!.properties.hustles
-            database.hustleDao.insertAll(postedHustles)
-
-            /* Start with bids on hustles we've posted */
-            val hustleBids = mutableListOf<HustleBid>()
-            val newBidsReceived = mutableListOf<HustleBid>()
-            for(hustle in postedHustles) {
-                hustle.bids?.forEach { bid -> bid.hustleId = hustle._id } ?: continue
-                hustleBids.addAll(hustle.bids)
-                newBidsReceived.addAll(hustle.bids.filter { !it.ignored})
-            }
-            bidsReceived.postValue(newBidsReceived)
-
-            /* Now add bids for hustles we've bid on */
-            val hustlesBidOn = biddableHustles.value!!
-            for(hustle in hustlesBidOn) {
-                val ourBidIndex = hustle.bids?.indexOfFirst { bid -> bid.userId.contentEquals(myHustlrId) } ?: continue
-                if(ourBidIndex == -1) continue
-                val bid = hustle.bids[ourBidIndex]
-                bid.hustleId = hustle._id
-                hustleBids.add(bid)
-            }
-
-            database.hustleBidDao.insertAll(hustleBids)
         }
     }
 

@@ -13,23 +13,6 @@ import com.google.gson.Gson
 class Converters {
 
     /**
-     * Convert from a Hustle to a JSON string
-     */
-    @TypeConverter
-    fun hustleToJson(value: Hustle?) : String {
-        return Gson().toJson(value)
-    }
-
-    /**
-     * Convert from a JSON string to a Hustle
-     */
-    @TypeConverter
-    fun jsonToHustle(value: String) : Hustle? {
-        val item = Gson().fromJson(value, Hustle::class.java) as Hustle
-        return item
-    }
-
-    /**
      * Convert from a list of Hustles to a JSON string
      */
     @TypeConverter

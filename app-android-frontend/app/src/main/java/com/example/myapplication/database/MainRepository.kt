@@ -128,13 +128,12 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
                     HustleModel.HustlePatchRequest(HustleModel.HustlePatchRequestProperties(patchRequest)))
                 .execute()
 
-            if(!patchResponse.isSuccessful) {
+            if(patchResponse.isSuccessful) {
+                val updatedHustle = patchResponse.body()!!.properties.hustle
+                database.hustleDao.update(updatedHustle)
+            } else {
                 Log.w(TAG, "Update hustle failed")
-                return@withContext
             }
-
-            val updatedHustle = patchResponse.body()!!.properties.hustle
-            database.hustleDao.update(updatedHustle)
         }
     }
 

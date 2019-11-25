@@ -26,6 +26,7 @@ class HustlrHubViewModel(application: Application) : AndroidViewModel(applicatio
     private val backgroundScope = CoroutineScope(Dispatchers.IO + viewModelJob)
 
     val hustles = repository.hustles
+    val biddableHustles = repository.biddableHustles
 
     var bidsSubmitted: LiveData<List<HustleBid>> = repository.bidsSubmitted
     var bidsReceived: LiveData<List<HustleBid>> = repository.bidsReceived
@@ -52,6 +53,15 @@ class HustlrHubViewModel(application: Application) : AndroidViewModel(applicatio
      */
     fun getHustle(id: String) : Hustle {
         val hustlesList = hustles.value
+        return hustlesList!!.filter { hustle -> hustle._id.contentEquals(id) }[0]
+    }
+
+    /**
+     * Get a biddable hustle by specifying its ID
+     * @param id Must be a valid ID for a hustle already cached locally
+     */
+    fun getBiddableHustle(id: String) : Hustle {
+        val hustlesList = biddableHustles.value
         return hustlesList!!.filter { hustle -> hustle._id.contentEquals(id) }[0]
     }
 

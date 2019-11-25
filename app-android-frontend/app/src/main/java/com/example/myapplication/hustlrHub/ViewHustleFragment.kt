@@ -46,7 +46,8 @@ class ViewHustleFragment : Fragment() {
         // Get a reference to the viewmodel
         vm = ViewModelProviders.of(this).get(HustlrHubViewModel::class.java)
         val hustleId: String = arguments!!.getString("hustleId")
-        targetHustle = vm.getHustle(hustleId)
+//        targetHustle = vm.getHustle(hustleId)
+        targetHustle = vm.getBiddableHustle(hustleId)
 
         // Initialize Fields
         initializeViewFields(targetHustle)

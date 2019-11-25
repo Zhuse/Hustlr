@@ -88,7 +88,7 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
             val hustleBids = mutableListOf<HustleBid>()
             val newBidsReceived = mutableListOf<HustleBid>()
             for(hustle in postedHustles) {
-                hustle.bids.forEach { bid -> bid.hustleId = hustle._id }
+                hustle.bids?.forEach { bid -> bid.hustleId = hustle._id } ?: continue
                 hustleBids.addAll(hustle.bids)
                 newBidsReceived.addAll(hustle.bids.filter { !it.ignored})
             }
@@ -97,7 +97,7 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
             /* Now add bids for hustles we've bid on */
             val hustlesBidOn = biddableHustles.value!!
             for(hustle in hustlesBidOn) {
-                val ourBidIndex = hustle.bids.indexOfFirst { bid -> bid.userId.contentEquals(myHustlrId) }
+                val ourBidIndex = hustle.bids?.indexOfFirst { bid -> bid.userId.contentEquals(myHustlrId) } ?: continue
                 if(ourBidIndex == -1) continue
                 val bid = hustle.bids[ourBidIndex]
                 bid.hustleId = hustle._id
@@ -173,7 +173,7 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
             val response = hustleApi.postHustle(hustle.providerId, requestBody).execute()
 
             if(response.isSuccessful) {
-                var postedHustle = response.body()!!
+                var postedHustle = response.body()!!.properties.hustle
                 database.hustleDao.insert(postedHustle)
             } else {
                 Log.w(TAG, "Post Hustle failed")

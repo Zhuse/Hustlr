@@ -49,5 +49,5 @@ data class Hustle(
     val hustlrId: String?,
 
     @ColumnInfo(name = "bids")
-    val bids: List<HustleBid>
+    val bids: List<HustleBid>?
 )

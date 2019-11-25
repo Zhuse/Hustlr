@@ -32,7 +32,7 @@ interface HustleApi {
      * Post a new hustle
      */
     @POST("hustle/users/{userId}")
-    fun postHustle(@Path("userId") providerId: String, @Body hustle: HustleModel.HustleRequest) : Call<Hustle>
+    fun postHustle(@Path("userId") providerId: String, @Body hustle: HustleModel.HustleRequest) : Call<HustleModel.HustlePatchResponse>
 
     /**
      * Update an existing hustle

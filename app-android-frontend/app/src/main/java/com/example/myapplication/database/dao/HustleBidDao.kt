@@ -13,13 +13,13 @@ interface HustleBidDao {
     /**
      * Insert a hustle bid
      */
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(hustleBid: HustleBid)
 //
     /**
      * Insert a list of hustle bids
      */
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertAll(bids: List<HustleBid>)
 //
     /**

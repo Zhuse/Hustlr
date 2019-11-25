@@ -62,7 +62,7 @@
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/bidsSubmittedList"
                 android:layout_width="match_parent"
-                android:layout_height="190dp"
+                android:layout_height="150dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toTopOf="@+id/bidsReceived"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -85,7 +85,7 @@
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/bidsReceivedList"
                 android:layout_width="match_parent"
-                android:layout_height="190dp"
+                android:layout_height="150dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toTopOf="@+id/divider"
                 app:layout_constraintEnd_toEndOf="parent"

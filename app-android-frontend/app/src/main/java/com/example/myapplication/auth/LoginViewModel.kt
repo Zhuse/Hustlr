@@ -100,6 +100,8 @@ class LoginViewModel(application: Application): AndroidViewModel(application) {
                                     putString("scope", tokenResp.scope)
                                     putLong("accessTokenExpiry", tokenResp.accessTokenExpirationTime!!)
                                     putString("userId", userResp._id)
+                                    putString("email", userResp.properties.email)
+                                    putString("username", userResp.properties.name)
                                 }
                                 am.addAccountExplicitly(account, "", userData)
 

@@ -18,8 +18,9 @@ object Model {
      *
      * @param score - user ELO score
      * @param email - user email
+     * @param name - user name
      */
-    data class Properties(val score: Int, val email: String)
+    data class Properties(val score: Int, val email: String, val name: String)
 
     /**
      * Optional object from backend responses.

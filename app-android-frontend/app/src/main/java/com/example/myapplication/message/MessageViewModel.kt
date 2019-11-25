@@ -1,8 +1,11 @@
 package com.example.myapplication.message
 
+import android.accounts.Account
+import android.accounts.AccountManager
+import android.app.Application
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.myapplication.BASE_URL
 import com.example.myapplication.message.model.Message
 import com.example.myapplication.message.model.User
@@ -11,27 +14,49 @@ import com.github.nkzawa.emitter.Emitter
 import com.github.nkzawa.socketio.client.IO
 import com.github.nkzawa.socketio.client.Socket
 import org.json.JSONException
+import org.json.JSONObject
+import java.lang.Exception
 import java.net.URISyntaxException
 
 /**
  * View Model class that prepares and manages data for MessageListFragment.
  * This class manages the socket connection for chat and sending/receiving messages.
  */
-class MessageViewModel : ViewModel() {
+class MessageViewModel(application: Application) : AndroidViewModel(application) {
+
+    private val accountManager: AccountManager by lazy { AccountManager.get(application) }
+    private var time: Long = 0
+
+    private val myUserId: String = accountManager.getUserData(accountManager.accounts[0], "userId")
+    private val myUsername: String = accountManager.getUserData(accountManager.accounts[0], "username")
 
     val messageData: MutableLiveData<Message> = MutableLiveData()
 
+
     private var messageSocket: Socket? = null
     private val onNewMessage: Emitter.Listener = Emitter.Listener {
-        // TODO: Add logic to differentiate between sender and receiver
-        // val data: JSONObject = it[0] as JSONObject
-        val username: String
+        val data: JSONObject = it[0] as JSONObject
         val message: String
+        val username: String
+        val userId: String
 
         try {
-            username = "" // data.getString("username")
-            message = it[0] as String // data.getString("message")
-            messageData.postValue(Message(message, User(username, UserType.SENDER)))
+            message = data.getString("message")
+            userId = data.getString("userId")
+            username = data.getString("username")
+
+            if (userId == myUserId) {
+                messageData.postValue(Message(message, User(username, UserType.SENDER)))
+            } else {
+                messageData.postValue(Message(message, User(username, UserType.RECIEVER)))
+            }
+
+            time = System.currentTimeMillis() - time
+            if (time < 5000) {
+                Log.i(TAG, "NON-FUNCTIONAL REQUIREMENT PASS: time to send message is $time")
+            } else {
+                Log.e(TAG, "NON-FUNCTIONAL REQUIREMENT FAIL: time to send message is $time")
+            }
         } catch (e: JSONException) {
             Log.e(TAG, "Error parsing message data", e)
         }
@@ -66,7 +91,16 @@ class MessageViewModel : ViewModel() {
      * @param message - message to be sent to socket
      */
     fun sendMessage(message: String) {
-        messageSocket!!.emit(EVENT_MESSAGE, message)
+        time = System.currentTimeMillis()
+        val socketInfo = JSONObject()
+        try {
+            socketInfo.put("message", message)
+            socketInfo.put("username", myUsername)
+            socketInfo.put("userId", myUserId)
+        } catch(e: Exception) {
+            Log.e(TAG, "error sending message", e)
+        }
+        messageSocket!!.emit(EVENT_MESSAGE, socketInfo)
     }
 
     /**

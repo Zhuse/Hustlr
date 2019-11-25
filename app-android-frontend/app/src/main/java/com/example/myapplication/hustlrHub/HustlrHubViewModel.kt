@@ -37,9 +37,6 @@ class HustlrHubViewModel(application: Application) : AndroidViewModel(applicatio
         initalize()
     }
 
-    /**
-     * Initial setup for viewmodel
-     */
     private fun initalize() {
         backgroundScope.launch {
             refreshHustleBids()
@@ -105,9 +102,6 @@ class HustlrHubViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    /**
-     * Refresh hustle bids
-     */
     private suspend fun refreshHustleBids() = repository.refreshHustleBids()
 
     override fun onCleared() {

@@ -1,11 +1,9 @@
 package com.example.myapplication.hustlrHub
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.database.model.Hustle
@@ -52,7 +50,7 @@ class HustleBidListAdapter(private val myHustlrId: String,
         holder.price.text = bid.bidCost.toString()
         holder.descriptionSnippet.text = descriptionSnippet.toString()
 
-        val actionButtonVisibility = if(hustle.providerId.contentEquals(myHustlrId) && hustle.hustlrId == null) View.VISIBLE else View.GONE
+        val actionButtonVisibility = getAcceptRejectButtonVisibility(bid, hustle)
         holder.itemView.acceptBidButton.visibility = actionButtonVisibility
         holder.itemView.ignoreBidButton.visibility = actionButtonVisibility
 
@@ -68,8 +66,17 @@ class HustleBidListAdapter(private val myHustlrId: String,
             }
         }
 
-        var statusText = ""
-        statusText = if(hustle.providerId.contentEquals(myHustlrId)) {
+        val statusText = determineStatusText(bid, hustle)
+        holder.bidStatus.text = statusText
+    }
+
+    private fun getAcceptRejectButtonVisibility(bid: HustleBid, hustle: Hustle) : Int {
+        return if(hustle.providerId.contentEquals(myHustlrId) && hustle.hustlrId == null) View.VISIBLE else View.GONE
+    }
+
+    private fun determineStatusText(bid: HustleBid, hustle: Hustle) : String {
+
+        return if(hustle.providerId.contentEquals(myHustlrId)) {
             when {
                 hustle.hustlrId == null -> "New Bid"
                 hustle.hustlrId == bid.userId -> "Bid Awarded"
@@ -82,13 +89,6 @@ class HustleBidListAdapter(private val myHustlrId: String,
                 else -> "Bid Rejected"
             }
         }
-        holder.bidStatus.text = statusText
-
-//        holder.itemView.setOnClickListener { view ->
-//            var bundle: Bundle = Bundle()
-//            bundle.putString("hustleId", item._id)
-//            view.findNavController().navigate(R.id.action_navigation_available_hustles_to_navigation_view_hustle, bundle)
-//        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : HustleBidViewHolder {

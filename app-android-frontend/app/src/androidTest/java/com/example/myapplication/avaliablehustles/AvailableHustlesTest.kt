@@ -36,10 +36,11 @@ class AvailableHustlesTest {
      */
     @Test
     fun availableHustlesTest() {
+        val availableHustlesText = "Available Hustles"
         val bottomNavigationItemView = onView(
             allOf(
                 withId(R.id.navigation_available_hustles),
-                withContentDescription("Available Hustles"),
+                withContentDescription(availableHustlesText),
                 childAtPosition(
                     childAtPosition(
                         withId(R.id.nav_view),
@@ -54,7 +55,7 @@ class AvailableHustlesTest {
 
         val textView = onView(
             allOf(
-                withText("Available Hustles"),
+                withText(availableHustlesText),
                 childAtPosition(
                     allOf(
                         withId(R.id.action_bar),
@@ -68,7 +69,7 @@ class AvailableHustlesTest {
                 isDisplayed()
             )
         )
-        textView.check(matches(withText("Available Hustles")))
+        textView.check(matches(withText(availableHustlesText)))
     }
 
     private fun childAtPosition(

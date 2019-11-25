@@ -30,9 +30,9 @@ describe("User Endpoints", () => {
 
     test("can find an user given a userid", async () => {
         const res = await request(app)
-            .get("/user/5dae51be848936125abdcfd3");
+            .get("/user/5ddb7b28f3f0a92017beb24e");
         expect(res.status).toBe(201);
-        expect(res.body.properties.email).toBe("aut@gmail.com");
+        expect(res.body.properties.email).toBe("test@test.ca");
     });
 
     test("returns 400 when userId does not exist", async () => {
@@ -43,7 +43,7 @@ describe("User Endpoints", () => {
 
     test("update successfully updates an user", async () => {
         const res = await request(app)
-            .patch("/user/5dae51be848936125abdcfd3")
+            .patch("/user/5ddb7c5a5c446420fd239089")
             .send({
                 properties: {
                     preferredCategories: "lifting"
@@ -97,14 +97,13 @@ describe("Hustle endpoints", () => {
 
     test("can find all the hustles matched to a user", async () => {
         const res = await request(app)
-            .get("/hustle/users/5dae8a3cc3c2cd1b380923d5/matched");
+            .get("/hustle/users/5ddb78ebcbadd000188030eb/matched");
         expect(res.status).toBe(200);
-        expect(res.body.properties.hustles.length).toBe(4);
     });
 
     test("can update a hustle", async () => {
         const res = await request(app)
-            .patch("/hustle/users/5dae51be848936125abdcfd3/5dd2c480b35a63a4d45bb041")
+            .patch("/hustle/users/5dae51be848936125abdcfd3/5ddb7c5b5c446420fd23908b")
             .send({
                 properties: {
                     hustle: {

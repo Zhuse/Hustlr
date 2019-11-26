@@ -37,24 +37,24 @@ interface HustleBidDao {
     /**
      * Get all hustle bids
      */
-    @Query("SELECT * FROM hustle_bid_table")
+    @Query("SELECT * FROM hustle_bid_table ORDER BY timestamp DESC")
     fun getAll() : LiveData<List<HustleBid>>
 //
     /**
      * Get all hustle bids posted by a given bidder id
      */
-    @Query("SELECT * FROM hustle_bid_table WHERE userId = :id")
+    @Query("SELECT * FROM hustle_bid_table WHERE userId = :id ORDER BY timestamp DESC")
     fun getHustleBidsByBidder(id: String) : LiveData<List<HustleBid>>
 //
     /**
      * Get all hustle bids on a given hustle id
      */
-    @Query("SELECT * FROM hustle_bid_table WHERE hustleId = :id")
+    @Query("SELECT * FROM hustle_bid_table WHERE hustleId = :id ORDER BY timestamp DESC")
     fun getHustleBidsByHustleId(id: String) : LiveData<List<HustleBid>>
 
     /**
      * Get all hustle bids from given hustle IDs
      */
-    @Query("SELECT * FROM hustle_bid_table WHERE hustleId IN (:ids)")
+    @Query("SELECT * FROM hustle_bid_table WHERE hustleId IN (:ids) ORDER BY timestamp DESC")
     fun getHustleBidsByHustleIds(ids: List<String>) : LiveData<List<HustleBid>>
 }

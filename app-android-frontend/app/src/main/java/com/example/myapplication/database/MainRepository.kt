@@ -148,9 +148,6 @@ class MainRepository private  constructor(private val database: MainDatabase, pr
             val response = hustleApi.postHustleBid(myHustlrId, hustleId, hustleBidBody).execute()
 
             if(response.isSuccessful) {
-//                var updatedHustle = response.body()!!
-                //TODO: Issue with the backend not sending back the updated Hustle
-//                database.hustleDao.update(updatedHustle)
                 refreshHustles()
             } else {
                 Log.w(TAG, "Post HustleBid failed")

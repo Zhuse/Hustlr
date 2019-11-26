@@ -41,7 +41,8 @@ class AvailableHustlesFragment : Fragment() {
         // observe the hustles variable
         availableHustlesViewModel.hustles.observe(this, Observer {
             it?.let {
-                adapter.data = it
+                val filteredList = it.filter { hustle -> hustle.status.contentEquals("posted") }
+                adapter.data = filteredList
             }
         })
 

@@ -9,7 +9,7 @@ module.exports.findMatches = function (userId) {
                 const userScore = currUser.properties.score;
                 const preferredCategories = currUser.properties.preferredCategories;
 
-                Hustle.find({ status: "posted", providerId: { $ne: userId } })
+                Hustle.find({ $or: [{status: "posted"}, {status: "in_prog"}, {status: "completed"}], providerId: { $ne: userId } })
                     .populate("bids")
                     .populate("providerId")
                     .then((results) => {

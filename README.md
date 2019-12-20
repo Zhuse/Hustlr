@@ -1,2 +1,2 @@
-# cpen321-project
-Project for CPEN 321
+# Hustlr
+Mobile Application which allows users to connect with other users for help with small jobs.
